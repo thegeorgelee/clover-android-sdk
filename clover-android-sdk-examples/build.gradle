@@ -29,10 +29,10 @@ android {
           abortOnError false
       }
   compileSdkVersion 17
-  buildToolsVersion "19.0.3"
+  buildToolsVersion "19.1.0"
 
   defaultConfig {
-    minSdkVersion 16
+    minSdkVersion 17
     targetSdkVersion 17
   }
 }
