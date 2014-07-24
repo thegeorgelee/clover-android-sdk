@@ -208,7 +208,27 @@ public class Merchant implements Parcelable {
 
   @Override
   public String toString() {
-    return String.format("%s{id=%s, name=%s, currency=%s, timeZone=%s (%s), account=%s, address=%s, deviceId=%s, phoneNumber=%s}", getClass().getSimpleName(), getId(), getName(), getCurrency(), getTimeZone().getDisplayName(), getTimeZone().getID(), getAccount().toString(), getAddress().toString(), getDeviceId(), getPhoneNumber());
+    return String.format("%s{id=%s, name=%s, currency=%s, timeZone=%s (%s), account=%s, address=%s, deviceId=%s, phoneNumber=%s}",
+            getClass().getSimpleName(), getId(), getName(), getCurrency(), getTimeZone().getDisplayName(), getTimeZone().getID(), getAccount().toString(),
+            getAddress().toString(), getDeviceId(), getPhoneNumber());
   }
+
+   public JSONObject getJSONObject() {
+       JSONObject rtn = new JSONObject();
+       try {
+           rtn.put("id", getId());
+           rtn.put("name", getName());
+           rtn.put("currency", getCurrency());
+           rtn.put("timeZone", getTimeZone().getDisplayName());
+           rtn.put("account", getAccount().toString());
+           rtn.put("address", getAddress().toString());
+           rtn.put("deviceId", getDeviceId());
+           rtn.put("phoneNumber", getPhoneNumber());
+       } catch (JSONException e) {
+           // do nothing return null
+           rtn = null;
+       }
+       return rtn;
+   }
 
 }
