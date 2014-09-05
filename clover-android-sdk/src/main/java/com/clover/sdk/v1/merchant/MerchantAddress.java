@@ -20,6 +20,9 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * A class representing a merchant address. Instances of this class are immutable.
  * To construct a new instance of this class, use
@@ -259,6 +262,24 @@ public class MerchantAddress implements Parcelable {
 
   @Override
   public String toString() {
-    return String.format("%s{address1=%s, address2=%s, address3=%s, city=%s, state=%s, zip=%s, country=%s", getClass().getSimpleName(), getAddress1(), getAddress2(), getAddress3(), getCity(), getState(), getZip(), getCountry());
+    return String.format("%s{address1=%s, address2=%s, address3=%s, city=%s, state=%s, zip=%s, country=%s",
+            getClass().getSimpleName(), getAddress1(), getAddress2(), getAddress3(), getCity(), getState(), getZip(), getCountry());
   }
+
+    public JSONObject getJSONObject() {
+        JSONObject rtn = new JSONObject();
+        try {
+            rtn.put("address1", getAddress1());
+            rtn.put("address2", getAddress2());
+            rtn.put("address3", getAddress3());
+            rtn.put("city", getCity());
+            rtn.put("state", getState());
+            rtn.put("zip", getZip());
+            rtn.put("countryCode", getCountry());
+        } catch (JSONException e) {
+            // do nothing return null
+            rtn = null;
+        }
+        return rtn;
+    }
 }

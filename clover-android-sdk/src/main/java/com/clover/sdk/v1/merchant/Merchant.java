@@ -221,7 +221,7 @@ public class Merchant implements Parcelable {
            rtn.put("currency", getCurrency());
            rtn.put("timeZone", getTimeZone().getDisplayName());
            rtn.put("account", getAccount().toString());
-           rtn.put("address", getAddress().toString());
+           rtn.put("address", getAddress().getJSONObject());
            rtn.put("deviceId", getDeviceId());
            rtn.put("phoneNumber", getPhoneNumber());
        } catch (JSONException e) {
