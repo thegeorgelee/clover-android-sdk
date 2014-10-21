@@ -26,6 +26,28 @@ package com.clover.sdk.v3.device;
 @SuppressWarnings("all")
 public final class Device implements android.os.Parcelable, com.clover.sdk.v3.Validator, com.clover.sdk.JSONifiable {
 
+ /**
+   * Unique identifier
+  */
+  public java.lang.String getId() {
+    return cacheGet(CacheKey.id);
+  }
+ /**
+   * Name of the device (if entered)
+  */
+  public java.lang.String getName() {
+    return cacheGet(CacheKey.name);
+  }
+  public java.lang.String getModel() {
+    return cacheGet(CacheKey.model);
+  }
+  public java.lang.String getOrderPrefix() {
+    return cacheGet(CacheKey.orderPrefix);
+  }
+  public java.lang.String getSerial() {
+    return cacheGet(CacheKey.serial);
+  }
+
 
   private enum CacheKey {
     id {
@@ -63,7 +85,6 @@ public final class Device implements android.os.Parcelable, com.clover.sdk.v3.Va
     public abstract Object extractValue(Device instance);
   }
 
-  private String jsonString = null;
   private org.json.JSONObject jsonObject = null;
   private android.os.Bundle bundle = null;
   private android.os.Bundle changeLog = null;
@@ -82,8 +103,12 @@ public final class Device implements android.os.Parcelable, com.clover.sdk.v3.Va
   /**
    * Constructs a new instance from the given JSON String.
    */
-  public Device(String json) {
-    this.jsonString = json;
+  public Device(String json) throws java.lang.IllegalArgumentException {
+    try {
+      this.jsonObject = new org.json.JSONObject(json);
+    } catch (org.json.JSONException e) {
+      throw new java.lang.IllegalArgumentException("invalid json", e);
+    }
   }
 
   /**
@@ -98,9 +123,7 @@ public final class Device implements android.os.Parcelable, com.clover.sdk.v3.Va
    * Constructs a new instance that is a deep copy of the source instance. It does not copy the bundle or changelog.
    */
   public Device(Device src) {
-    if (src.jsonString != null) {
-      this.jsonString = src.jsonString;
-    } else {
+    if (src.jsonObject != null) {
       this.jsonObject = com.clover.sdk.v3.JsonHelper.deepCopy(src.getJSONObject());
     }
   }
@@ -162,17 +185,8 @@ public final class Device implements android.os.Parcelable, com.clover.sdk.v3.Va
    * reflected in this instance and vice-versa.
    */
   public org.json.JSONObject getJSONObject() {
-    try {
-      if (jsonObject == null) {
-        if (jsonString != null) {
-          jsonObject = new org.json.JSONObject(jsonString);
-          jsonString = null; // null this so it will be recreated if jsonObject is modified
-        } else {
-          jsonObject = new org.json.JSONObject();
-        }
-      }
-    } catch (org.json.JSONException e) {
-      throw new java.lang.IllegalArgumentException(e);
+    if (jsonObject == null) {
+      jsonObject = new org.json.JSONObject();
     }
     return jsonObject;
   }
@@ -181,73 +195,46 @@ public final class Device implements android.os.Parcelable, com.clover.sdk.v3.Va
   @Override
   public void validate() {
     java.lang.String id = getId();
-    if (id != null && id.length() > 36) throw new IllegalArgumentException("Maximum string length exceeded for 'id'");
+    if (id != null && id.length() > 36) { throw new IllegalArgumentException("Maximum string length exceeded for 'id'");}
 
     java.lang.String name = getName();
-    if (name != null && name.length() > 127) throw new IllegalArgumentException("Maximum string length exceeded for 'name'");
+    if (name != null && name.length() > 127) { throw new IllegalArgumentException("Maximum string length exceeded for 'name'");}
 
     java.lang.String model = getModel();
-    if (model != null && model.length() > 64) throw new IllegalArgumentException("Maximum string length exceeded for 'model'");
+    if (model != null && model.length() > 64) { throw new IllegalArgumentException("Maximum string length exceeded for 'model'");}
 
     java.lang.String orderPrefix = getOrderPrefix();
-    if (orderPrefix != null && orderPrefix.length() > 1) throw new IllegalArgumentException("Maximum string length exceeded for 'orderPrefix'");
+    if (orderPrefix != null && orderPrefix.length() > 1) { throw new IllegalArgumentException("Maximum string length exceeded for 'orderPrefix'");}
 
     java.lang.String serial = getSerial();
-    if (serial != null && serial.length() > 32) throw new IllegalArgumentException("Maximum string length exceeded for 'serial'");
+    if (serial != null && serial.length() > 32) { throw new IllegalArgumentException("Maximum string length exceeded for 'serial'");}
   }
 
 
-  /**
-   * Unique identifier
-   */
-  public java.lang.String getId() {
-    return cacheGet(CacheKey.id);
-  }
 
   private java.lang.String extractId() {
     return getJSONObject().isNull("id") ? null :
       getJSONObject().optString("id");
   }
 
-  /**
-   * Name of the device (if entered)
-   */
-  public java.lang.String getName() {
-    return cacheGet(CacheKey.name);
-  }
 
   private java.lang.String extractName() {
     return getJSONObject().isNull("name") ? null :
       getJSONObject().optString("name");
   }
 
-  /**
-   */
-  public java.lang.String getModel() {
-    return cacheGet(CacheKey.model);
-  }
 
   private java.lang.String extractModel() {
     return getJSONObject().isNull("model") ? null :
       getJSONObject().optString("model");
   }
 
-  /**
-   */
-  public java.lang.String getOrderPrefix() {
-    return cacheGet(CacheKey.orderPrefix);
-  }
 
   private java.lang.String extractOrderPrefix() {
     return getJSONObject().isNull("orderPrefix") ? null :
       getJSONObject().optString("orderPrefix");
   }
 
-  /**
-   */
-  public java.lang.String getSerial() {
-    return cacheGet(CacheKey.serial);
-  }
 
   private java.lang.String extractSerial() {
     return getJSONObject().isNull("serial") ? null :
@@ -494,7 +481,7 @@ public final class Device implements android.os.Parcelable, com.clover.sdk.v3.Va
 
   @Override
   public String toString() {
-    String json = jsonString != null ? jsonString : getJSONObject().toString();
+    String json = getJSONObject().toString();
 
     if (bundle != null) {
       bundle.isEmpty(); // Triggers unparcel

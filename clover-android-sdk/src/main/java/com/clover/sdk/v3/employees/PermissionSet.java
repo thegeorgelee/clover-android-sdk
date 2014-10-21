@@ -26,6 +26,40 @@ package com.clover.sdk.v3.employees;
 @SuppressWarnings("all")
 public final class PermissionSet implements android.os.Parcelable, com.clover.sdk.v3.Validator, com.clover.sdk.JSONifiable {
 
+ /**
+   * Unique identifier
+  */
+  public java.lang.String getId() {
+    return cacheGet(CacheKey.id);
+  }
+ /**
+   * Key of the permissionSet
+  */
+  public java.lang.String getName() {
+    return cacheGet(CacheKey.name);
+  }
+ /**
+   * Label of the permissionSet
+  */
+  public java.lang.String getLabel() {
+    return cacheGet(CacheKey.label);
+  }
+  public com.clover.sdk.v3.base.Reference getApp() {
+    return cacheGet(CacheKey.app);
+  }
+  public java.lang.Boolean getEmployeeDefault() {
+    return cacheGet(CacheKey.employeeDefault);
+  }
+  public java.lang.Boolean getManagerDefault() {
+    return cacheGet(CacheKey.managerDefault);
+  }
+ /**
+   * Bitmap of permissions
+  */
+  public com.clover.sdk.v3.employees.Permissions getPermissions() {
+    return cacheGet(CacheKey.permissions);
+  }
+
   public static final String AUTHORITY = "com.clover.roles";
 
   private enum CacheKey {
@@ -76,7 +110,6 @@ public final class PermissionSet implements android.os.Parcelable, com.clover.sd
     public abstract Object extractValue(PermissionSet instance);
   }
 
-  private String jsonString = null;
   private org.json.JSONObject jsonObject = null;
   private android.os.Bundle bundle = null;
   private android.os.Bundle changeLog = null;
@@ -95,8 +128,12 @@ public final class PermissionSet implements android.os.Parcelable, com.clover.sd
   /**
    * Constructs a new instance from the given JSON String.
    */
-  public PermissionSet(String json) {
-    this.jsonString = json;
+  public PermissionSet(String json) throws java.lang.IllegalArgumentException {
+    try {
+      this.jsonObject = new org.json.JSONObject(json);
+    } catch (org.json.JSONException e) {
+      throw new java.lang.IllegalArgumentException("invalid json", e);
+    }
   }
 
   /**
@@ -111,9 +148,7 @@ public final class PermissionSet implements android.os.Parcelable, com.clover.sd
    * Constructs a new instance that is a deep copy of the source instance. It does not copy the bundle or changelog.
    */
   public PermissionSet(PermissionSet src) {
-    if (src.jsonString != null) {
-      this.jsonString = src.jsonString;
-    } else {
+    if (src.jsonObject != null) {
       this.jsonObject = com.clover.sdk.v3.JsonHelper.deepCopy(src.getJSONObject());
     }
   }
@@ -175,17 +210,8 @@ public final class PermissionSet implements android.os.Parcelable, com.clover.sd
    * reflected in this instance and vice-versa.
    */
   public org.json.JSONObject getJSONObject() {
-    try {
-      if (jsonObject == null) {
-        if (jsonString != null) {
-          jsonObject = new org.json.JSONObject(jsonString);
-          jsonString = null; // null this so it will be recreated if jsonObject is modified
-        } else {
-          jsonObject = new org.json.JSONObject();
-        }
-      }
-    } catch (org.json.JSONException e) {
-      throw new java.lang.IllegalArgumentException(e);
+    if (jsonObject == null) {
+      jsonObject = new org.json.JSONObject();
     }
     return jsonObject;
   }
@@ -194,59 +220,34 @@ public final class PermissionSet implements android.os.Parcelable, com.clover.sd
   @Override
   public void validate() {
     java.lang.String id = getId();
-    if (id != null && id.length() > 13) throw new IllegalArgumentException("Maximum string length exceeded for 'id'");
+    if (id != null && id.length() > 13) { throw new IllegalArgumentException("Maximum string length exceeded for 'id'");}
 
     java.lang.String name = getName();
-    if (name != null && name.length() > 127) throw new IllegalArgumentException("Maximum string length exceeded for 'name'");
+    if (name != null && name.length() > 127) { throw new IllegalArgumentException("Maximum string length exceeded for 'name'");}
 
     java.lang.String label = getLabel();
-    if (label != null && label.length() > 127) throw new IllegalArgumentException("Maximum string length exceeded for 'label'");
+    if (label != null && label.length() > 127) { throw new IllegalArgumentException("Maximum string length exceeded for 'label'");}
   }
 
 
-  /**
-   * Unique identifier
-   */
-  public java.lang.String getId() {
-    return cacheGet(CacheKey.id);
-  }
 
   private java.lang.String extractId() {
     return getJSONObject().isNull("id") ? null :
       getJSONObject().optString("id");
   }
 
-  /**
-   * Key of the permissionSet
-   */
-  public java.lang.String getName() {
-    return cacheGet(CacheKey.name);
-  }
 
   private java.lang.String extractName() {
     return getJSONObject().isNull("name") ? null :
       getJSONObject().optString("name");
   }
 
-  /**
-   * Label of the permissionSet
-   */
-  public java.lang.String getLabel() {
-    return cacheGet(CacheKey.label);
-  }
 
   private java.lang.String extractLabel() {
     return getJSONObject().isNull("label") ? null :
       getJSONObject().optString("label");
   }
 
-  /**
-   *
-   * The returned object is not a copy so changes to it will be reflected in this instance and vice-versa.
-   */
-  public com.clover.sdk.v3.base.Reference getApp() {
-    return cacheGet(CacheKey.app);
-  }
 
   private com.clover.sdk.v3.base.Reference extractApp() {
     org.json.JSONObject jsonObj = getJSONObject().optJSONObject("app");
@@ -256,36 +257,18 @@ public final class PermissionSet implements android.os.Parcelable, com.clover.sd
     return null;
   }
 
-  /**
-   */
-  public java.lang.Boolean getEmployeeDefault() {
-    return cacheGet(CacheKey.employeeDefault);
-  }
 
   private java.lang.Boolean extractEmployeeDefault() {
     return getJSONObject().isNull("employeeDefault") ? null :
       getJSONObject().optBoolean("employeeDefault");
   }
 
-  /**
-   */
-  public java.lang.Boolean getManagerDefault() {
-    return cacheGet(CacheKey.managerDefault);
-  }
 
   private java.lang.Boolean extractManagerDefault() {
     return getJSONObject().isNull("managerDefault") ? null :
       getJSONObject().optBoolean("managerDefault");
   }
 
-  /**
-   * Bitmap of permissions
-   *
-   * The returned object is not a copy so changes to it will be reflected in this instance and vice-versa.
-   */
-  public com.clover.sdk.v3.employees.Permissions getPermissions() {
-    return cacheGet(CacheKey.permissions);
-  }
 
   private com.clover.sdk.v3.employees.Permissions extractPermissions() {
     org.json.JSONObject jsonObj = getJSONObject().optJSONObject("permissions");
@@ -607,7 +590,7 @@ public final class PermissionSet implements android.os.Parcelable, com.clover.sd
 
   @Override
   public String toString() {
-    String json = jsonString != null ? jsonString : getJSONObject().toString();
+    String json = getJSONObject().toString();
 
     if (bundle != null) {
       bundle.isEmpty(); // Triggers unparcel

@@ -27,6 +27,25 @@ package com.clover.sdk.v3.order;
 /** Snapshot of a line item modifier at the time that the order was placed. */
 public final class Modification implements android.os.Parcelable, com.clover.sdk.v3.Validator, com.clover.sdk.JSONifiable {
 
+  public java.lang.String getId() {
+    return cacheGet(CacheKey.id);
+  }
+  public java.lang.String getName() {
+    return cacheGet(CacheKey.name);
+  }
+  public java.lang.String getAlternateName() {
+    return cacheGet(CacheKey.alternateName);
+  }
+  public java.lang.Long getAmount() {
+    return cacheGet(CacheKey.amount);
+  }
+ /**
+   * The modifier object.  Values from the Modifier are copied to the Modification at the time that the order is placed.  Modifier values may change after the order is placed.
+  */
+  public com.clover.sdk.v3.inventory.Modifier getModifier() {
+    return cacheGet(CacheKey.modifier);
+  }
+
 
   private enum CacheKey {
     id {
@@ -64,7 +83,6 @@ public final class Modification implements android.os.Parcelable, com.clover.sdk
     public abstract Object extractValue(Modification instance);
   }
 
-  private String jsonString = null;
   private org.json.JSONObject jsonObject = null;
   private android.os.Bundle bundle = null;
   private android.os.Bundle changeLog = null;
@@ -83,8 +101,12 @@ public final class Modification implements android.os.Parcelable, com.clover.sdk
   /**
    * Constructs a new instance from the given JSON String.
    */
-  public Modification(String json) {
-    this.jsonString = json;
+  public Modification(String json) throws java.lang.IllegalArgumentException {
+    try {
+      this.jsonObject = new org.json.JSONObject(json);
+    } catch (org.json.JSONException e) {
+      throw new java.lang.IllegalArgumentException("invalid json", e);
+    }
   }
 
   /**
@@ -99,9 +121,7 @@ public final class Modification implements android.os.Parcelable, com.clover.sdk
    * Constructs a new instance that is a deep copy of the source instance. It does not copy the bundle or changelog.
    */
   public Modification(Modification src) {
-    if (src.jsonString != null) {
-      this.jsonString = src.jsonString;
-    } else {
+    if (src.jsonObject != null) {
       this.jsonObject = com.clover.sdk.v3.JsonHelper.deepCopy(src.getJSONObject());
     }
   }
@@ -163,17 +183,8 @@ public final class Modification implements android.os.Parcelable, com.clover.sdk
    * reflected in this instance and vice-versa.
    */
   public org.json.JSONObject getJSONObject() {
-    try {
-      if (jsonObject == null) {
-        if (jsonString != null) {
-          jsonObject = new org.json.JSONObject(jsonString);
-          jsonString = null; // null this so it will be recreated if jsonObject is modified
-        } else {
-          jsonObject = new org.json.JSONObject();
-        }
-      }
-    } catch (org.json.JSONException e) {
-      throw new java.lang.IllegalArgumentException(e);
+    if (jsonObject == null) {
+      jsonObject = new org.json.JSONObject();
     }
     return jsonObject;
   }
@@ -182,68 +193,40 @@ public final class Modification implements android.os.Parcelable, com.clover.sdk
   @Override
   public void validate() {
     java.lang.String id = getId();
-    if (id != null && id.length() > 13) throw new IllegalArgumentException("Maximum string length exceeded for 'id'");
+    if (id != null && id.length() > 13) { throw new IllegalArgumentException("Maximum string length exceeded for 'id'");}
 
     java.lang.String name = getName();
-    if (name != null && name.length() > 255) throw new IllegalArgumentException("Maximum string length exceeded for 'name'");
+    if (name != null && name.length() > 255) { throw new IllegalArgumentException("Maximum string length exceeded for 'name'");}
 
     java.lang.String alternateName = getAlternateName();
-    if (alternateName != null && alternateName.length() > 255) throw new IllegalArgumentException("Maximum string length exceeded for 'alternateName'");
+    if (alternateName != null && alternateName.length() > 255) { throw new IllegalArgumentException("Maximum string length exceeded for 'alternateName'");}
   }
 
 
-  /**
-   */
-  public java.lang.String getId() {
-    return cacheGet(CacheKey.id);
-  }
 
   private java.lang.String extractId() {
     return getJSONObject().isNull("id") ? null :
       getJSONObject().optString("id");
   }
 
-  /**
-   */
-  public java.lang.String getName() {
-    return cacheGet(CacheKey.name);
-  }
 
   private java.lang.String extractName() {
     return getJSONObject().isNull("name") ? null :
       getJSONObject().optString("name");
   }
 
-  /**
-   */
-  public java.lang.String getAlternateName() {
-    return cacheGet(CacheKey.alternateName);
-  }
 
   private java.lang.String extractAlternateName() {
     return getJSONObject().isNull("alternateName") ? null :
       getJSONObject().optString("alternateName");
   }
 
-  /**
-   */
-  public java.lang.Long getAmount() {
-    return cacheGet(CacheKey.amount);
-  }
 
   private java.lang.Long extractAmount() {
     return getJSONObject().isNull("amount") ? null :
       getJSONObject().optLong("amount");
   }
 
-  /**
-   * The modifier object.  Values from the Modifier are copied to the Modification at the time that the order is placed.  Modifier values may change after the order is placed.
-   *
-   * The returned object is not a copy so changes to it will be reflected in this instance and vice-versa.
-   */
-  public com.clover.sdk.v3.inventory.Modifier getModifier() {
-    return cacheGet(CacheKey.modifier);
-  }
 
   private com.clover.sdk.v3.inventory.Modifier extractModifier() {
     org.json.JSONObject jsonObj = getJSONObject().optJSONObject("modifier");
@@ -496,7 +479,7 @@ public final class Modification implements android.os.Parcelable, com.clover.sdk
 
   @Override
   public String toString() {
-    String json = jsonString != null ? jsonString : getJSONObject().toString();
+    String json = getJSONObject().toString();
 
     if (bundle != null) {
       bundle.isEmpty(); // Triggers unparcel

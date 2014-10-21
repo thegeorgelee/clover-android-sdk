@@ -26,6 +26,31 @@ package com.clover.sdk.v3.base;
 @SuppressWarnings("all")
 public final class Address implements android.os.Parcelable, com.clover.sdk.v3.Validator, com.clover.sdk.JSONifiable {
 
+  public java.lang.String getAddress1() {
+    return cacheGet(CacheKey.address1);
+  }
+  public java.lang.String getAddress2() {
+    return cacheGet(CacheKey.address2);
+  }
+  public java.lang.String getAddress3() {
+    return cacheGet(CacheKey.address3);
+  }
+  public java.lang.String getCity() {
+    return cacheGet(CacheKey.city);
+  }
+  public java.lang.String getCountry() {
+    return cacheGet(CacheKey.country);
+  }
+  public java.lang.String getPhoneNumber() {
+    return cacheGet(CacheKey.phoneNumber);
+  }
+  public java.lang.String getState() {
+    return cacheGet(CacheKey.state);
+  }
+  public java.lang.String getZip() {
+    return cacheGet(CacheKey.zip);
+  }
+
 
   private enum CacheKey {
     address1 {
@@ -81,7 +106,6 @@ public final class Address implements android.os.Parcelable, com.clover.sdk.v3.V
     public abstract Object extractValue(Address instance);
   }
 
-  private String jsonString = null;
   private org.json.JSONObject jsonObject = null;
   private android.os.Bundle bundle = null;
   private android.os.Bundle changeLog = null;
@@ -100,8 +124,12 @@ public final class Address implements android.os.Parcelable, com.clover.sdk.v3.V
   /**
    * Constructs a new instance from the given JSON String.
    */
-  public Address(String json) {
-    this.jsonString = json;
+  public Address(String json) throws java.lang.IllegalArgumentException {
+    try {
+      this.jsonObject = new org.json.JSONObject(json);
+    } catch (org.json.JSONException e) {
+      throw new java.lang.IllegalArgumentException("invalid json", e);
+    }
   }
 
   /**
@@ -116,9 +144,7 @@ public final class Address implements android.os.Parcelable, com.clover.sdk.v3.V
    * Constructs a new instance that is a deep copy of the source instance. It does not copy the bundle or changelog.
    */
   public Address(Address src) {
-    if (src.jsonString != null) {
-      this.jsonString = src.jsonString;
-    } else {
+    if (src.jsonObject != null) {
       this.jsonObject = com.clover.sdk.v3.JsonHelper.deepCopy(src.getJSONObject());
     }
   }
@@ -180,17 +206,8 @@ public final class Address implements android.os.Parcelable, com.clover.sdk.v3.V
    * reflected in this instance and vice-versa.
    */
   public org.json.JSONObject getJSONObject() {
-    try {
-      if (jsonObject == null) {
-        if (jsonString != null) {
-          jsonObject = new org.json.JSONObject(jsonString);
-          jsonString = null; // null this so it will be recreated if jsonObject is modified
-        } else {
-          jsonObject = new org.json.JSONObject();
-        }
-      }
-    } catch (org.json.JSONException e) {
-      throw new java.lang.IllegalArgumentException(e);
+    if (jsonObject == null) {
+      jsonObject = new org.json.JSONObject();
     }
     return jsonObject;
   }
@@ -199,113 +216,73 @@ public final class Address implements android.os.Parcelable, com.clover.sdk.v3.V
   @Override
   public void validate() {
     java.lang.String address1 = getAddress1();
-    if (address1 != null && address1.length() > 255) throw new IllegalArgumentException("Maximum string length exceeded for 'address1'");
+    if (address1 != null && address1.length() > 255) { throw new IllegalArgumentException("Maximum string length exceeded for 'address1'");}
 
     java.lang.String address2 = getAddress2();
-    if (address2 != null && address2.length() > 255) throw new IllegalArgumentException("Maximum string length exceeded for 'address2'");
+    if (address2 != null && address2.length() > 255) { throw new IllegalArgumentException("Maximum string length exceeded for 'address2'");}
 
     java.lang.String address3 = getAddress3();
-    if (address3 != null && address3.length() > 255) throw new IllegalArgumentException("Maximum string length exceeded for 'address3'");
+    if (address3 != null && address3.length() > 255) { throw new IllegalArgumentException("Maximum string length exceeded for 'address3'");}
 
     java.lang.String city = getCity();
-    if (city != null && city.length() > 127) throw new IllegalArgumentException("Maximum string length exceeded for 'city'");
+    if (city != null && city.length() > 127) { throw new IllegalArgumentException("Maximum string length exceeded for 'city'");}
 
     java.lang.String country = getCountry();
-    if (country != null && country.length() > 127) throw new IllegalArgumentException("Maximum string length exceeded for 'country'");
+    if (country != null && country.length() > 127) { throw new IllegalArgumentException("Maximum string length exceeded for 'country'");}
 
     java.lang.String phoneNumber = getPhoneNumber();
-    if (phoneNumber != null && phoneNumber.length() > 21) throw new IllegalArgumentException("Maximum string length exceeded for 'phoneNumber'");
+    if (phoneNumber != null && phoneNumber.length() > 21) { throw new IllegalArgumentException("Maximum string length exceeded for 'phoneNumber'");}
 
     java.lang.String state = getState();
-    if (state != null && state.length() > 127) throw new IllegalArgumentException("Maximum string length exceeded for 'state'");
+    if (state != null && state.length() > 127) { throw new IllegalArgumentException("Maximum string length exceeded for 'state'");}
 
     java.lang.String zip = getZip();
-    if (zip != null && zip.length() > 127) throw new IllegalArgumentException("Maximum string length exceeded for 'zip'");
+    if (zip != null && zip.length() > 127) { throw new IllegalArgumentException("Maximum string length exceeded for 'zip'");}
   }
 
 
-  /**
-   */
-  public java.lang.String getAddress1() {
-    return cacheGet(CacheKey.address1);
-  }
 
   private java.lang.String extractAddress1() {
     return getJSONObject().isNull("address1") ? null :
       getJSONObject().optString("address1");
   }
 
-  /**
-   */
-  public java.lang.String getAddress2() {
-    return cacheGet(CacheKey.address2);
-  }
 
   private java.lang.String extractAddress2() {
     return getJSONObject().isNull("address2") ? null :
       getJSONObject().optString("address2");
   }
 
-  /**
-   */
-  public java.lang.String getAddress3() {
-    return cacheGet(CacheKey.address3);
-  }
 
   private java.lang.String extractAddress3() {
     return getJSONObject().isNull("address3") ? null :
       getJSONObject().optString("address3");
   }
 
-  /**
-   */
-  public java.lang.String getCity() {
-    return cacheGet(CacheKey.city);
-  }
 
   private java.lang.String extractCity() {
     return getJSONObject().isNull("city") ? null :
       getJSONObject().optString("city");
   }
 
-  /**
-   */
-  public java.lang.String getCountry() {
-    return cacheGet(CacheKey.country);
-  }
 
   private java.lang.String extractCountry() {
     return getJSONObject().isNull("country") ? null :
       getJSONObject().optString("country");
   }
 
-  /**
-   */
-  public java.lang.String getPhoneNumber() {
-    return cacheGet(CacheKey.phoneNumber);
-  }
 
   private java.lang.String extractPhoneNumber() {
     return getJSONObject().isNull("phoneNumber") ? null :
       getJSONObject().optString("phoneNumber");
   }
 
-  /**
-   */
-  public java.lang.String getState() {
-    return cacheGet(CacheKey.state);
-  }
 
   private java.lang.String extractState() {
     return getJSONObject().isNull("state") ? null :
       getJSONObject().optString("state");
   }
 
-  /**
-   */
-  public java.lang.String getZip() {
-    return cacheGet(CacheKey.zip);
-  }
 
   private java.lang.String extractZip() {
     return getJSONObject().isNull("zip") ? null :
@@ -651,7 +628,7 @@ public final class Address implements android.os.Parcelable, com.clover.sdk.v3.V
 
   @Override
   public String toString() {
-    String json = jsonString != null ? jsonString : getJSONObject().toString();
+    String json = getJSONObject().toString();
 
     if (bundle != null) {
       bundle.isEmpty(); // Triggers unparcel

@@ -26,6 +26,43 @@ package com.clover.sdk.v3.cash;
 @SuppressWarnings("all")
 public final class CashEvent implements android.os.Parcelable, com.clover.sdk.v3.Validator, com.clover.sdk.JSONifiable {
 
+ /**
+   * The type of event that occured
+  */
+  public com.clover.sdk.v3.cash.Type getType() {
+    return cacheGet(CacheKey.type);
+  }
+ /**
+   * The amount that was either added, removed of modified by the event
+  */
+  public java.lang.Long getAmountChange() {
+    return cacheGet(CacheKey.amountChange);
+  }
+ /**
+   * Time at which the event was exectued
+  */
+  public java.lang.Long getTimestamp() {
+    return cacheGet(CacheKey.timestamp);
+  }
+ /**
+   * Any additional information regarding the event
+  */
+  public java.lang.String getNote() {
+    return cacheGet(CacheKey.note);
+  }
+ /**
+   * The employee who performed the event
+  */
+  public com.clover.sdk.v3.employees.Employee getEmployee() {
+    return cacheGet(CacheKey.employee);
+  }
+ /**
+   * The device that initiated the event
+  */
+  public com.clover.sdk.v3.device.Device getDevice() {
+    return cacheGet(CacheKey.device);
+  }
+
 
   private enum CacheKey {
     type {
@@ -69,7 +106,6 @@ public final class CashEvent implements android.os.Parcelable, com.clover.sdk.v3
     public abstract Object extractValue(CashEvent instance);
   }
 
-  private String jsonString = null;
   private org.json.JSONObject jsonObject = null;
   private android.os.Bundle bundle = null;
   private android.os.Bundle changeLog = null;
@@ -88,8 +124,12 @@ public final class CashEvent implements android.os.Parcelable, com.clover.sdk.v3
   /**
    * Constructs a new instance from the given JSON String.
    */
-  public CashEvent(String json) {
-    this.jsonString = json;
+  public CashEvent(String json) throws java.lang.IllegalArgumentException {
+    try {
+      this.jsonObject = new org.json.JSONObject(json);
+    } catch (org.json.JSONException e) {
+      throw new java.lang.IllegalArgumentException("invalid json", e);
+    }
   }
 
   /**
@@ -104,9 +144,7 @@ public final class CashEvent implements android.os.Parcelable, com.clover.sdk.v3
    * Constructs a new instance that is a deep copy of the source instance. It does not copy the bundle or changelog.
    */
   public CashEvent(CashEvent src) {
-    if (src.jsonString != null) {
-      this.jsonString = src.jsonString;
-    } else {
+    if (src.jsonObject != null) {
       this.jsonObject = com.clover.sdk.v3.JsonHelper.deepCopy(src.getJSONObject());
     }
   }
@@ -168,17 +206,8 @@ public final class CashEvent implements android.os.Parcelable, com.clover.sdk.v3
    * reflected in this instance and vice-versa.
    */
   public org.json.JSONObject getJSONObject() {
-    try {
-      if (jsonObject == null) {
-        if (jsonString != null) {
-          jsonObject = new org.json.JSONObject(jsonString);
-          jsonString = null; // null this so it will be recreated if jsonObject is modified
-        } else {
-          jsonObject = new org.json.JSONObject();
-        }
-      }
-    } catch (org.json.JSONException e) {
-      throw new java.lang.IllegalArgumentException(e);
+    if (jsonObject == null) {
+      jsonObject = new org.json.JSONObject();
     }
     return jsonObject;
   }
@@ -189,12 +218,6 @@ public final class CashEvent implements android.os.Parcelable, com.clover.sdk.v3
   }
 
 
-  /**
-   * The type of event that occured
-   */
-  public com.clover.sdk.v3.cash.Type getType() {
-    return cacheGet(CacheKey.type);
-  }
 
   private com.clover.sdk.v3.cash.Type extractType() {
     if (!getJSONObject().isNull("type")) {
@@ -208,50 +231,24 @@ public final class CashEvent implements android.os.Parcelable, com.clover.sdk.v3
     return null;
   }
 
-  /**
-   * The amount that was either added, removed of modified by the event
-   */
-  public java.lang.Long getAmountChange() {
-    return cacheGet(CacheKey.amountChange);
-  }
 
   private java.lang.Long extractAmountChange() {
     return getJSONObject().isNull("amountChange") ? null :
       getJSONObject().optLong("amountChange");
   }
 
-  /**
-   * Time at which the event was exectued
-   */
-  public java.lang.Long getTimestamp() {
-    return cacheGet(CacheKey.timestamp);
-  }
 
   private java.lang.Long extractTimestamp() {
     return getJSONObject().isNull("timestamp") ? null :
       getJSONObject().optLong("timestamp");
   }
 
-  /**
-   * Any additional information regarding the event
-   */
-  public java.lang.String getNote() {
-    return cacheGet(CacheKey.note);
-  }
 
   private java.lang.String extractNote() {
     return getJSONObject().isNull("note") ? null :
       getJSONObject().optString("note");
   }
 
-  /**
-   * The employee who performed the event
-   *
-   * The returned object is not a copy so changes to it will be reflected in this instance and vice-versa.
-   */
-  public com.clover.sdk.v3.employees.Employee getEmployee() {
-    return cacheGet(CacheKey.employee);
-  }
 
   private com.clover.sdk.v3.employees.Employee extractEmployee() {
     org.json.JSONObject jsonObj = getJSONObject().optJSONObject("employee");
@@ -261,14 +258,6 @@ public final class CashEvent implements android.os.Parcelable, com.clover.sdk.v3
     return null;
   }
 
-  /**
-   * The device that initiated the event
-   *
-   * The returned object is not a copy so changes to it will be reflected in this instance and vice-versa.
-   */
-  public com.clover.sdk.v3.device.Device getDevice() {
-    return cacheGet(CacheKey.device);
-  }
 
   private com.clover.sdk.v3.device.Device extractDevice() {
     org.json.JSONObject jsonObj = getJSONObject().optJSONObject("device");
@@ -557,7 +546,7 @@ public final class CashEvent implements android.os.Parcelable, com.clover.sdk.v3
 
   @Override
   public String toString() {
-    String json = jsonString != null ? jsonString : getJSONObject().toString();
+    String json = getJSONObject().toString();
 
     if (bundle != null) {
       bundle.isEmpty(); // Triggers unparcel

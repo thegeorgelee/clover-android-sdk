@@ -26,6 +26,49 @@ package com.clover.sdk.v3.apps;
 @SuppressWarnings("all")
 public final class AndroidVersion implements android.os.Parcelable, com.clover.sdk.v3.Validator, com.clover.sdk.JSONifiable {
 
+  public java.lang.String getId() {
+    return cacheGet(CacheKey.id);
+  }
+ /**
+   * Creation timestamp
+  */
+  public java.lang.Long getCreatedAt() {
+    return cacheGet(CacheKey.createdAt);
+  }
+ /**
+   * Unique identifier
+  */
+  public java.lang.Long getVersion() {
+    return cacheGet(CacheKey.version);
+  }
+  public java.lang.String getVersionName() {
+    return cacheGet(CacheKey.versionName);
+  }
+  public java.lang.Boolean getApproved() {
+    return cacheGet(CacheKey.approved);
+  }
+  public java.lang.String getHash() {
+    return cacheGet(CacheKey.hash);
+  }
+  public java.lang.String getHashOriginal() {
+    return cacheGet(CacheKey.hashOriginal);
+  }
+  public com.clover.sdk.v3.base.ApprovalStatus getApprovalStatus() {
+    return cacheGet(CacheKey.approvalStatus);
+  }
+ /**
+   * Url to download the APK
+  */
+  public java.lang.String getApkUrl() {
+    return cacheGet(CacheKey.apkUrl);
+  }
+ /**
+   * Reference to app this android version belongs to
+  */
+  public com.clover.sdk.v3.base.Reference getApp() {
+    return cacheGet(CacheKey.app);
+  }
+
 
   private enum CacheKey {
     id {
@@ -93,7 +136,6 @@ public final class AndroidVersion implements android.os.Parcelable, com.clover.s
     public abstract Object extractValue(AndroidVersion instance);
   }
 
-  private String jsonString = null;
   private org.json.JSONObject jsonObject = null;
   private android.os.Bundle bundle = null;
   private android.os.Bundle changeLog = null;
@@ -112,8 +154,12 @@ public final class AndroidVersion implements android.os.Parcelable, com.clover.s
   /**
    * Constructs a new instance from the given JSON String.
    */
-  public AndroidVersion(String json) {
-    this.jsonString = json;
+  public AndroidVersion(String json) throws java.lang.IllegalArgumentException {
+    try {
+      this.jsonObject = new org.json.JSONObject(json);
+    } catch (org.json.JSONException e) {
+      throw new java.lang.IllegalArgumentException("invalid json", e);
+    }
   }
 
   /**
@@ -128,9 +174,7 @@ public final class AndroidVersion implements android.os.Parcelable, com.clover.s
    * Constructs a new instance that is a deep copy of the source instance. It does not copy the bundle or changelog.
    */
   public AndroidVersion(AndroidVersion src) {
-    if (src.jsonString != null) {
-      this.jsonString = src.jsonString;
-    } else {
+    if (src.jsonObject != null) {
       this.jsonObject = com.clover.sdk.v3.JsonHelper.deepCopy(src.getJSONObject());
     }
   }
@@ -192,17 +236,8 @@ public final class AndroidVersion implements android.os.Parcelable, com.clover.s
    * reflected in this instance and vice-versa.
    */
   public org.json.JSONObject getJSONObject() {
-    try {
-      if (jsonObject == null) {
-        if (jsonString != null) {
-          jsonObject = new org.json.JSONObject(jsonString);
-          jsonString = null; // null this so it will be recreated if jsonObject is modified
-        } else {
-          jsonObject = new org.json.JSONObject();
-        }
-      }
-    } catch (org.json.JSONException e) {
-      throw new java.lang.IllegalArgumentException(e);
+    if (jsonObject == null) {
+      jsonObject = new org.json.JSONObject();
     }
     return jsonObject;
   }
@@ -211,103 +246,61 @@ public final class AndroidVersion implements android.os.Parcelable, com.clover.s
   @Override
   public void validate() {
     java.lang.String id = getId();
-    if (id != null && id.length() > 13) throw new IllegalArgumentException("Maximum string length exceeded for 'id'");
+    if (id != null && id.length() > 13) { throw new IllegalArgumentException("Maximum string length exceeded for 'id'");}
 
     java.lang.String versionName = getVersionName();
-    if (versionName != null && versionName.length() > 255) throw new IllegalArgumentException("Maximum string length exceeded for 'versionName'");
+    if (versionName != null && versionName.length() > 255) { throw new IllegalArgumentException("Maximum string length exceeded for 'versionName'");}
 
     java.lang.String hash = getHash();
-    if (hash != null && hash.length() > 64) throw new IllegalArgumentException("Maximum string length exceeded for 'hash'");
+    if (hash != null && hash.length() > 64) { throw new IllegalArgumentException("Maximum string length exceeded for 'hash'");}
 
     java.lang.String hashOriginal = getHashOriginal();
-    if (hashOriginal != null && hashOriginal.length() > 64) throw new IllegalArgumentException("Maximum string length exceeded for 'hashOriginal'");
+    if (hashOriginal != null && hashOriginal.length() > 64) { throw new IllegalArgumentException("Maximum string length exceeded for 'hashOriginal'");}
   }
 
 
-  /**
-   */
-  public java.lang.String getId() {
-    return cacheGet(CacheKey.id);
-  }
 
   private java.lang.String extractId() {
     return getJSONObject().isNull("id") ? null :
       getJSONObject().optString("id");
   }
 
-  /**
-   * Creation timestamp
-   */
-  public java.lang.Long getCreatedAt() {
-    return cacheGet(CacheKey.createdAt);
-  }
 
   private java.lang.Long extractCreatedAt() {
     return getJSONObject().isNull("createdAt") ? null :
       getJSONObject().optLong("createdAt");
   }
 
-  /**
-   * Unique identifier
-   */
-  public java.lang.Long getVersion() {
-    return cacheGet(CacheKey.version);
-  }
 
   private java.lang.Long extractVersion() {
     return getJSONObject().isNull("version") ? null :
       getJSONObject().optLong("version");
   }
 
-  /**
-   */
-  public java.lang.String getVersionName() {
-    return cacheGet(CacheKey.versionName);
-  }
 
   private java.lang.String extractVersionName() {
     return getJSONObject().isNull("versionName") ? null :
       getJSONObject().optString("versionName");
   }
 
-  /**
-   */
-  public java.lang.Boolean getApproved() {
-    return cacheGet(CacheKey.approved);
-  }
 
   private java.lang.Boolean extractApproved() {
     return getJSONObject().isNull("approved") ? null :
       getJSONObject().optBoolean("approved");
   }
 
-  /**
-   */
-  public java.lang.String getHash() {
-    return cacheGet(CacheKey.hash);
-  }
 
   private java.lang.String extractHash() {
     return getJSONObject().isNull("hash") ? null :
       getJSONObject().optString("hash");
   }
 
-  /**
-   */
-  public java.lang.String getHashOriginal() {
-    return cacheGet(CacheKey.hashOriginal);
-  }
 
   private java.lang.String extractHashOriginal() {
     return getJSONObject().isNull("hashOriginal") ? null :
       getJSONObject().optString("hashOriginal");
   }
 
-  /**
-   */
-  public com.clover.sdk.v3.base.ApprovalStatus getApprovalStatus() {
-    return cacheGet(CacheKey.approvalStatus);
-  }
 
   private com.clover.sdk.v3.base.ApprovalStatus extractApprovalStatus() {
     if (!getJSONObject().isNull("approvalStatus")) {
@@ -321,26 +314,12 @@ public final class AndroidVersion implements android.os.Parcelable, com.clover.s
     return null;
   }
 
-  /**
-   * Url to download the APK
-   */
-  public java.lang.String getApkUrl() {
-    return cacheGet(CacheKey.apkUrl);
-  }
 
   private java.lang.String extractApkUrl() {
     return getJSONObject().isNull("apkUrl") ? null :
       getJSONObject().optString("apkUrl");
   }
 
-  /**
-   * Reference to app this android version belongs to
-   *
-   * The returned object is not a copy so changes to it will be reflected in this instance and vice-versa.
-   */
-  public com.clover.sdk.v3.base.Reference getApp() {
-    return cacheGet(CacheKey.app);
-  }
 
   private com.clover.sdk.v3.base.Reference extractApp() {
     org.json.JSONObject jsonObj = getJSONObject().optJSONObject("app");
@@ -758,7 +737,7 @@ public final class AndroidVersion implements android.os.Parcelable, com.clover.s
 
   @Override
   public String toString() {
-    String json = jsonString != null ? jsonString : getJSONObject().toString();
+    String json = getJSONObject().toString();
 
     if (bundle != null) {
       bundle.isEmpty(); // Triggers unparcel

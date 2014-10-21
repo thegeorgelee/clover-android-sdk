@@ -26,6 +26,22 @@ package com.clover.sdk.v3.billing;
 @SuppressWarnings("all")
 public final class AppMeteredEvent implements android.os.Parcelable, com.clover.sdk.v3.Validator, com.clover.sdk.JSONifiable {
 
+  public java.lang.String getId() {
+    return cacheGet(CacheKey.id);
+  }
+  public com.clover.sdk.v3.apps.AppMetered getAppMetered() {
+    return cacheGet(CacheKey.appMetered);
+  }
+  public java.lang.Long getCount() {
+    return cacheGet(CacheKey.count);
+  }
+  public java.lang.Long getCreatedTime() {
+    return cacheGet(CacheKey.createdTime);
+  }
+  public java.lang.Long getModifiedTime() {
+    return cacheGet(CacheKey.modifiedTime);
+  }
+
 
   private enum CacheKey {
     id {
@@ -63,7 +79,6 @@ public final class AppMeteredEvent implements android.os.Parcelable, com.clover.
     public abstract Object extractValue(AppMeteredEvent instance);
   }
 
-  private String jsonString = null;
   private org.json.JSONObject jsonObject = null;
   private android.os.Bundle bundle = null;
   private android.os.Bundle changeLog = null;
@@ -82,8 +97,12 @@ public final class AppMeteredEvent implements android.os.Parcelable, com.clover.
   /**
    * Constructs a new instance from the given JSON String.
    */
-  public AppMeteredEvent(String json) {
-    this.jsonString = json;
+  public AppMeteredEvent(String json) throws java.lang.IllegalArgumentException {
+    try {
+      this.jsonObject = new org.json.JSONObject(json);
+    } catch (org.json.JSONException e) {
+      throw new java.lang.IllegalArgumentException("invalid json", e);
+    }
   }
 
   /**
@@ -98,9 +117,7 @@ public final class AppMeteredEvent implements android.os.Parcelable, com.clover.
    * Constructs a new instance that is a deep copy of the source instance. It does not copy the bundle or changelog.
    */
   public AppMeteredEvent(AppMeteredEvent src) {
-    if (src.jsonString != null) {
-      this.jsonString = src.jsonString;
-    } else {
+    if (src.jsonObject != null) {
       this.jsonObject = com.clover.sdk.v3.JsonHelper.deepCopy(src.getJSONObject());
     }
   }
@@ -162,17 +179,8 @@ public final class AppMeteredEvent implements android.os.Parcelable, com.clover.
    * reflected in this instance and vice-versa.
    */
   public org.json.JSONObject getJSONObject() {
-    try {
-      if (jsonObject == null) {
-        if (jsonString != null) {
-          jsonObject = new org.json.JSONObject(jsonString);
-          jsonString = null; // null this so it will be recreated if jsonObject is modified
-        } else {
-          jsonObject = new org.json.JSONObject();
-        }
-      }
-    } catch (org.json.JSONException e) {
-      throw new java.lang.IllegalArgumentException(e);
+    if (jsonObject == null) {
+      jsonObject = new org.json.JSONObject();
     }
     return jsonObject;
   }
@@ -181,7 +189,7 @@ public final class AppMeteredEvent implements android.os.Parcelable, com.clover.
   @Override
   public void validate() {
     java.lang.String id = getId();
-    if (id != null && id.length() > 13) throw new IllegalArgumentException("Maximum string length exceeded for 'id'");
+    if (id != null && id.length() > 13) { throw new IllegalArgumentException("Maximum string length exceeded for 'id'");}
 
     com.clover.sdk.v3.apps.AppMetered appMetered = getAppMetered();
     if (appMetered == null) throw new java.lang.IllegalArgumentException("'appMetered' is required to be non-null");
@@ -191,24 +199,12 @@ public final class AppMeteredEvent implements android.os.Parcelable, com.clover.
   }
 
 
-  /**
-   */
-  public java.lang.String getId() {
-    return cacheGet(CacheKey.id);
-  }
 
   private java.lang.String extractId() {
     return getJSONObject().isNull("id") ? null :
       getJSONObject().optString("id");
   }
 
-  /**
-   *
-   * The returned object is not a copy so changes to it will be reflected in this instance and vice-versa.
-   */
-  public com.clover.sdk.v3.apps.AppMetered getAppMetered() {
-    return cacheGet(CacheKey.appMetered);
-  }
 
   private com.clover.sdk.v3.apps.AppMetered extractAppMetered() {
     org.json.JSONObject jsonObj = getJSONObject().optJSONObject("appMetered");
@@ -218,33 +214,18 @@ public final class AppMeteredEvent implements android.os.Parcelable, com.clover.
     return null;
   }
 
-  /**
-   */
-  public java.lang.Long getCount() {
-    return cacheGet(CacheKey.count);
-  }
 
   private java.lang.Long extractCount() {
     return getJSONObject().isNull("count") ? null :
       getJSONObject().optLong("count");
   }
 
-  /**
-   */
-  public java.lang.Long getCreatedTime() {
-    return cacheGet(CacheKey.createdTime);
-  }
 
   private java.lang.Long extractCreatedTime() {
     return getJSONObject().isNull("createdTime") ? null :
       getJSONObject().optLong("createdTime");
   }
 
-  /**
-   */
-  public java.lang.Long getModifiedTime() {
-    return cacheGet(CacheKey.modifiedTime);
-  }
 
   private java.lang.Long extractModifiedTime() {
     return getJSONObject().isNull("modifiedTime") ? null :
@@ -494,7 +475,7 @@ public final class AppMeteredEvent implements android.os.Parcelable, com.clover.
 
   @Override
   public String toString() {
-    String json = jsonString != null ? jsonString : getJSONObject().toString();
+    String json = getJSONObject().toString();
 
     if (bundle != null) {
       bundle.isEmpty(); // Triggers unparcel

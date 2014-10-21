@@ -26,6 +26,112 @@ package com.clover.sdk.v3.inventory;
 @SuppressWarnings("all")
 public final class Item implements android.os.Parcelable, com.clover.sdk.v3.Validator, com.clover.sdk.JSONifiable {
 
+ /**
+   * Unique identifier
+  */
+  public java.lang.String getId() {
+    return cacheGet(CacheKey.id);
+  }
+ /**
+   * True if this item is hidden from register
+  */
+  public java.lang.Boolean getHidden() {
+    return cacheGet(CacheKey.hidden);
+  }
+ /**
+   * Reference to an item group
+  */
+  public com.clover.sdk.v3.base.Reference getItemGroup() {
+    return cacheGet(CacheKey.itemGroup);
+  }
+ /**
+   * Name of the item
+  */
+  public java.lang.String getName() {
+    return cacheGet(CacheKey.name);
+  }
+ /**
+   * Alternate name of the item
+  */
+  public java.lang.String getAlternateName() {
+    return cacheGet(CacheKey.alternateName);
+  }
+ /**
+   * Product code, e.g. UPC or EAN
+  */
+  public java.lang.String getCode() {
+    return cacheGet(CacheKey.code);
+  }
+ /**
+   * SKU of the item
+  */
+  public java.lang.String getSku() {
+    return cacheGet(CacheKey.sku);
+  }
+ /**
+   * Price of the item, typically in cents; use priceType and merchant currency to determine actual item price
+  */
+  public java.lang.Long getPrice() {
+    return cacheGet(CacheKey.price);
+  }
+  public com.clover.sdk.v3.inventory.PriceType getPriceType() {
+    return cacheGet(CacheKey.priceType);
+  }
+ /**
+   * Flag to indicate whether or not to use default tax rates
+  */
+  public java.lang.Boolean getDefaultTaxRates() {
+    return cacheGet(CacheKey.defaultTaxRates);
+  }
+ /**
+   * Unit name, e.g. oz, lb
+  */
+  public java.lang.String getUnitName() {
+    return cacheGet(CacheKey.unitName);
+  }
+ /**
+   * Cost of the item to merchant, as opposed to customer price
+  */
+  public java.lang.Long getCost() {
+    return cacheGet(CacheKey.cost);
+  }
+ /**
+   * True if this item should be counted as revenue, for example gift cards and donations would not
+  */
+  public java.lang.Boolean getIsRevenue() {
+    return cacheGet(CacheKey.isRevenue);
+  }
+ /**
+   * DEPRECATED: use itemStock instead
+  */
+  public java.lang.Long getStockCount() {
+    return cacheGet(CacheKey.stockCount);
+  }
+  public java.util.List<com.clover.sdk.v3.inventory.TaxRate> getTaxRates() {
+    return cacheGet(CacheKey.taxRates);
+  }
+  public java.util.List<com.clover.sdk.v3.inventory.ModifierGroup> getModifierGroups() {
+    return cacheGet(CacheKey.modifierGroups);
+  }
+ /**
+   * Categories associated with this item
+  */
+  public java.util.List<com.clover.sdk.v3.inventory.Category> getCategories() {
+    return cacheGet(CacheKey.categories);
+  }
+ /**
+   * Tags associated with this item
+  */
+  public java.util.List<com.clover.sdk.v3.inventory.Tag> getTags() {
+    return cacheGet(CacheKey.tags);
+  }
+ /**
+   * Item stock attribute that can be expanded to show stock quantity
+  */
+  public com.clover.sdk.v3.inventory.ItemStock getItemStock() {
+    return cacheGet(CacheKey.itemStock);
+  }
+
 
   private enum CacheKey {
     id {
@@ -147,7 +253,6 @@ public final class Item implements android.os.Parcelable, com.clover.sdk.v3.Vali
     public abstract Object extractValue(Item instance);
   }
 
-  private String jsonString = null;
   private org.json.JSONObject jsonObject = null;
   private android.os.Bundle bundle = null;
   private android.os.Bundle changeLog = null;
@@ -166,8 +271,12 @@ public final class Item implements android.os.Parcelable, com.clover.sdk.v3.Vali
   /**
    * Constructs a new instance from the given JSON String.
    */
-  public Item(String json) {
-    this.jsonString = json;
+  public Item(String json) throws java.lang.IllegalArgumentException {
+    try {
+      this.jsonObject = new org.json.JSONObject(json);
+    } catch (org.json.JSONException e) {
+      throw new java.lang.IllegalArgumentException("invalid json", e);
+    }
   }
 
   /**
@@ -182,9 +291,7 @@ public final class Item implements android.os.Parcelable, com.clover.sdk.v3.Vali
    * Constructs a new instance that is a deep copy of the source instance. It does not copy the bundle or changelog.
    */
   public Item(Item src) {
-    if (src.jsonString != null) {
-      this.jsonString = src.jsonString;
-    } else {
+    if (src.jsonObject != null) {
       this.jsonObject = com.clover.sdk.v3.JsonHelper.deepCopy(src.getJSONObject());
     }
   }
@@ -246,17 +353,8 @@ public final class Item implements android.os.Parcelable, com.clover.sdk.v3.Vali
    * reflected in this instance and vice-versa.
    */
   public org.json.JSONObject getJSONObject() {
-    try {
-      if (jsonObject == null) {
-        if (jsonString != null) {
-          jsonObject = new org.json.JSONObject(jsonString);
-          jsonString = null; // null this so it will be recreated if jsonObject is modified
-        } else {
-          jsonObject = new org.json.JSONObject();
-        }
-      }
-    } catch (org.json.JSONException e) {
-      throw new java.lang.IllegalArgumentException(e);
+    if (jsonObject == null) {
+      jsonObject = new org.json.JSONObject();
     }
     return jsonObject;
   }
@@ -265,50 +363,45 @@ public final class Item implements android.os.Parcelable, com.clover.sdk.v3.Vali
   @Override
   public void validate() {
     java.lang.String id = getId();
-    if (id != null && id.length() > 13) throw new IllegalArgumentException("Maximum string length exceeded for 'id'");
+    if (id != null && id.length() > 13) { throw new IllegalArgumentException("Maximum string length exceeded for 'id'");}
 
     java.lang.String name = getName();
     if (name == null) throw new java.lang.IllegalArgumentException("'name' is required to be non-null");
-    if (name != null && name.length() > 127) throw new IllegalArgumentException("Maximum string length exceeded for 'name'");
+    if (name != null && name.length() > 127) { throw new IllegalArgumentException("Maximum string length exceeded for 'name'");}
+
+    java.lang.String alternateName = getAlternateName();
+    if (alternateName != null && alternateName.length() > 127) { throw new IllegalArgumentException("Maximum string length exceeded for 'alternateName'");}
+
+    java.lang.String code = getCode();
+    if (code != null && code.length() > 100) { throw new IllegalArgumentException("Maximum string length exceeded for 'code'");}
+
+    java.lang.String sku = getSku();
+    if (sku != null && sku.length() > 100) { throw new IllegalArgumentException("Maximum string length exceeded for 'sku'");}
 
     java.lang.Long price = getPrice();
     if (price == null) throw new java.lang.IllegalArgumentException("'price' is required to be non-null");
-    if (price != null && price < 0) throw new IllegalArgumentException("Invalid value for 'price'");
+    if (price != null && ( price < 0)) throw new IllegalArgumentException("Invalid value for 'price'");
+
+    java.lang.String unitName = getUnitName();
+    if (unitName != null && unitName.length() > 64) { throw new IllegalArgumentException("Maximum string length exceeded for 'unitName'");}
+
+    java.lang.Long stockCount = getStockCount();
+    if (stockCount != null && ( stockCount < 0)) throw new IllegalArgumentException("Invalid value for 'stockCount'");
   }
 
 
-  /**
-   * Unique identifier
-   */
-  public java.lang.String getId() {
-    return cacheGet(CacheKey.id);
-  }
 
   private java.lang.String extractId() {
     return getJSONObject().isNull("id") ? null :
       getJSONObject().optString("id");
   }
 
-  /**
-   * True if this item is hidden from register
-   */
-  public java.lang.Boolean getHidden() {
-    return cacheGet(CacheKey.hidden);
-  }
 
   private java.lang.Boolean extractHidden() {
     return getJSONObject().isNull("hidden") ? null :
       getJSONObject().optBoolean("hidden");
   }
 
-  /**
-   * Reference to an item group
-   *
-   * The returned object is not a copy so changes to it will be reflected in this instance and vice-versa.
-   */
-  public com.clover.sdk.v3.base.Reference getItemGroup() {
-    return cacheGet(CacheKey.itemGroup);
-  }
 
   private com.clover.sdk.v3.base.Reference extractItemGroup() {
     org.json.JSONObject jsonObj = getJSONObject().optJSONObject("itemGroup");
@@ -318,71 +411,36 @@ public final class Item implements android.os.Parcelable, com.clover.sdk.v3.Vali
     return null;
   }
 
-  /**
-   * Name of the item
-   */
-  public java.lang.String getName() {
-    return cacheGet(CacheKey.name);
-  }
 
   private java.lang.String extractName() {
     return getJSONObject().isNull("name") ? null :
       getJSONObject().optString("name");
   }
 
-  /**
-   * Alternate name of the item
-   */
-  public java.lang.String getAlternateName() {
-    return cacheGet(CacheKey.alternateName);
-  }
 
   private java.lang.String extractAlternateName() {
     return getJSONObject().isNull("alternateName") ? null :
       getJSONObject().optString("alternateName");
   }
 
-  /**
-   * Product code, e.g. UPC or EAN
-   */
-  public java.lang.String getCode() {
-    return cacheGet(CacheKey.code);
-  }
 
   private java.lang.String extractCode() {
     return getJSONObject().isNull("code") ? null :
       getJSONObject().optString("code");
   }
 
-  /**
-   * SKU of the item
-   */
-  public java.lang.String getSku() {
-    return cacheGet(CacheKey.sku);
-  }
 
   private java.lang.String extractSku() {
     return getJSONObject().isNull("sku") ? null :
       getJSONObject().optString("sku");
   }
 
-  /**
-   * Price of the item, typically in cents; use priceType and merchant currency to determine actual item price
-   */
-  public java.lang.Long getPrice() {
-    return cacheGet(CacheKey.price);
-  }
 
   private java.lang.Long extractPrice() {
     return getJSONObject().isNull("price") ? null :
       getJSONObject().optLong("price");
   }
 
-  /**
-   */
-  public com.clover.sdk.v3.inventory.PriceType getPriceType() {
-    return cacheGet(CacheKey.priceType);
-  }
 
   private com.clover.sdk.v3.inventory.PriceType extractPriceType() {
     if (!getJSONObject().isNull("priceType")) {
@@ -396,73 +454,36 @@ public final class Item implements android.os.Parcelable, com.clover.sdk.v3.Vali
     return null;
   }
 
-  /**
-   * Flag to indicate whether or not to use default tax rates
-   */
-  public java.lang.Boolean getDefaultTaxRates() {
-    return cacheGet(CacheKey.defaultTaxRates);
-  }
 
   private java.lang.Boolean extractDefaultTaxRates() {
     return getJSONObject().isNull("defaultTaxRates") ? null :
       getJSONObject().optBoolean("defaultTaxRates");
   }
 
-  /**
-   * Unit name, e.g. oz, lb
-   */
-  public java.lang.String getUnitName() {
-    return cacheGet(CacheKey.unitName);
-  }
 
   private java.lang.String extractUnitName() {
     return getJSONObject().isNull("unitName") ? null :
       getJSONObject().optString("unitName");
   }
 
-  /**
-   * Cost of the item to merchant, as opposed to customer price
-   */
-  public java.lang.Long getCost() {
-    return cacheGet(CacheKey.cost);
-  }
 
   private java.lang.Long extractCost() {
     return getJSONObject().isNull("cost") ? null :
       getJSONObject().optLong("cost");
   }
 
-  /**
-   * True if this item should be counted as revenue, for example gift cards and donations would not
-   */
-  public java.lang.Boolean getIsRevenue() {
-    return cacheGet(CacheKey.isRevenue);
-  }
 
   private java.lang.Boolean extractIsRevenue() {
     return getJSONObject().isNull("isRevenue") ? null :
       getJSONObject().optBoolean("isRevenue");
   }
 
-  /**
-   * DEPRECATED: use itemStock instead
-   */
-  public java.lang.Long getStockCount() {
-    return cacheGet(CacheKey.stockCount);
-  }
 
   private java.lang.Long extractStockCount() {
     return getJSONObject().isNull("stockCount") ? null :
       getJSONObject().optLong("stockCount");
   }
 
-  /**
-   *
-   * The returned List is unmodifiable and will never contain any nulls, even if the source JSON had null entries.
-   */
-  public java.util.List<com.clover.sdk.v3.inventory.TaxRate> getTaxRates() {
-    return cacheGet(CacheKey.taxRates);
-  }
 
   private java.util.List<com.clover.sdk.v3.inventory.TaxRate> extractTaxRates() {
     if (getJSONObject().isNull("taxRates")) {
@@ -485,13 +506,6 @@ public final class Item implements android.os.Parcelable, com.clover.sdk.v3.Vali
     return java.util.Collections.unmodifiableList(itemList);
   }
 
-  /**
-   *
-   * The returned List is unmodifiable and will never contain any nulls, even if the source JSON had null entries.
-   */
-  public java.util.List<com.clover.sdk.v3.inventory.ModifierGroup> getModifierGroups() {
-    return cacheGet(CacheKey.modifierGroups);
-  }
 
   private java.util.List<com.clover.sdk.v3.inventory.ModifierGroup> extractModifierGroups() {
     if (getJSONObject().isNull("modifierGroups")) {
@@ -514,14 +528,6 @@ public final class Item implements android.os.Parcelable, com.clover.sdk.v3.Vali
     return java.util.Collections.unmodifiableList(itemList);
   }
 
-  /**
-   * Categories associated with this item
-   *
-   * The returned List is unmodifiable and will never contain any nulls, even if the source JSON had null entries.
-   */
-  public java.util.List<com.clover.sdk.v3.inventory.Category> getCategories() {
-    return cacheGet(CacheKey.categories);
-  }
 
   private java.util.List<com.clover.sdk.v3.inventory.Category> extractCategories() {
     if (getJSONObject().isNull("categories")) {
@@ -544,14 +550,6 @@ public final class Item implements android.os.Parcelable, com.clover.sdk.v3.Vali
     return java.util.Collections.unmodifiableList(itemList);
   }
 
-  /**
-   * Tags associated with this item
-   *
-   * The returned List is unmodifiable and will never contain any nulls, even if the source JSON had null entries.
-   */
-  public java.util.List<com.clover.sdk.v3.inventory.Tag> getTags() {
-    return cacheGet(CacheKey.tags);
-  }
 
   private java.util.List<com.clover.sdk.v3.inventory.Tag> extractTags() {
     if (getJSONObject().isNull("tags")) {
@@ -574,14 +572,6 @@ public final class Item implements android.os.Parcelable, com.clover.sdk.v3.Vali
     return java.util.Collections.unmodifiableList(itemList);
   }
 
-  /**
-   * Item stock attribute that can be expanded to show stock quantity
-   *
-   * The returned object is not a copy so changes to it will be reflected in this instance and vice-versa.
-   */
-  public com.clover.sdk.v3.inventory.ItemStock getItemStock() {
-    return cacheGet(CacheKey.itemStock);
-  }
 
   private com.clover.sdk.v3.inventory.ItemStock extractItemStock() {
     org.json.JSONObject jsonObj = getJSONObject().optJSONObject("itemStock");
@@ -1391,7 +1381,7 @@ public final class Item implements android.os.Parcelable, com.clover.sdk.v3.Vali
 
   @Override
   public String toString() {
-    String json = jsonString != null ? jsonString : getJSONObject().toString();
+    String json = getJSONObject().toString();
 
     if (bundle != null) {
       bundle.isEmpty(); // Triggers unparcel

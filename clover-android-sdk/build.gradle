@@ -15,7 +15,7 @@
  */
 
 group = 'com.clover.sdk'
-version = '26'
+version = '61'
 
 repositories {
     mavenLocal()
@@ -27,21 +27,22 @@ apply plugin: 'android-library'
 
 dependencies {
     compile files('lib/calc.jar')
-//    classpath 'com.android.tools.build:gradle:0.12.+'
-//    classpath 'com.github.dcendents:android-maven-plugin:1.0'
+    //    classpath 'com.android.tools.build:gradle:0.12.+'
+    //    classpath 'com.github.dcendents:android-maven-plugin:1.0'
 }
 
 ant.importBuild 'javadoc.xml'
 
 android {
-  lintOptions {
-    abortOnError false
-  }
-  compileSdkVersion 17
-  buildToolsVersion "19.1.0"
-
-  defaultConfig {
-    minSdkVersion 17
-    targetSdkVersion 17
-  }
+    lintOptions {
+        abortOnError false
+    }
+    compileSdkVersion 19
+    buildToolsVersion "19.1.0"
+    defaultConfig {
+        minSdkVersion 17
+        targetSdkVersion 19
+    }
+    productFlavors {
+    }
 }

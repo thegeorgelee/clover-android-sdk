@@ -26,6 +26,67 @@ package com.clover.sdk.v3.employees;
 @SuppressWarnings("all")
 public final class Shift implements android.os.Parcelable, com.clover.sdk.v3.Validator, com.clover.sdk.JSONifiable {
 
+ /**
+   * Unique identifier
+  */
+  public java.lang.String getId() {
+    return cacheGet(CacheKey.id);
+  }
+ /**
+   * The employee that worked this shift
+  */
+  public com.clover.sdk.v3.employees.Employee getEmployee() {
+    return cacheGet(CacheKey.employee);
+  }
+ /**
+   * Amount of cash tips collected
+  */
+  public java.lang.Long getCashTipsCollected() {
+    return cacheGet(CacheKey.cashTipsCollected);
+  }
+ /**
+   * Whether the employee used server banking
+  */
+  public java.lang.Boolean getServerBanking() {
+    return cacheGet(CacheKey.serverBanking);
+  }
+ /**
+   * Clock in time
+  */
+  public java.lang.Long getInTime() {
+    return cacheGet(CacheKey.inTime);
+  }
+ /**
+   * Overridden clock in time
+  */
+  public java.lang.Long getOverrideInTime() {
+    return cacheGet(CacheKey.overrideInTime);
+  }
+ /**
+   * The employee who overrode the clock in time
+  */
+  public com.clover.sdk.v3.employees.Employee getOverrideInEmployee() {
+    return cacheGet(CacheKey.overrideInEmployee);
+  }
+ /**
+   * Clock out time
+  */
+  public java.lang.Long getOutTime() {
+    return cacheGet(CacheKey.outTime);
+  }
+ /**
+   * Overridden clock out time
+  */
+  public java.lang.Long getOverrideOutTime() {
+    return cacheGet(CacheKey.overrideOutTime);
+  }
+ /**
+   * The employee who overrode the clock out time
+  */
+  public com.clover.sdk.v3.employees.Employee getOverrideOutEmployee() {
+    return cacheGet(CacheKey.overrideOutEmployee);
+  }
+
 
   private enum CacheKey {
     id {
@@ -93,7 +154,6 @@ public final class Shift implements android.os.Parcelable, com.clover.sdk.v3.Val
     public abstract Object extractValue(Shift instance);
   }
 
-  private String jsonString = null;
   private org.json.JSONObject jsonObject = null;
   private android.os.Bundle bundle = null;
   private android.os.Bundle changeLog = null;
@@ -112,8 +172,12 @@ public final class Shift implements android.os.Parcelable, com.clover.sdk.v3.Val
   /**
    * Constructs a new instance from the given JSON String.
    */
-  public Shift(String json) {
-    this.jsonString = json;
+  public Shift(String json) throws java.lang.IllegalArgumentException {
+    try {
+      this.jsonObject = new org.json.JSONObject(json);
+    } catch (org.json.JSONException e) {
+      throw new java.lang.IllegalArgumentException("invalid json", e);
+    }
   }
 
   /**
@@ -128,9 +192,7 @@ public final class Shift implements android.os.Parcelable, com.clover.sdk.v3.Val
    * Constructs a new instance that is a deep copy of the source instance. It does not copy the bundle or changelog.
    */
   public Shift(Shift src) {
-    if (src.jsonString != null) {
-      this.jsonString = src.jsonString;
-    } else {
+    if (src.jsonObject != null) {
       this.jsonObject = com.clover.sdk.v3.JsonHelper.deepCopy(src.getJSONObject());
     }
   }
@@ -192,17 +254,8 @@ public final class Shift implements android.os.Parcelable, com.clover.sdk.v3.Val
    * reflected in this instance and vice-versa.
    */
   public org.json.JSONObject getJSONObject() {
-    try {
-      if (jsonObject == null) {
-        if (jsonString != null) {
-          jsonObject = new org.json.JSONObject(jsonString);
-          jsonString = null; // null this so it will be recreated if jsonObject is modified
-        } else {
-          jsonObject = new org.json.JSONObject();
-        }
-      }
-    } catch (org.json.JSONException e) {
-      throw new java.lang.IllegalArgumentException(e);
+    if (jsonObject == null) {
+      jsonObject = new org.json.JSONObject();
     }
     return jsonObject;
   }
@@ -211,30 +264,16 @@ public final class Shift implements android.os.Parcelable, com.clover.sdk.v3.Val
   @Override
   public void validate() {
     java.lang.String id = getId();
-    if (id != null && id.length() > 13) throw new IllegalArgumentException("Maximum string length exceeded for 'id'");
+    if (id != null && id.length() > 13) { throw new IllegalArgumentException("Maximum string length exceeded for 'id'");}
   }
 
 
-  /**
-   * Unique identifier
-   */
-  public java.lang.String getId() {
-    return cacheGet(CacheKey.id);
-  }
 
   private java.lang.String extractId() {
     return getJSONObject().isNull("id") ? null :
       getJSONObject().optString("id");
   }
 
-  /**
-   * The employee that worked this shift
-   *
-   * The returned object is not a copy so changes to it will be reflected in this instance and vice-versa.
-   */
-  public com.clover.sdk.v3.employees.Employee getEmployee() {
-    return cacheGet(CacheKey.employee);
-  }
 
   private com.clover.sdk.v3.employees.Employee extractEmployee() {
     org.json.JSONObject jsonObj = getJSONObject().optJSONObject("employee");
@@ -244,62 +283,30 @@ public final class Shift implements android.os.Parcelable, com.clover.sdk.v3.Val
     return null;
   }
 
-  /**
-   * Amount of cash tips collected
-   */
-  public java.lang.Long getCashTipsCollected() {
-    return cacheGet(CacheKey.cashTipsCollected);
-  }
 
   private java.lang.Long extractCashTipsCollected() {
     return getJSONObject().isNull("cashTipsCollected") ? null :
       getJSONObject().optLong("cashTipsCollected");
   }
 
-  /**
-   * Whether the employee used server banking
-   */
-  public java.lang.Boolean getServerBanking() {
-    return cacheGet(CacheKey.serverBanking);
-  }
 
   private java.lang.Boolean extractServerBanking() {
     return getJSONObject().isNull("serverBanking") ? null :
       getJSONObject().optBoolean("serverBanking");
   }
 
-  /**
-   * Clock in time
-   */
-  public java.lang.Long getInTime() {
-    return cacheGet(CacheKey.inTime);
-  }
 
   private java.lang.Long extractInTime() {
     return getJSONObject().isNull("inTime") ? null :
       getJSONObject().optLong("inTime");
   }
 
-  /**
-   * Overridden clock in time
-   */
-  public java.lang.Long getOverrideInTime() {
-    return cacheGet(CacheKey.overrideInTime);
-  }
 
   private java.lang.Long extractOverrideInTime() {
     return getJSONObject().isNull("overrideInTime") ? null :
       getJSONObject().optLong("overrideInTime");
   }
 
-  /**
-   * The employee who overrode the clock in time
-   *
-   * The returned object is not a copy so changes to it will be reflected in this instance and vice-versa.
-   */
-  public com.clover.sdk.v3.employees.Employee getOverrideInEmployee() {
-    return cacheGet(CacheKey.overrideInEmployee);
-  }
 
   private com.clover.sdk.v3.employees.Employee extractOverrideInEmployee() {
     org.json.JSONObject jsonObj = getJSONObject().optJSONObject("overrideInEmployee");
@@ -309,38 +316,18 @@ public final class Shift implements android.os.Parcelable, com.clover.sdk.v3.Val
     return null;
   }
 
-  /**
-   * Clock out time
-   */
-  public java.lang.Long getOutTime() {
-    return cacheGet(CacheKey.outTime);
-  }
 
   private java.lang.Long extractOutTime() {
     return getJSONObject().isNull("outTime") ? null :
       getJSONObject().optLong("outTime");
   }
 
-  /**
-   * Overridden clock out time
-   */
-  public java.lang.Long getOverrideOutTime() {
-    return cacheGet(CacheKey.overrideOutTime);
-  }
 
   private java.lang.Long extractOverrideOutTime() {
     return getJSONObject().isNull("overrideOutTime") ? null :
       getJSONObject().optLong("overrideOutTime");
   }
 
-  /**
-   * The employee who overrode the clock out time
-   *
-   * The returned object is not a copy so changes to it will be reflected in this instance and vice-versa.
-   */
-  public com.clover.sdk.v3.employees.Employee getOverrideOutEmployee() {
-    return cacheGet(CacheKey.overrideOutEmployee);
-  }
 
   private com.clover.sdk.v3.employees.Employee extractOverrideOutEmployee() {
     org.json.JSONObject jsonObj = getJSONObject().optJSONObject("overrideOutEmployee");
@@ -764,7 +751,7 @@ public final class Shift implements android.os.Parcelable, com.clover.sdk.v3.Val
 
   @Override
   public String toString() {
-    String json = jsonString != null ? jsonString : getJSONObject().toString();
+    String json = getJSONObject().toString();
 
     if (bundle != null) {
       bundle.isEmpty(); // Triggers unparcel

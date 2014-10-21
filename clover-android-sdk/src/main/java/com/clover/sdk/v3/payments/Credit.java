@@ -26,6 +26,58 @@ package com.clover.sdk.v3.payments;
 @SuppressWarnings("all")
 public final class Credit implements android.os.Parcelable, com.clover.sdk.v3.Validator, com.clover.sdk.JSONifiable {
 
+ /**
+   * Unique identifier
+  */
+  public java.lang.String getId() {
+    return cacheGet(CacheKey.id);
+  }
+ /**
+   * The tender type associated with this payment, e.g. credit card, cash, etc.
+  */
+  public com.clover.sdk.v3.base.Tender getTender() {
+    return cacheGet(CacheKey.tender);
+  }
+ /**
+   * The employee who processed the payment
+  */
+  public com.clover.sdk.v3.base.Reference getEmployee() {
+    return cacheGet(CacheKey.employee);
+  }
+ /**
+   * Customer who received the credit/refund
+  */
+  public com.clover.sdk.v3.customers.Customer getCustomers() {
+    return cacheGet(CacheKey.customers);
+  }
+ /**
+   * Amount paid in tax
+  */
+  public java.lang.Long getAmount() {
+    return cacheGet(CacheKey.amount);
+  }
+ /**
+   * Amount paid in tax
+  */
+  public java.lang.Long getTaxAmount() {
+    return cacheGet(CacheKey.taxAmount);
+  }
+ /**
+   * Time payment was recorded on server
+  */
+  public java.lang.Long getCreatedTime() {
+    return cacheGet(CacheKey.createdTime);
+  }
+  public java.lang.Long getClientCreatedTime() {
+    return cacheGet(CacheKey.clientCreatedTime);
+  }
+ /**
+   * Information about the card used for credit/debit card payments
+  */
+  public com.clover.sdk.v3.payments.CardTransaction getCardTransaction() {
+    return cacheGet(CacheKey.cardTransaction);
+  }
+
 
   private enum CacheKey {
     id {
@@ -87,7 +139,6 @@ public final class Credit implements android.os.Parcelable, com.clover.sdk.v3.Va
     public abstract Object extractValue(Credit instance);
   }
 
-  private String jsonString = null;
   private org.json.JSONObject jsonObject = null;
   private android.os.Bundle bundle = null;
   private android.os.Bundle changeLog = null;
@@ -106,8 +157,12 @@ public final class Credit implements android.os.Parcelable, com.clover.sdk.v3.Va
   /**
    * Constructs a new instance from the given JSON String.
    */
-  public Credit(String json) {
-    this.jsonString = json;
+  public Credit(String json) throws java.lang.IllegalArgumentException {
+    try {
+      this.jsonObject = new org.json.JSONObject(json);
+    } catch (org.json.JSONException e) {
+      throw new java.lang.IllegalArgumentException("invalid json", e);
+    }
   }
 
   /**
@@ -122,9 +177,7 @@ public final class Credit implements android.os.Parcelable, com.clover.sdk.v3.Va
    * Constructs a new instance that is a deep copy of the source instance. It does not copy the bundle or changelog.
    */
   public Credit(Credit src) {
-    if (src.jsonString != null) {
-      this.jsonString = src.jsonString;
-    } else {
+    if (src.jsonObject != null) {
       this.jsonObject = com.clover.sdk.v3.JsonHelper.deepCopy(src.getJSONObject());
     }
   }
@@ -186,17 +239,8 @@ public final class Credit implements android.os.Parcelable, com.clover.sdk.v3.Va
    * reflected in this instance and vice-versa.
    */
   public org.json.JSONObject getJSONObject() {
-    try {
-      if (jsonObject == null) {
-        if (jsonString != null) {
-          jsonObject = new org.json.JSONObject(jsonString);
-          jsonString = null; // null this so it will be recreated if jsonObject is modified
-        } else {
-          jsonObject = new org.json.JSONObject();
-        }
-      }
-    } catch (org.json.JSONException e) {
-      throw new java.lang.IllegalArgumentException(e);
+    if (jsonObject == null) {
+      jsonObject = new org.json.JSONObject();
     }
     return jsonObject;
   }
@@ -205,30 +249,16 @@ public final class Credit implements android.os.Parcelable, com.clover.sdk.v3.Va
   @Override
   public void validate() {
     java.lang.String id = getId();
-    if (id != null && id.length() > 13) throw new IllegalArgumentException("Maximum string length exceeded for 'id'");
+    if (id != null && id.length() > 13) { throw new IllegalArgumentException("Maximum string length exceeded for 'id'");}
   }
 
 
-  /**
-   * Unique identifier
-   */
-  public java.lang.String getId() {
-    return cacheGet(CacheKey.id);
-  }
 
   private java.lang.String extractId() {
     return getJSONObject().isNull("id") ? null :
       getJSONObject().optString("id");
   }
 
-  /**
-   * The tender type associated with this payment, e.g. credit card, cash, etc.
-   *
-   * The returned object is not a copy so changes to it will be reflected in this instance and vice-versa.
-   */
-  public com.clover.sdk.v3.base.Tender getTender() {
-    return cacheGet(CacheKey.tender);
-  }
 
   private com.clover.sdk.v3.base.Tender extractTender() {
     org.json.JSONObject jsonObj = getJSONObject().optJSONObject("tender");
@@ -238,14 +268,6 @@ public final class Credit implements android.os.Parcelable, com.clover.sdk.v3.Va
     return null;
   }
 
-  /**
-   * The employee who processed the payment
-   *
-   * The returned object is not a copy so changes to it will be reflected in this instance and vice-versa.
-   */
-  public com.clover.sdk.v3.base.Reference getEmployee() {
-    return cacheGet(CacheKey.employee);
-  }
 
   private com.clover.sdk.v3.base.Reference extractEmployee() {
     org.json.JSONObject jsonObj = getJSONObject().optJSONObject("employee");
@@ -255,14 +277,6 @@ public final class Credit implements android.os.Parcelable, com.clover.sdk.v3.Va
     return null;
   }
 
-  /**
-   * Customer who received the credit/refund
-   *
-   * The returned object is not a copy so changes to it will be reflected in this instance and vice-versa.
-   */
-  public com.clover.sdk.v3.customers.Customer getCustomers() {
-    return cacheGet(CacheKey.customers);
-  }
 
   private com.clover.sdk.v3.customers.Customer extractCustomers() {
     org.json.JSONObject jsonObj = getJSONObject().optJSONObject("customers");
@@ -272,61 +286,30 @@ public final class Credit implements android.os.Parcelable, com.clover.sdk.v3.Va
     return null;
   }
 
-  /**
-   * Amount paid in tax
-   */
-  public java.lang.Long getAmount() {
-    return cacheGet(CacheKey.amount);
-  }
 
   private java.lang.Long extractAmount() {
     return getJSONObject().isNull("amount") ? null :
       getJSONObject().optLong("amount");
   }
 
-  /**
-   * Amount paid in tax
-   */
-  public java.lang.Long getTaxAmount() {
-    return cacheGet(CacheKey.taxAmount);
-  }
 
   private java.lang.Long extractTaxAmount() {
     return getJSONObject().isNull("taxAmount") ? null :
       getJSONObject().optLong("taxAmount");
   }
 
-  /**
-   * Time payment was recorded on server
-   */
-  public java.lang.Long getCreatedTime() {
-    return cacheGet(CacheKey.createdTime);
-  }
 
   private java.lang.Long extractCreatedTime() {
     return getJSONObject().isNull("createdTime") ? null :
       getJSONObject().optLong("createdTime");
   }
 
-  /**
-   */
-  public java.lang.Long getClientCreatedTime() {
-    return cacheGet(CacheKey.clientCreatedTime);
-  }
 
   private java.lang.Long extractClientCreatedTime() {
     return getJSONObject().isNull("clientCreatedTime") ? null :
       getJSONObject().optLong("clientCreatedTime");
   }
 
-  /**
-   * Information about the card used for credit/debit card payments
-   *
-   * The returned object is not a copy so changes to it will be reflected in this instance and vice-versa.
-   */
-  public com.clover.sdk.v3.payments.CardTransaction getCardTransaction() {
-    return cacheGet(CacheKey.cardTransaction);
-  }
 
   private com.clover.sdk.v3.payments.CardTransaction extractCardTransaction() {
     org.json.JSONObject jsonObj = getJSONObject().optJSONObject("cardTransaction");
@@ -720,7 +703,7 @@ public final class Credit implements android.os.Parcelable, com.clover.sdk.v3.Va
 
   @Override
   public String toString() {
-    String json = jsonString != null ? jsonString : getJSONObject().toString();
+    String json = getJSONObject().toString();
 
     if (bundle != null) {
       bundle.isEmpty(); // Triggers unparcel

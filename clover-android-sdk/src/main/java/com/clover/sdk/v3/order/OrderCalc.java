@@ -71,8 +71,8 @@ public class OrderCalc {
     }
 
     @Override
-    public Decimal getPercentDiscount() {
-      return OrderCalc.getPercentDiscount(order.getDiscounts());
+    public Collection<Decimal> getPercentDiscounts() {
+      return OrderCalc.getPercentDiscounts(order.getDiscounts());
     }
 
     @Override
@@ -164,8 +164,8 @@ public class OrderCalc {
     }
 
     @Override
-    public Decimal getPercentDiscount() {
-      return OrderCalc.getPercentDiscount(line.getDiscounts());
+    public Collection<Decimal> getPercentDiscounts() {
+      return OrderCalc.getPercentDiscounts(line.getDiscounts());
     }
 
     @Override
@@ -242,23 +242,18 @@ public class OrderCalc {
     return total;
   }
 
-  private static Decimal getPercentDiscount(Collection<Discount> discounts) {
-    if (discounts == null) {
-      return Decimal.ZERO;
+  private static Collection<Decimal> getPercentDiscounts(Collection<Discount> discounts) {
+    if (discounts == null || discounts.isEmpty()) {
+      return Collections.emptyList();
     }
-    long percentTotal = 0;
+    List<Decimal> result = Lists.newArrayList();
     for (Discount d : discounts) {
-      if (d.getPercentage() != null) {
-        percentTotal += d.getPercentage();
+      Long percent = d.getPercentage();
+      if (percent != null) {
+        result.add(new Decimal(percent, 0));
       }
     }
-    if (percentTotal < 0) {
-      percentTotal = 0;
-    }
-    if (percentTotal > 100) {
-      percentTotal = 100;
-    }
-    return new Decimal(percentTotal);
+    return result;
   }
 
   public long getTax() {

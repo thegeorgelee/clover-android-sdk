@@ -26,6 +26,49 @@ package com.clover.sdk.v3.apps;
 @SuppressWarnings("all")
 public final class AppSubscription implements android.os.Parcelable, com.clover.sdk.v3.Validator, com.clover.sdk.JSONifiable {
 
+ /**
+   * Unique identifier
+  */
+  public java.lang.String getId() {
+    return cacheGet(CacheKey.id);
+  }
+ /**
+   * App subscription name
+  */
+  public java.lang.String getName() {
+    return cacheGet(CacheKey.name);
+  }
+ /**
+   * The cost of the subscription
+  */
+  public java.lang.Long getAmount() {
+    return cacheGet(CacheKey.amount);
+  }
+ /**
+   * App subscription name
+  */
+  public java.lang.String getDescription() {
+    return cacheGet(CacheKey.description);
+  }
+ /**
+   * App subscription active status
+  */
+  public java.lang.Boolean getActive() {
+    return cacheGet(CacheKey.active);
+  }
+ /**
+   * Reference to app this subscription belongs to
+  */
+  public com.clover.sdk.v3.base.Reference getApp() {
+    return cacheGet(CacheKey.app);
+  }
+ /**
+   * The list of merchants that have this app subscription installed
+  */
+  public java.util.List<com.clover.sdk.v3.base.Reference> getMerchants() {
+    return cacheGet(CacheKey.merchants);
+  }
+
 
   private enum CacheKey {
     id {
@@ -64,12 +107,17 @@ public final class AppSubscription implements android.os.Parcelable, com.clover.
         return instance.extractApp();
       }
     },
+    merchants {
+      @Override
+      public Object extractValue(AppSubscription instance) {
+        return instance.extractMerchants();
+      }
+    },
     ;
 
     public abstract Object extractValue(AppSubscription instance);
   }
 
-  private String jsonString = null;
   private org.json.JSONObject jsonObject = null;
   private android.os.Bundle bundle = null;
   private android.os.Bundle changeLog = null;
@@ -88,8 +136,12 @@ public final class AppSubscription implements android.os.Parcelable, com.clover.
   /**
    * Constructs a new instance from the given JSON String.
    */
-  public AppSubscription(String json) {
-    this.jsonString = json;
+  public AppSubscription(String json) throws java.lang.IllegalArgumentException {
+    try {
+      this.jsonObject = new org.json.JSONObject(json);
+    } catch (org.json.JSONException e) {
+      throw new java.lang.IllegalArgumentException("invalid json", e);
+    }
   }
 
   /**
@@ -104,9 +156,7 @@ public final class AppSubscription implements android.os.Parcelable, com.clover.
    * Constructs a new instance that is a deep copy of the source instance. It does not copy the bundle or changelog.
    */
   public AppSubscription(AppSubscription src) {
-    if (src.jsonString != null) {
-      this.jsonString = src.jsonString;
-    } else {
+    if (src.jsonObject != null) {
       this.jsonObject = com.clover.sdk.v3.JsonHelper.deepCopy(src.getJSONObject());
     }
   }
@@ -168,17 +218,8 @@ public final class AppSubscription implements android.os.Parcelable, com.clover.
    * reflected in this instance and vice-versa.
    */
   public org.json.JSONObject getJSONObject() {
-    try {
-      if (jsonObject == null) {
-        if (jsonString != null) {
-          jsonObject = new org.json.JSONObject(jsonString);
-          jsonString = null; // null this so it will be recreated if jsonObject is modified
-        } else {
-          jsonObject = new org.json.JSONObject();
-        }
-      }
-    } catch (org.json.JSONException e) {
-      throw new java.lang.IllegalArgumentException(e);
+    if (jsonObject == null) {
+      jsonObject = new org.json.JSONObject();
     }
     return jsonObject;
   }
@@ -187,90 +228,52 @@ public final class AppSubscription implements android.os.Parcelable, com.clover.
   @Override
   public void validate() {
     java.lang.String id = getId();
-    if (id != null && id.length() > 13) throw new IllegalArgumentException("Maximum string length exceeded for 'id'");
+    if (id != null && id.length() > 13) { throw new IllegalArgumentException("Maximum string length exceeded for 'id'");}
 
     java.lang.String name = getName();
     if (name == null) throw new java.lang.IllegalArgumentException("'name' is required to be non-null");
-    if (name != null && name.length() > 20) throw new IllegalArgumentException("Maximum string length exceeded for 'name'");
+    if (name != null && name.length() > 20) { throw new IllegalArgumentException("Maximum string length exceeded for 'name'");}
 
     java.lang.Long amount = getAmount();
     if (amount == null) throw new java.lang.IllegalArgumentException("'amount' is required to be non-null");
-    if (amount != null && amount < 0) throw new IllegalArgumentException("Invalid value for 'amount'");
+    if (amount != null && ( amount < 0)) throw new IllegalArgumentException("Invalid value for 'amount'");
 
     java.lang.String description = getDescription();
     if (description == null) throw new java.lang.IllegalArgumentException("'description' is required to be non-null");
-    if (description != null && description.length() > 1024) throw new IllegalArgumentException("Maximum string length exceeded for 'description'");
+    if (description != null && description.length() > 1024) { throw new IllegalArgumentException("Maximum string length exceeded for 'description'");}
   }
 
 
-  /**
-   * Unique identifier
-   */
-  public java.lang.String getId() {
-    return cacheGet(CacheKey.id);
-  }
 
   private java.lang.String extractId() {
     return getJSONObject().isNull("id") ? null :
       getJSONObject().optString("id");
   }
 
-  /**
-   * App subscription name
-   */
-  public java.lang.String getName() {
-    return cacheGet(CacheKey.name);
-  }
 
   private java.lang.String extractName() {
     return getJSONObject().isNull("name") ? null :
       getJSONObject().optString("name");
   }
 
-  /**
-   * The cost of the subscription
-   */
-  public java.lang.Long getAmount() {
-    return cacheGet(CacheKey.amount);
-  }
 
   private java.lang.Long extractAmount() {
     return getJSONObject().isNull("amount") ? null :
       getJSONObject().optLong("amount");
   }
 
-  /**
-   * App subscription name
-   */
-  public java.lang.String getDescription() {
-    return cacheGet(CacheKey.description);
-  }
 
   private java.lang.String extractDescription() {
     return getJSONObject().isNull("description") ? null :
       getJSONObject().optString("description");
   }
 
-  /**
-   * App subscription active status
-   */
-  public java.lang.Boolean getActive() {
-    return cacheGet(CacheKey.active);
-  }
 
   private java.lang.Boolean extractActive() {
     return getJSONObject().isNull("active") ? null :
       getJSONObject().optBoolean("active");
   }
 
-  /**
-   * Reference to app this subscription belongs to
-   *
-   * The returned object is not a copy so changes to it will be reflected in this instance and vice-versa.
-   */
-  public com.clover.sdk.v3.base.Reference getApp() {
-    return cacheGet(CacheKey.app);
-  }
 
   private com.clover.sdk.v3.base.Reference extractApp() {
     org.json.JSONObject jsonObj = getJSONObject().optJSONObject("app");
@@ -278,6 +281,28 @@ public final class AppSubscription implements android.os.Parcelable, com.clover.
       return new com.clover.sdk.v3.base.Reference(getJSONObject().optJSONObject("app"));
     }
     return null;
+  }
+
+
+  private java.util.List<com.clover.sdk.v3.base.Reference> extractMerchants() {
+    if (getJSONObject().isNull("merchants")) {
+      return null;
+    }
+
+    org.json.JSONObject elementsContainer = getJSONObject().optJSONObject("merchants");
+    org.json.JSONArray itemArray = elementsContainer.optJSONArray("elements");
+    java.util.List<com.clover.sdk.v3.base.Reference> itemList =
+        new java.util.ArrayList<com.clover.sdk.v3.base.Reference>(itemArray.length());
+    for (int i = 0; i < itemArray.length(); i++) {
+      org.json.JSONObject obj = itemArray.optJSONObject(i);
+      if (obj == null) {
+        continue;
+      }
+      com.clover.sdk.v3.base.Reference item = new com.clover.sdk.v3.base.Reference(obj);
+      itemList.add(item);
+    }
+
+    return java.util.Collections.unmodifiableList(itemList);
   }
 
 
@@ -311,6 +336,16 @@ public final class AppSubscription implements android.os.Parcelable, com.clover.
     return cacheValueIsNotNull(CacheKey.app);
   }
 
+  /** Checks whether the 'merchants' field is set and is not null */
+  public boolean isNotNullMerchants() {
+    return cacheValueIsNotNull(CacheKey.merchants);
+  }
+
+  /** Checks whether the 'merchants' field is set and is not null and is not empty */
+  public boolean isNotEmptyMerchants() {
+    return isNotNullMerchants() && !getMerchants().isEmpty();
+  }
+
 
   /** Checks whether the 'id' field has been set, however the value could be null */
   public boolean hasId() {
@@ -340,6 +375,11 @@ public final class AppSubscription implements android.os.Parcelable, com.clover.
   /** Checks whether the 'app' field has been set, however the value could be null */
   public boolean hasApp() {
     return cacheHasKey(CacheKey.app);
+  }
+
+  /** Checks whether the 'merchants' field has been set, however the value could be null */
+  public boolean hasMerchants() {
+    return cacheHasKey(CacheKey.merchants);
   }
 
 
@@ -442,6 +482,40 @@ public final class AppSubscription implements android.os.Parcelable, com.clover.
     return this;
   }
 
+  /**
+   * Sets the field 'merchants'.
+   *
+   * Nulls in the given List are skipped. List parameter is copied, so it will not reflect any changes, but objects inside it will.
+   */
+  public AppSubscription setMerchants(java.util.List<com.clover.sdk.v3.base.Reference> merchants) {
+    logChange("merchants");
+
+    try {
+      if (merchants == null) {
+        getJSONObject().put("merchants", org.json.JSONObject.NULL);
+        cacheMarkDirty(CacheKey.merchants);
+        return this;
+      }
+
+      org.json.JSONArray array = new org.json.JSONArray();
+      for (com.clover.sdk.v3.base.Reference obj : merchants) {
+        if (obj == null) {
+          continue;
+        }
+        array.put(obj.getJSONObject());
+      }
+
+      org.json.JSONObject elementsContainer = new org.json.JSONObject();
+      elementsContainer.put("elements", array);
+      getJSONObject().put("merchants", elementsContainer);
+    } catch (org.json.JSONException e) {
+      throw new java.lang.IllegalArgumentException(e);
+    }
+
+    cacheMarkDirty(CacheKey.merchants);
+    return this;
+  }
+
 
   /** Clears the 'id' field, the 'has' method for this field will now return false */
   public void clearId() {
@@ -483,6 +557,13 @@ public final class AppSubscription implements android.os.Parcelable, com.clover.
     unlogChange("app");
     getJSONObject().remove("app");
     cacheRemoveValue(CacheKey.app);
+  }
+
+  /** Clears the 'merchants' field, the 'has' method for this field will now return false */
+  public void clearMerchants() {
+    unlogChange("merchants");
+    getJSONObject().remove("merchants");
+    cacheRemoveValue(CacheKey.merchants);
   }
 
 
@@ -556,7 +637,7 @@ public final class AppSubscription implements android.os.Parcelable, com.clover.
 
   @Override
   public String toString() {
-    String json = jsonString != null ? jsonString : getJSONObject().toString();
+    String json = getJSONObject().toString();
 
     if (bundle != null) {
       bundle.isEmpty(); // Triggers unparcel
@@ -625,6 +706,8 @@ public final class AppSubscription implements android.os.Parcelable, com.clover.
     public static final boolean ACTIVE_IS_REQUIRED = false;
 
     public static final boolean APP_IS_REQUIRED = false;
+
+    public static final boolean MERCHANTS_IS_REQUIRED = false;
 
   }
 

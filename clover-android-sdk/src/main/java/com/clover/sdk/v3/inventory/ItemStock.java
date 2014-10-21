@@ -27,6 +27,25 @@ package com.clover.sdk.v3.inventory;
 /** The class is used to update the item stock */
 public final class ItemStock implements android.os.Parcelable, com.clover.sdk.v3.Validator, com.clover.sdk.JSONifiable {
 
+ /**
+   * Reference to an item
+  */
+  public com.clover.sdk.v3.base.Reference getItem() {
+    return cacheGet(CacheKey.item);
+  }
+ /**
+   * DEPRECATED: use quantity instead
+  */
+  public java.lang.Long getStockCount() {
+    return cacheGet(CacheKey.stockCount);
+  }
+ /**
+   * Current count of this item in stock
+  */
+  public java.lang.Double getQuantity() {
+    return cacheGet(CacheKey.quantity);
+  }
+
 
   private enum CacheKey {
     item {
@@ -52,7 +71,6 @@ public final class ItemStock implements android.os.Parcelable, com.clover.sdk.v3
     public abstract Object extractValue(ItemStock instance);
   }
 
-  private String jsonString = null;
   private org.json.JSONObject jsonObject = null;
   private android.os.Bundle bundle = null;
   private android.os.Bundle changeLog = null;
@@ -71,8 +89,12 @@ public final class ItemStock implements android.os.Parcelable, com.clover.sdk.v3
   /**
    * Constructs a new instance from the given JSON String.
    */
-  public ItemStock(String json) {
-    this.jsonString = json;
+  public ItemStock(String json) throws java.lang.IllegalArgumentException {
+    try {
+      this.jsonObject = new org.json.JSONObject(json);
+    } catch (org.json.JSONException e) {
+      throw new java.lang.IllegalArgumentException("invalid json", e);
+    }
   }
 
   /**
@@ -87,9 +109,7 @@ public final class ItemStock implements android.os.Parcelable, com.clover.sdk.v3
    * Constructs a new instance that is a deep copy of the source instance. It does not copy the bundle or changelog.
    */
   public ItemStock(ItemStock src) {
-    if (src.jsonString != null) {
-      this.jsonString = src.jsonString;
-    } else {
+    if (src.jsonObject != null) {
       this.jsonObject = com.clover.sdk.v3.JsonHelper.deepCopy(src.getJSONObject());
     }
   }
@@ -151,17 +171,8 @@ public final class ItemStock implements android.os.Parcelable, com.clover.sdk.v3
    * reflected in this instance and vice-versa.
    */
   public org.json.JSONObject getJSONObject() {
-    try {
-      if (jsonObject == null) {
-        if (jsonString != null) {
-          jsonObject = new org.json.JSONObject(jsonString);
-          jsonString = null; // null this so it will be recreated if jsonObject is modified
-        } else {
-          jsonObject = new org.json.JSONObject();
-        }
-      }
-    } catch (org.json.JSONException e) {
-      throw new java.lang.IllegalArgumentException(e);
+    if (jsonObject == null) {
+      jsonObject = new org.json.JSONObject();
     }
     return jsonObject;
   }
@@ -169,17 +180,12 @@ public final class ItemStock implements android.os.Parcelable, com.clover.sdk.v3
 
   @Override
   public void validate() {
+
+    java.lang.Long stockCount = getStockCount();
+    if (stockCount != null && ( stockCount < 0)) throw new IllegalArgumentException("Invalid value for 'stockCount'");
   }
 
 
-  /**
-   * Reference to an item
-   *
-   * The returned object is not a copy so changes to it will be reflected in this instance and vice-versa.
-   */
-  public com.clover.sdk.v3.base.Reference getItem() {
-    return cacheGet(CacheKey.item);
-  }
 
   private com.clover.sdk.v3.base.Reference extractItem() {
     org.json.JSONObject jsonObj = getJSONObject().optJSONObject("item");
@@ -189,24 +195,12 @@ public final class ItemStock implements android.os.Parcelable, com.clover.sdk.v3
     return null;
   }
 
-  /**
-   * DEPRECATED: use quantity instead
-   */
-  public java.lang.Long getStockCount() {
-    return cacheGet(CacheKey.stockCount);
-  }
 
   private java.lang.Long extractStockCount() {
     return getJSONObject().isNull("stockCount") ? null :
       getJSONObject().optLong("stockCount");
   }
 
-  /**
-   * Current count of this item in stock
-   */
-  public java.lang.Double getQuantity() {
-    return cacheGet(CacheKey.quantity);
-  }
 
   private java.lang.Double extractQuantity() {
     return getJSONObject().isNull("quantity") ? null :
@@ -390,7 +384,7 @@ public final class ItemStock implements android.os.Parcelable, com.clover.sdk.v3
 
   @Override
   public String toString() {
-    String json = jsonString != null ? jsonString : getJSONObject().toString();
+    String json = getJSONObject().toString();
 
     if (bundle != null) {
       bundle.isEmpty(); // Triggers unparcel

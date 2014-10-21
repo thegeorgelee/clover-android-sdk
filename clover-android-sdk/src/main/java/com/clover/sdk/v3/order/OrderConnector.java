@@ -23,7 +23,6 @@ import android.os.RemoteException;
 import com.clover.sdk.v1.BindingException;
 import com.clover.sdk.v1.ClientException;
 import com.clover.sdk.v1.ResultStatus;
-import com.clover.sdk.v1.ServiceCallback;
 import com.clover.sdk.v1.ServiceConnector;
 import com.clover.sdk.v1.ServiceException;
 import com.clover.sdk.v3.inventory.Modifier;
@@ -34,6 +33,7 @@ import com.clover.sdk.v3.payments.Refund;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class OrderConnector extends ServiceConnector<IOrderService> {
@@ -137,25 +137,16 @@ public class OrderConnector extends ServiceConnector<IOrderService> {
   @Override
   public void disconnect() {
     mOnOrderChangedListener.clear();
-    execute(
-        new ServiceCallable<IOrderService, Void>() {
-          @Override
-          public Void call(IOrderService service, ResultStatus status) throws RemoteException {
-            if (mListener != null) {
-              service.removeOnOrderUpdatedListener(mListener);
-              mListener.destroy();
-              mListener = null;
-            }
-            return null;
-          }
-        }, new ServiceCallback<Void>() {
-          @Override
-          public void onServiceSuccess(Void result, ResultStatus status) {
-            super.onServiceSuccess(result, status);
-            OrderConnector.super.disconnect();
-          }
-        }
-    );
+    if (mListener != null) {
+      try {
+        mService.removeOnOrderUpdatedListener(mListener);
+      } catch (RemoteException e) {
+        e.printStackTrace();
+      }
+      mListener.destroy();
+      mListener = null;
+    }
+    super.disconnect();
   }
 
   public com.clover.sdk.v3.order.Order getOrder(final String orderId) throws RemoteException, ClientException, ServiceException, BindingException {
@@ -284,11 +275,21 @@ public class OrderConnector extends ServiceConnector<IOrderService> {
     });
   }
 
+  @Deprecated
   public List<LineItem> copyLineItems(final String sourceOrderId, final String destinationOrderId, final List<String> srclineItemIds) throws RemoteException, ClientException, ServiceException, BindingException {
     return execute(new ServiceCallable<IOrderService, List<LineItem>>() {
       @Override
       public List<LineItem> call(IOrderService service, ResultStatus status) throws RemoteException {
         return service.copyLineItems(sourceOrderId, destinationOrderId, srclineItemIds, status);
+      }
+    });
+  }
+
+  public Map<String, List<LineItem>> createLineItemsFrom(final String sourceOrderId, final String destinationOrderId, final List<String> srclineItemIds) throws RemoteException, ClientException, ServiceException, BindingException {
+    return execute(new ServiceCallable<IOrderService, Map<String, List<LineItem>>>() {
+      @Override
+      public Map<String, List<LineItem>> call(IOrderService service, ResultStatus status) throws RemoteException {
+        return service.createLineItemsFrom(sourceOrderId, destinationOrderId, srclineItemIds, status);
       }
     });
   }
@@ -451,6 +452,15 @@ public class OrderConnector extends ServiceConnector<IOrderService> {
       @Override
       public Order call(IOrderService service, ResultStatus status) throws RemoteException {
         return service.deleteRefund(orderId, refundId, status);
+      }
+    });
+  }
+
+  public boolean fire(final String orderId) throws RemoteException, ClientException, ServiceException, BindingException {
+    return execute(new ServiceCallable<IOrderService, Boolean>() {
+      @Override
+      public Boolean call(IOrderService service, ResultStatus status) throws RemoteException {
+        return service.fire(orderId , status);
       }
     });
   }

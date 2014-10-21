@@ -26,6 +26,49 @@ package com.clover.sdk.v3.order;
 @SuppressWarnings("all")
 public final class OrderType implements android.os.Parcelable, com.clover.sdk.v3.Validator, com.clover.sdk.JSONifiable {
 
+ /**
+   * Unique identifier
+  */
+  public java.lang.String getId() {
+    return cacheGet(CacheKey.id);
+  }
+ /**
+   * Label Key
+  */
+  public java.lang.String getLabelKey() {
+    return cacheGet(CacheKey.labelKey);
+  }
+ /**
+   * Label Key
+  */
+  public java.lang.String getLabel() {
+    return cacheGet(CacheKey.label);
+  }
+ /**
+   * If this order type is taxable
+  */
+  public java.lang.Boolean getTaxable() {
+    return cacheGet(CacheKey.taxable);
+  }
+ /**
+   * If this order type is the default
+  */
+  public java.lang.Boolean getIsDefault() {
+    return cacheGet(CacheKey.isDefault);
+  }
+ /**
+   * If this order type is deleted
+  */
+  public java.lang.Boolean getIsDeleted() {
+    return cacheGet(CacheKey.isDeleted);
+  }
+ /**
+   * Optional system order type that this order type is associated with.
+  */
+  public java.lang.String getSystemOrderTypeId() {
+    return cacheGet(CacheKey.systemOrderTypeId);
+  }
+
 
   private enum CacheKey {
     id {
@@ -64,12 +107,17 @@ public final class OrderType implements android.os.Parcelable, com.clover.sdk.v3
         return instance.extractIsDeleted();
       }
     },
+    systemOrderTypeId {
+      @Override
+      public Object extractValue(OrderType instance) {
+        return instance.extractSystemOrderTypeId();
+      }
+    },
     ;
 
     public abstract Object extractValue(OrderType instance);
   }
 
-  private String jsonString = null;
   private org.json.JSONObject jsonObject = null;
   private android.os.Bundle bundle = null;
   private android.os.Bundle changeLog = null;
@@ -88,8 +136,12 @@ public final class OrderType implements android.os.Parcelable, com.clover.sdk.v3
   /**
    * Constructs a new instance from the given JSON String.
    */
-  public OrderType(String json) {
-    this.jsonString = json;
+  public OrderType(String json) throws java.lang.IllegalArgumentException {
+    try {
+      this.jsonObject = new org.json.JSONObject(json);
+    } catch (org.json.JSONException e) {
+      throw new java.lang.IllegalArgumentException("invalid json", e);
+    }
   }
 
   /**
@@ -104,9 +156,7 @@ public final class OrderType implements android.os.Parcelable, com.clover.sdk.v3
    * Constructs a new instance that is a deep copy of the source instance. It does not copy the bundle or changelog.
    */
   public OrderType(OrderType src) {
-    if (src.jsonString != null) {
-      this.jsonString = src.jsonString;
-    } else {
+    if (src.jsonObject != null) {
       this.jsonObject = com.clover.sdk.v3.JsonHelper.deepCopy(src.getJSONObject());
     }
   }
@@ -168,17 +218,8 @@ public final class OrderType implements android.os.Parcelable, com.clover.sdk.v3
    * reflected in this instance and vice-versa.
    */
   public org.json.JSONObject getJSONObject() {
-    try {
-      if (jsonObject == null) {
-        if (jsonString != null) {
-          jsonObject = new org.json.JSONObject(jsonString);
-          jsonString = null; // null this so it will be recreated if jsonObject is modified
-        } else {
-          jsonObject = new org.json.JSONObject();
-        }
-      }
-    } catch (org.json.JSONException e) {
-      throw new java.lang.IllegalArgumentException(e);
+    if (jsonObject == null) {
+      jsonObject = new org.json.JSONObject();
     }
     return jsonObject;
   }
@@ -187,86 +228,59 @@ public final class OrderType implements android.os.Parcelable, com.clover.sdk.v3
   @Override
   public void validate() {
     java.lang.String id = getId();
-    if (id != null && id.length() > 13) throw new IllegalArgumentException("Maximum string length exceeded for 'id'");
+    if (id != null && id.length() > 13) { throw new IllegalArgumentException("Maximum string length exceeded for 'id'");}
 
     java.lang.String labelKey = getLabelKey();
-    if (labelKey != null && labelKey.length() > 127) throw new IllegalArgumentException("Maximum string length exceeded for 'labelKey'");
+    if (labelKey != null && labelKey.length() > 127) { throw new IllegalArgumentException("Maximum string length exceeded for 'labelKey'");}
 
     java.lang.String label = getLabel();
-    if (label != null && label.length() > 127) throw new IllegalArgumentException("Maximum string length exceeded for 'label'");
+    if (label != null && label.length() > 127) { throw new IllegalArgumentException("Maximum string length exceeded for 'label'");}
+
+    java.lang.String systemOrderTypeId = getSystemOrderTypeId();
+    if (systemOrderTypeId != null && systemOrderTypeId.length() > 13) { throw new IllegalArgumentException("Maximum string length exceeded for 'systemOrderTypeId'");}
   }
 
 
-  /**
-   * Unique identifier
-   */
-  public java.lang.String getId() {
-    return cacheGet(CacheKey.id);
-  }
 
   private java.lang.String extractId() {
     return getJSONObject().isNull("id") ? null :
       getJSONObject().optString("id");
   }
 
-  /**
-   * Label Key
-   */
-  public java.lang.String getLabelKey() {
-    return cacheGet(CacheKey.labelKey);
-  }
 
   private java.lang.String extractLabelKey() {
     return getJSONObject().isNull("labelKey") ? null :
       getJSONObject().optString("labelKey");
   }
 
-  /**
-   * Label Key
-   */
-  public java.lang.String getLabel() {
-    return cacheGet(CacheKey.label);
-  }
 
   private java.lang.String extractLabel() {
     return getJSONObject().isNull("label") ? null :
       getJSONObject().optString("label");
   }
 
-  /**
-   * If this order type is taxable
-   */
-  public java.lang.Boolean getTaxable() {
-    return cacheGet(CacheKey.taxable);
-  }
 
   private java.lang.Boolean extractTaxable() {
     return getJSONObject().isNull("taxable") ? null :
       getJSONObject().optBoolean("taxable");
   }
 
-  /**
-   * If this order type is the default
-   */
-  public java.lang.Boolean getIsDefault() {
-    return cacheGet(CacheKey.isDefault);
-  }
 
   private java.lang.Boolean extractIsDefault() {
     return getJSONObject().isNull("isDefault") ? null :
       getJSONObject().optBoolean("isDefault");
   }
 
-  /**
-   * If this order type is deleted
-   */
-  public java.lang.Boolean getIsDeleted() {
-    return cacheGet(CacheKey.isDeleted);
-  }
 
   private java.lang.Boolean extractIsDeleted() {
     return getJSONObject().isNull("isDeleted") ? null :
       getJSONObject().optBoolean("isDeleted");
+  }
+
+
+  private java.lang.String extractSystemOrderTypeId() {
+    return getJSONObject().isNull("systemOrderTypeId") ? null :
+      getJSONObject().optString("systemOrderTypeId");
   }
 
 
@@ -300,6 +314,11 @@ public final class OrderType implements android.os.Parcelable, com.clover.sdk.v3
     return cacheValueIsNotNull(CacheKey.isDeleted);
   }
 
+  /** Checks whether the 'systemOrderTypeId' field is set and is not null */
+  public boolean isNotNullSystemOrderTypeId() {
+    return cacheValueIsNotNull(CacheKey.systemOrderTypeId);
+  }
+
 
   /** Checks whether the 'id' field has been set, however the value could be null */
   public boolean hasId() {
@@ -329,6 +348,11 @@ public final class OrderType implements android.os.Parcelable, com.clover.sdk.v3
   /** Checks whether the 'isDeleted' field has been set, however the value could be null */
   public boolean hasIsDeleted() {
     return cacheHasKey(CacheKey.isDeleted);
+  }
+
+  /** Checks whether the 'systemOrderTypeId' field has been set, however the value could be null */
+  public boolean hasSystemOrderTypeId() {
+    return cacheHasKey(CacheKey.systemOrderTypeId);
   }
 
 
@@ -428,6 +452,22 @@ public final class OrderType implements android.os.Parcelable, com.clover.sdk.v3
     return this;
   }
 
+  /**
+   * Sets the field 'systemOrderTypeId'.
+   */
+  public OrderType setSystemOrderTypeId(java.lang.String systemOrderTypeId) {
+    logChange("systemOrderTypeId");
+
+    try {
+      getJSONObject().put("systemOrderTypeId", systemOrderTypeId == null ? org.json.JSONObject.NULL : com.clover.sdk.v3.JsonHelper.toJSON(systemOrderTypeId));
+    } catch (org.json.JSONException e) {
+      throw new java.lang.IllegalArgumentException(e);
+    }
+
+    cacheMarkDirty(CacheKey.systemOrderTypeId);
+    return this;
+  }
+
 
   /** Clears the 'id' field, the 'has' method for this field will now return false */
   public void clearId() {
@@ -469,6 +509,13 @@ public final class OrderType implements android.os.Parcelable, com.clover.sdk.v3
     unlogChange("isDeleted");
     getJSONObject().remove("isDeleted");
     cacheRemoveValue(CacheKey.isDeleted);
+  }
+
+  /** Clears the 'systemOrderTypeId' field, the 'has' method for this field will now return false */
+  public void clearSystemOrderTypeId() {
+    unlogChange("systemOrderTypeId");
+    getJSONObject().remove("systemOrderTypeId");
+    cacheRemoveValue(CacheKey.systemOrderTypeId);
   }
 
 
@@ -542,7 +589,7 @@ public final class OrderType implements android.os.Parcelable, com.clover.sdk.v3
 
   @Override
   public String toString() {
-    String json = jsonString != null ? jsonString : getJSONObject().toString();
+    String json = getJSONObject().toString();
 
     if (bundle != null) {
       bundle.isEmpty(); // Triggers unparcel
@@ -610,6 +657,9 @@ public final class OrderType implements android.os.Parcelable, com.clover.sdk.v3
     public static final boolean ISDEFAULT_IS_REQUIRED = false;
 
     public static final boolean ISDELETED_IS_REQUIRED = false;
+
+    public static final boolean SYSTEMORDERTYPEID_IS_REQUIRED = false;
+    public static final long SYSTEMORDERTYPEID_MAX_LEN = 13;
 
   }
 

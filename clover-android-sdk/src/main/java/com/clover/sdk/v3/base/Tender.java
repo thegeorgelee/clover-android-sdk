@@ -26,6 +26,55 @@ package com.clover.sdk.v3.base;
 @SuppressWarnings("all")
 public final class Tender implements android.os.Parcelable, com.clover.sdk.v3.Validator, com.clover.sdk.JSONifiable {
 
+ /**
+   * Unique identifier
+  */
+  public java.lang.String getId() {
+    return cacheGet(CacheKey.id);
+  }
+ /**
+   * If this merchant tender is editable
+  */
+  public java.lang.Boolean getEditable() {
+    return cacheGet(CacheKey.editable);
+  }
+ /**
+   * Label Key
+  */
+  public java.lang.String getLabelKey() {
+    return cacheGet(CacheKey.labelKey);
+  }
+ /**
+   * Label Key
+  */
+  public java.lang.String getLabel() {
+    return cacheGet(CacheKey.label);
+  }
+ /**
+   * If this tender opens the cash drawer
+  */
+  public java.lang.Boolean getOpensCashDrawer() {
+    return cacheGet(CacheKey.opensCashDrawer);
+  }
+ /**
+   * If this merchant tender is enabled
+  */
+  public java.lang.Boolean getEnabled() {
+    return cacheGet(CacheKey.enabled);
+  }
+ /**
+   * If this merchant tender is visible
+  */
+  public java.lang.Boolean getVisible() {
+    return cacheGet(CacheKey.visible);
+  }
+ /**
+   * Label Key
+  */
+  public java.lang.String getInstructions() {
+    return cacheGet(CacheKey.instructions);
+  }
+
 
   private enum CacheKey {
     id {
@@ -81,7 +130,6 @@ public final class Tender implements android.os.Parcelable, com.clover.sdk.v3.Va
     public abstract Object extractValue(Tender instance);
   }
 
-  private String jsonString = null;
   private org.json.JSONObject jsonObject = null;
   private android.os.Bundle bundle = null;
   private android.os.Bundle changeLog = null;
@@ -100,8 +148,12 @@ public final class Tender implements android.os.Parcelable, com.clover.sdk.v3.Va
   /**
    * Constructs a new instance from the given JSON String.
    */
-  public Tender(String json) {
-    this.jsonString = json;
+  public Tender(String json) throws java.lang.IllegalArgumentException {
+    try {
+      this.jsonObject = new org.json.JSONObject(json);
+    } catch (org.json.JSONException e) {
+      throw new java.lang.IllegalArgumentException("invalid json", e);
+    }
   }
 
   /**
@@ -116,9 +168,7 @@ public final class Tender implements android.os.Parcelable, com.clover.sdk.v3.Va
    * Constructs a new instance that is a deep copy of the source instance. It does not copy the bundle or changelog.
    */
   public Tender(Tender src) {
-    if (src.jsonString != null) {
-      this.jsonString = src.jsonString;
-    } else {
+    if (src.jsonObject != null) {
       this.jsonObject = com.clover.sdk.v3.JsonHelper.deepCopy(src.getJSONObject());
     }
   }
@@ -180,17 +230,8 @@ public final class Tender implements android.os.Parcelable, com.clover.sdk.v3.Va
    * reflected in this instance and vice-versa.
    */
   public org.json.JSONObject getJSONObject() {
-    try {
-      if (jsonObject == null) {
-        if (jsonString != null) {
-          jsonObject = new org.json.JSONObject(jsonString);
-          jsonString = null; // null this so it will be recreated if jsonObject is modified
-        } else {
-          jsonObject = new org.json.JSONObject();
-        }
-      }
-    } catch (org.json.JSONException e) {
-      throw new java.lang.IllegalArgumentException(e);
+    if (jsonObject == null) {
+      jsonObject = new org.json.JSONObject();
     }
     return jsonObject;
   }
@@ -199,106 +240,58 @@ public final class Tender implements android.os.Parcelable, com.clover.sdk.v3.Va
   @Override
   public void validate() {
     java.lang.String id = getId();
-    if (id != null && id.length() > 13) throw new IllegalArgumentException("Maximum string length exceeded for 'id'");
+    if (id != null && id.length() > 13) { throw new IllegalArgumentException("Maximum string length exceeded for 'id'");}
 
     java.lang.String labelKey = getLabelKey();
-    if (labelKey != null && labelKey.length() > 127) throw new IllegalArgumentException("Maximum string length exceeded for 'labelKey'");
+    if (labelKey != null && labelKey.length() > 127) { throw new IllegalArgumentException("Maximum string length exceeded for 'labelKey'");}
 
     java.lang.String label = getLabel();
-    if (label != null && label.length() > 127) throw new IllegalArgumentException("Maximum string length exceeded for 'label'");
+    if (label != null && label.length() > 127) { throw new IllegalArgumentException("Maximum string length exceeded for 'label'");}
   }
 
 
-  /**
-   * Unique identifier
-   */
-  public java.lang.String getId() {
-    return cacheGet(CacheKey.id);
-  }
 
   private java.lang.String extractId() {
     return getJSONObject().isNull("id") ? null :
       getJSONObject().optString("id");
   }
 
-  /**
-   * If this merchant tender is editable
-   */
-  public java.lang.Boolean getEditable() {
-    return cacheGet(CacheKey.editable);
-  }
 
   private java.lang.Boolean extractEditable() {
     return getJSONObject().isNull("editable") ? null :
       getJSONObject().optBoolean("editable");
   }
 
-  /**
-   * Label Key
-   */
-  public java.lang.String getLabelKey() {
-    return cacheGet(CacheKey.labelKey);
-  }
 
   private java.lang.String extractLabelKey() {
     return getJSONObject().isNull("labelKey") ? null :
       getJSONObject().optString("labelKey");
   }
 
-  /**
-   * Label Key
-   */
-  public java.lang.String getLabel() {
-    return cacheGet(CacheKey.label);
-  }
 
   private java.lang.String extractLabel() {
     return getJSONObject().isNull("label") ? null :
       getJSONObject().optString("label");
   }
 
-  /**
-   * If this tender opens the cash drawer
-   */
-  public java.lang.Boolean getOpensCashDrawer() {
-    return cacheGet(CacheKey.opensCashDrawer);
-  }
 
   private java.lang.Boolean extractOpensCashDrawer() {
     return getJSONObject().isNull("opensCashDrawer") ? null :
       getJSONObject().optBoolean("opensCashDrawer");
   }
 
-  /**
-   * If this merchant tender is enabled
-   */
-  public java.lang.Boolean getEnabled() {
-    return cacheGet(CacheKey.enabled);
-  }
 
   private java.lang.Boolean extractEnabled() {
     return getJSONObject().isNull("enabled") ? null :
       getJSONObject().optBoolean("enabled");
   }
 
-  /**
-   * If this merchant tender is visible
-   */
-  public java.lang.Boolean getVisible() {
-    return cacheGet(CacheKey.visible);
-  }
 
   private java.lang.Boolean extractVisible() {
     return getJSONObject().isNull("visible") ? null :
       getJSONObject().optBoolean("visible");
   }
 
-  /**
-   * Label Key
-   */
-  public java.lang.String getInstructions() {
-    return cacheGet(CacheKey.instructions);
-  }
 
   private java.lang.String extractInstructions() {
     return getJSONObject().isNull("instructions") ? null :
@@ -644,7 +637,7 @@ public final class Tender implements android.os.Parcelable, com.clover.sdk.v3.Va
 
   @Override
   public String toString() {
-    String json = jsonString != null ? jsonString : getJSONObject().toString();
+    String json = getJSONObject().toString();
 
     if (bundle != null) {
       bundle.isEmpty(); // Triggers unparcel

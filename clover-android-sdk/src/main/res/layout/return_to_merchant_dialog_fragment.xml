@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/returnInstructions"
+              android:layout_height="match_parent"
+              android:layout_width="match_parent"
+              android:layout_gravity="center"
+              android:orientation="vertical"
+              android:padding="16dp">
+  <TextView
+      android:id="@+id/instruction"
+      style="@style/Instructions"/>
+
+  <!-- temporary dimens and src until final asset is received -->
+  <ImageView
+      android:layout_height="300dp"
+      android:layout_width="400dp"
+      android:scaleType="fitCenter"
+      android:layout_gravity="center_horizontal"
+      android:src="@drawable/return_to_merchant"
+      android:contentDescription="@string/returnToMerchant"/>
+</LinearLayout>

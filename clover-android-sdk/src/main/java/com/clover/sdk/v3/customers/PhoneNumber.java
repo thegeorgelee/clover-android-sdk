@@ -26,8 +26,21 @@ package com.clover.sdk.v3.customers;
 @SuppressWarnings("all")
 public final class PhoneNumber implements android.os.Parcelable, com.clover.sdk.v3.Validator, com.clover.sdk.JSONifiable {
 
+  public java.lang.String getId() {
+    return cacheGet(CacheKey.id);
+  }
+  public java.lang.String getPhoneNumber() {
+    return cacheGet(CacheKey.phoneNumber);
+  }
+
 
   private enum CacheKey {
+    id {
+      @Override
+      public Object extractValue(PhoneNumber instance) {
+        return instance.extractId();
+      }
+    },
     phoneNumber {
       @Override
       public Object extractValue(PhoneNumber instance) {
@@ -39,7 +52,6 @@ public final class PhoneNumber implements android.os.Parcelable, com.clover.sdk.
     public abstract Object extractValue(PhoneNumber instance);
   }
 
-  private String jsonString = null;
   private org.json.JSONObject jsonObject = null;
   private android.os.Bundle bundle = null;
   private android.os.Bundle changeLog = null;
@@ -58,8 +70,12 @@ public final class PhoneNumber implements android.os.Parcelable, com.clover.sdk.
   /**
    * Constructs a new instance from the given JSON String.
    */
-  public PhoneNumber(String json) {
-    this.jsonString = json;
+  public PhoneNumber(String json) throws java.lang.IllegalArgumentException {
+    try {
+      this.jsonObject = new org.json.JSONObject(json);
+    } catch (org.json.JSONException e) {
+      throw new java.lang.IllegalArgumentException("invalid json", e);
+    }
   }
 
   /**
@@ -74,9 +90,7 @@ public final class PhoneNumber implements android.os.Parcelable, com.clover.sdk.
    * Constructs a new instance that is a deep copy of the source instance. It does not copy the bundle or changelog.
    */
   public PhoneNumber(PhoneNumber src) {
-    if (src.jsonString != null) {
-      this.jsonString = src.jsonString;
-    } else {
+    if (src.jsonObject != null) {
       this.jsonObject = com.clover.sdk.v3.JsonHelper.deepCopy(src.getJSONObject());
     }
   }
@@ -138,17 +152,8 @@ public final class PhoneNumber implements android.os.Parcelable, com.clover.sdk.
    * reflected in this instance and vice-versa.
    */
   public org.json.JSONObject getJSONObject() {
-    try {
-      if (jsonObject == null) {
-        if (jsonString != null) {
-          jsonObject = new org.json.JSONObject(jsonString);
-          jsonString = null; // null this so it will be recreated if jsonObject is modified
-        } else {
-          jsonObject = new org.json.JSONObject();
-        }
-      }
-    } catch (org.json.JSONException e) {
-      throw new java.lang.IllegalArgumentException(e);
+    if (jsonObject == null) {
+      jsonObject = new org.json.JSONObject();
     }
     return jsonObject;
   }
@@ -156,14 +161,18 @@ public final class PhoneNumber implements android.os.Parcelable, com.clover.sdk.
 
   @Override
   public void validate() {
+
+    java.lang.String phoneNumber = getPhoneNumber();
+    if (phoneNumber == null) throw new java.lang.IllegalArgumentException("'phoneNumber' is required to be non-null");
   }
 
 
-  /**
-   */
-  public java.lang.String getPhoneNumber() {
-    return cacheGet(CacheKey.phoneNumber);
+
+  private java.lang.String extractId() {
+    return getJSONObject().isNull("id") ? null :
+      getJSONObject().optString("id");
   }
+
 
   private java.lang.String extractPhoneNumber() {
     return getJSONObject().isNull("phoneNumber") ? null :
@@ -171,17 +180,43 @@ public final class PhoneNumber implements android.os.Parcelable, com.clover.sdk.
   }
 
 
+  /** Checks whether the 'id' field is set and is not null */
+  public boolean isNotNullId() {
+    return cacheValueIsNotNull(CacheKey.id);
+  }
+
   /** Checks whether the 'phoneNumber' field is set and is not null */
   public boolean isNotNullPhoneNumber() {
     return cacheValueIsNotNull(CacheKey.phoneNumber);
   }
 
 
+  /** Checks whether the 'id' field has been set, however the value could be null */
+  public boolean hasId() {
+    return cacheHasKey(CacheKey.id);
+  }
+
   /** Checks whether the 'phoneNumber' field has been set, however the value could be null */
   public boolean hasPhoneNumber() {
     return cacheHasKey(CacheKey.phoneNumber);
   }
 
+
+  /**
+   * Sets the field 'id'.
+   */
+  public PhoneNumber setId(java.lang.String id) {
+    logChange("id");
+
+    try {
+      getJSONObject().put("id", id == null ? org.json.JSONObject.NULL : com.clover.sdk.v3.JsonHelper.toJSON(id));
+    } catch (org.json.JSONException e) {
+      throw new java.lang.IllegalArgumentException(e);
+    }
+
+    cacheMarkDirty(CacheKey.id);
+    return this;
+  }
 
   /**
    * Sets the field 'phoneNumber'.
@@ -199,6 +234,13 @@ public final class PhoneNumber implements android.os.Parcelable, com.clover.sdk.
     return this;
   }
 
+
+  /** Clears the 'id' field, the 'has' method for this field will now return false */
+  public void clearId() {
+    unlogChange("id");
+    getJSONObject().remove("id");
+    cacheRemoveValue(CacheKey.id);
+  }
 
   /** Clears the 'phoneNumber' field, the 'has' method for this field will now return false */
   public void clearPhoneNumber() {
@@ -278,7 +320,7 @@ public final class PhoneNumber implements android.os.Parcelable, com.clover.sdk.
 
   @Override
   public String toString() {
-    String json = jsonString != null ? jsonString : getJSONObject().toString();
+    String json = getJSONObject().toString();
 
     if (bundle != null) {
       bundle.isEmpty(); // Triggers unparcel
@@ -332,7 +374,9 @@ public final class PhoneNumber implements android.os.Parcelable, com.clover.sdk.
 
   public interface Constraints {
 
-    public static final boolean PHONENUMBER_IS_REQUIRED = false;
+    public static final boolean ID_IS_REQUIRED = false;
+
+    public static final boolean PHONENUMBER_IS_REQUIRED = true;
 
   }
 

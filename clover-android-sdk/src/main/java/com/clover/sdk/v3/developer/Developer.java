@@ -26,6 +26,202 @@ package com.clover.sdk.v3.developer;
 @SuppressWarnings("all")
 public final class Developer implements android.os.Parcelable, com.clover.sdk.v3.Validator, com.clover.sdk.JSONifiable {
 
+ /**
+   * Unique identifier
+  */
+  public java.lang.String getId() {
+    return cacheGet(CacheKey.id);
+  }
+ /**
+   * Developer's name.  Could be a company name.  Whatever is to be shown as who made the app in App Marketplace, e.g. NoshList, Pioneer Works Inc., Seven Spaces, etc.  Also used as (optional) Business DBA (Doing Business Name) name when sending to Braintree for app billing background check.
+  */
+  public java.lang.String getName() {
+    return cacheGet(CacheKey.name);
+  }
+ /**
+   * Developer's individual first name
+  */
+  public java.lang.String getFirstName() {
+    return cacheGet(CacheKey.firstName);
+  }
+ /**
+   * Developer's individual last name
+  */
+  public java.lang.String getLastName() {
+    return cacheGet(CacheKey.lastName);
+  }
+ /**
+   * Developer's email
+  */
+  public java.lang.String getEmail() {
+    return cacheGet(CacheKey.email);
+  }
+ /**
+   * Developer's phone
+  */
+  public java.lang.String getPhone() {
+    return cacheGet(CacheKey.phone);
+  }
+ /**
+   * Developer's date of birth
+  */
+  public java.lang.String getDob() {
+    return cacheGet(CacheKey.dob);
+  }
+ /**
+   * Developer's SSN; won't be stored in DB
+  */
+  public java.lang.String getSsn() {
+    return cacheGet(CacheKey.ssn);
+  }
+ /**
+   * Developer's address
+  */
+  public java.lang.String getAddress() {
+    return cacheGet(CacheKey.address);
+  }
+ /**
+   * Developer's city
+  */
+  public java.lang.String getCity() {
+    return cacheGet(CacheKey.city);
+  }
+ /**
+   * Developer's state
+  */
+  public java.lang.String getState() {
+    return cacheGet(CacheKey.state);
+  }
+ /**
+   * Developer's country
+  */
+  public java.lang.String getCountry() {
+    return cacheGet(CacheKey.country);
+  }
+ /**
+   * Developer's postal code
+  */
+  public java.lang.String getPostalCode() {
+    return cacheGet(CacheKey.postalCode);
+  }
+ /**
+   * Developer's bank account number; won't be stored in DB
+  */
+  public java.lang.String getBankAccountNumber() {
+    return cacheGet(CacheKey.bankAccountNumber);
+  }
+ /**
+   * Developer's bank routing number
+  */
+  public java.lang.String getBankRoutingNumber() {
+    return cacheGet(CacheKey.bankRoutingNumber);
+  }
+ /**
+   * Developer's business legal name
+  */
+  public java.lang.String getBusinessLegalName() {
+    return cacheGet(CacheKey.businessLegalName);
+  }
+ /**
+   * Developer's Tax ID
+  */
+  public java.lang.String getTin() {
+    return cacheGet(CacheKey.tin);
+  }
+ /**
+   * Developer's business address
+  */
+  public java.lang.String getBusinessAddress() {
+    return cacheGet(CacheKey.businessAddress);
+  }
+ /**
+   * Developer's business city
+  */
+  public java.lang.String getBusinessCity() {
+    return cacheGet(CacheKey.businessCity);
+  }
+ /**
+   * Developer's business state
+  */
+  public java.lang.String getBusinessState() {
+    return cacheGet(CacheKey.businessState);
+  }
+ /**
+   * Developer's business country
+  */
+  public java.lang.String getBusinessCountry() {
+    return cacheGet(CacheKey.businessCountry);
+  }
+ /**
+   * Developer's business postal code
+  */
+  public java.lang.String getBusinessPostalCode() {
+    return cacheGet(CacheKey.businessPostalCode);
+  }
+ /**
+   * Developer's billing status
+  */
+  public com.clover.sdk.v3.developer.DeveloperBillingStatus getBillingStatus() {
+    return cacheGet(CacheKey.billingStatus);
+  }
+ /**
+   * Developer's billing status message
+  */
+  public java.lang.String getBillingStatusMessage() {
+    return cacheGet(CacheKey.billingStatusMessage);
+  }
+  public com.clover.sdk.v3.base.ApprovalStatus getApprovalStatus() {
+    return cacheGet(CacheKey.approvalStatus);
+  }
+ /**
+   * If the user has accepted the developer agreement
+  */
+  public java.lang.Boolean getAcceptedAgreement() {
+    return cacheGet(CacheKey.acceptedAgreement);
+  }
+ /**
+   * Name of public relations contact
+  */
+  public java.lang.String getPrName() {
+    return cacheGet(CacheKey.prName);
+  }
+ /**
+   * Email of public relations contact
+  */
+  public java.lang.String getPrEmail() {
+    return cacheGet(CacheKey.prEmail);
+  }
+ /**
+   * Phone of public relations contact
+  */
+  public java.lang.String getPrPhone() {
+    return cacheGet(CacheKey.prPhone);
+  }
+ /**
+   * Developer's business website
+  */
+  public java.lang.String getWebsite() {
+    return cacheGet(CacheKey.website);
+  }
+ /**
+   * Timestamp indicating the last time the developer was modified.
+  */
+  public java.lang.Long getModifiedTime() {
+    return cacheGet(CacheKey.modifiedTime);
+  }
+ /**
+   * The user account that owns this developer account.
+  */
+  public com.clover.sdk.v3.base.Reference getOwner() {
+    return cacheGet(CacheKey.owner);
+  }
+ /**
+   * If the developer can apply for pricing or not
+  */
+  public java.lang.Boolean getCanApplyForPricing() {
+    return cacheGet(CacheKey.canApplyForPricing);
+  }
+
 
   private enum CacheKey {
     id {
@@ -94,6 +290,12 @@ public final class Developer implements android.os.Parcelable, com.clover.sdk.v3
         return instance.extractState();
       }
     },
+    country {
+      @Override
+      public Object extractValue(Developer instance) {
+        return instance.extractCountry();
+      }
+    },
     postalCode {
       @Override
       public Object extractValue(Developer instance) {
@@ -118,10 +320,10 @@ public final class Developer implements android.os.Parcelable, com.clover.sdk.v3
         return instance.extractBusinessLegalName();
       }
     },
-    ein {
+    tin {
       @Override
       public Object extractValue(Developer instance) {
-        return instance.extractEin();
+        return instance.extractTin();
       }
     },
     businessAddress {
@@ -142,6 +344,12 @@ public final class Developer implements android.os.Parcelable, com.clover.sdk.v3
         return instance.extractBusinessState();
       }
     },
+    businessCountry {
+      @Override
+      public Object extractValue(Developer instance) {
+        return instance.extractBusinessCountry();
+      }
+    },
     businessPostalCode {
       @Override
       public Object extractValue(Developer instance) {
@@ -160,10 +368,46 @@ public final class Developer implements android.os.Parcelable, com.clover.sdk.v3
         return instance.extractBillingStatusMessage();
       }
     },
+    approvalStatus {
+      @Override
+      public Object extractValue(Developer instance) {
+        return instance.extractApprovalStatus();
+      }
+    },
+    acceptedAgreement {
+      @Override
+      public Object extractValue(Developer instance) {
+        return instance.extractAcceptedAgreement();
+      }
+    },
+    prName {
+      @Override
+      public Object extractValue(Developer instance) {
+        return instance.extractPrName();
+      }
+    },
+    prEmail {
+      @Override
+      public Object extractValue(Developer instance) {
+        return instance.extractPrEmail();
+      }
+    },
+    prPhone {
+      @Override
+      public Object extractValue(Developer instance) {
+        return instance.extractPrPhone();
+      }
+    },
     website {
       @Override
       public Object extractValue(Developer instance) {
         return instance.extractWebsite();
+      }
+    },
+    modifiedTime {
+      @Override
+      public Object extractValue(Developer instance) {
+        return instance.extractModifiedTime();
       }
     },
     owner {
@@ -172,12 +416,17 @@ public final class Developer implements android.os.Parcelable, com.clover.sdk.v3
         return instance.extractOwner();
       }
     },
+    canApplyForPricing {
+      @Override
+      public Object extractValue(Developer instance) {
+        return instance.extractCanApplyForPricing();
+      }
+    },
     ;
 
     public abstract Object extractValue(Developer instance);
   }
 
-  private String jsonString = null;
   private org.json.JSONObject jsonObject = null;
   private android.os.Bundle bundle = null;
   private android.os.Bundle changeLog = null;
@@ -196,8 +445,12 @@ public final class Developer implements android.os.Parcelable, com.clover.sdk.v3
   /**
    * Constructs a new instance from the given JSON String.
    */
-  public Developer(String json) {
-    this.jsonString = json;
+  public Developer(String json) throws java.lang.IllegalArgumentException {
+    try {
+      this.jsonObject = new org.json.JSONObject(json);
+    } catch (org.json.JSONException e) {
+      throw new java.lang.IllegalArgumentException("invalid json", e);
+    }
   }
 
   /**
@@ -212,9 +465,7 @@ public final class Developer implements android.os.Parcelable, com.clover.sdk.v3
    * Constructs a new instance that is a deep copy of the source instance. It does not copy the bundle or changelog.
    */
   public Developer(Developer src) {
-    if (src.jsonString != null) {
-      this.jsonString = src.jsonString;
-    } else {
+    if (src.jsonObject != null) {
       this.jsonObject = com.clover.sdk.v3.JsonHelper.deepCopy(src.getJSONObject());
     }
   }
@@ -276,17 +527,8 @@ public final class Developer implements android.os.Parcelable, com.clover.sdk.v3
    * reflected in this instance and vice-versa.
    */
   public org.json.JSONObject getJSONObject() {
-    try {
-      if (jsonObject == null) {
-        if (jsonString != null) {
-          jsonObject = new org.json.JSONObject(jsonString);
-          jsonString = null; // null this so it will be recreated if jsonObject is modified
-        } else {
-          jsonObject = new org.json.JSONObject();
-        }
-      }
-    } catch (org.json.JSONException e) {
-      throw new java.lang.IllegalArgumentException(e);
+    if (jsonObject == null) {
+      jsonObject = new org.json.JSONObject();
     }
     return jsonObject;
   }
@@ -295,360 +537,288 @@ public final class Developer implements android.os.Parcelable, com.clover.sdk.v3
   @Override
   public void validate() {
     java.lang.String id = getId();
-    if (id != null && id.length() > 13) throw new IllegalArgumentException("Maximum string length exceeded for 'id'");
+    if (id != null && id.length() > 13) { throw new IllegalArgumentException("Maximum string length exceeded for 'id'");}
 
     java.lang.String name = getName();
-    if (name != null && name.length() > 127) throw new IllegalArgumentException("Maximum string length exceeded for 'name'");
+    if (name != null && name.length() > 127) { throw new IllegalArgumentException("Maximum string length exceeded for 'name'");}
 
     java.lang.String firstName = getFirstName();
-    if (firstName != null && firstName.length() > 127) throw new IllegalArgumentException("Maximum string length exceeded for 'firstName'");
+    if (firstName != null && firstName.length() > 127) { throw new IllegalArgumentException("Maximum string length exceeded for 'firstName'");}
 
     java.lang.String lastName = getLastName();
-    if (lastName != null && lastName.length() > 127) throw new IllegalArgumentException("Maximum string length exceeded for 'lastName'");
+    if (lastName != null && lastName.length() > 127) { throw new IllegalArgumentException("Maximum string length exceeded for 'lastName'");}
 
     java.lang.String email = getEmail();
-    if (email != null && email.length() > 127) throw new IllegalArgumentException("Maximum string length exceeded for 'email'");
+    if (email != null && email.length() > 127) { throw new IllegalArgumentException("Maximum string length exceeded for 'email'");}
 
     java.lang.String phone = getPhone();
-    if (phone != null && phone.length() > 25) throw new IllegalArgumentException("Maximum string length exceeded for 'phone'");
+    if (phone != null && phone.length() > 25) { throw new IllegalArgumentException("Maximum string length exceeded for 'phone'");}
 
     java.lang.String dob = getDob();
-    if (dob != null && dob.length() > 10) throw new IllegalArgumentException("Maximum string length exceeded for 'dob'");
+    if (dob != null && dob.length() > 10) { throw new IllegalArgumentException("Maximum string length exceeded for 'dob'");}
 
     java.lang.String ssn = getSsn();
-    if (ssn != null && ssn.length() > 9) throw new IllegalArgumentException("Maximum string length exceeded for 'ssn'");
+    if (ssn != null && ssn.length() > 9) { throw new IllegalArgumentException("Maximum string length exceeded for 'ssn'");}
 
     java.lang.String address = getAddress();
-    if (address != null && address.length() > 255) throw new IllegalArgumentException("Maximum string length exceeded for 'address'");
+    if (address != null && address.length() > 255) { throw new IllegalArgumentException("Maximum string length exceeded for 'address'");}
 
     java.lang.String city = getCity();
-    if (city != null && city.length() > 127) throw new IllegalArgumentException("Maximum string length exceeded for 'city'");
+    if (city != null && city.length() > 127) { throw new IllegalArgumentException("Maximum string length exceeded for 'city'");}
 
     java.lang.String state = getState();
-    if (state != null && state.length() > 2) throw new IllegalArgumentException("Maximum string length exceeded for 'state'");
+    if (state != null && state.length() > 2) { throw new IllegalArgumentException("Maximum string length exceeded for 'state'");}
+
+    java.lang.String country = getCountry();
+    if (country != null && country.length() > 2) { throw new IllegalArgumentException("Maximum string length exceeded for 'country'");}
 
     java.lang.String postalCode = getPostalCode();
-    if (postalCode != null && postalCode.length() > 20) throw new IllegalArgumentException("Maximum string length exceeded for 'postalCode'");
+    if (postalCode != null && postalCode.length() > 20) { throw new IllegalArgumentException("Maximum string length exceeded for 'postalCode'");}
 
     java.lang.String bankAccountNumber = getBankAccountNumber();
-    if (bankAccountNumber != null && bankAccountNumber.length() > 20) throw new IllegalArgumentException("Maximum string length exceeded for 'bankAccountNumber'");
+    if (bankAccountNumber != null && bankAccountNumber.length() > 20) { throw new IllegalArgumentException("Maximum string length exceeded for 'bankAccountNumber'");}
 
     java.lang.String bankRoutingNumber = getBankRoutingNumber();
-    if (bankRoutingNumber != null && bankRoutingNumber.length() > 9) throw new IllegalArgumentException("Maximum string length exceeded for 'bankRoutingNumber'");
+    if (bankRoutingNumber != null && bankRoutingNumber.length() > 9) { throw new IllegalArgumentException("Maximum string length exceeded for 'bankRoutingNumber'");}
 
     java.lang.String businessLegalName = getBusinessLegalName();
-    if (businessLegalName != null && businessLegalName.length() > 255) throw new IllegalArgumentException("Maximum string length exceeded for 'businessLegalName'");
+    if (businessLegalName != null && businessLegalName.length() > 255) { throw new IllegalArgumentException("Maximum string length exceeded for 'businessLegalName'");}
 
-    java.lang.String ein = getEin();
-    if (ein != null && ein.length() > 9) throw new IllegalArgumentException("Maximum string length exceeded for 'ein'");
+    java.lang.String tin = getTin();
+    if (tin != null && tin.length() > 9) { throw new IllegalArgumentException("Maximum string length exceeded for 'tin'");}
 
     java.lang.String businessAddress = getBusinessAddress();
-    if (businessAddress != null && businessAddress.length() > 255) throw new IllegalArgumentException("Maximum string length exceeded for 'businessAddress'");
+    if (businessAddress != null && businessAddress.length() > 255) { throw new IllegalArgumentException("Maximum string length exceeded for 'businessAddress'");}
 
     java.lang.String businessCity = getBusinessCity();
-    if (businessCity != null && businessCity.length() > 127) throw new IllegalArgumentException("Maximum string length exceeded for 'businessCity'");
+    if (businessCity != null && businessCity.length() > 127) { throw new IllegalArgumentException("Maximum string length exceeded for 'businessCity'");}
 
     java.lang.String businessState = getBusinessState();
-    if (businessState != null && businessState.length() > 2) throw new IllegalArgumentException("Maximum string length exceeded for 'businessState'");
+    if (businessState != null && businessState.length() > 2) { throw new IllegalArgumentException("Maximum string length exceeded for 'businessState'");}
+
+    java.lang.String businessCountry = getBusinessCountry();
+    if (businessCountry != null && businessCountry.length() > 2) { throw new IllegalArgumentException("Maximum string length exceeded for 'businessCountry'");}
 
     java.lang.String businessPostalCode = getBusinessPostalCode();
-    if (businessPostalCode != null && businessPostalCode.length() > 20) throw new IllegalArgumentException("Maximum string length exceeded for 'businessPostalCode'");
-
-    java.lang.String billingStatus = getBillingStatus();
-    if (billingStatus != null && billingStatus.length() > 10) throw new IllegalArgumentException("Maximum string length exceeded for 'billingStatus'");
+    if (businessPostalCode != null && businessPostalCode.length() > 20) { throw new IllegalArgumentException("Maximum string length exceeded for 'businessPostalCode'");}
 
     java.lang.String billingStatusMessage = getBillingStatusMessage();
-    if (billingStatusMessage != null && billingStatusMessage.length() > 127) throw new IllegalArgumentException("Maximum string length exceeded for 'billingStatusMessage'");
+    if (billingStatusMessage != null && billingStatusMessage.length() > 127) { throw new IllegalArgumentException("Maximum string length exceeded for 'billingStatusMessage'");}
+
+    java.lang.String prName = getPrName();
+    if (prName != null && prName.length() > 255) { throw new IllegalArgumentException("Maximum string length exceeded for 'prName'");}
+
+    java.lang.String prEmail = getPrEmail();
+    if (prEmail != null && prEmail.length() > 127) { throw new IllegalArgumentException("Maximum string length exceeded for 'prEmail'");}
+
+    java.lang.String prPhone = getPrPhone();
+    if (prPhone != null && prPhone.length() > 25) { throw new IllegalArgumentException("Maximum string length exceeded for 'prPhone'");}
 
     java.lang.String website = getWebsite();
-    if (website != null && website.length() > 255) throw new IllegalArgumentException("Maximum string length exceeded for 'website'");
+    if (website != null && website.length() > 255) { throw new IllegalArgumentException("Maximum string length exceeded for 'website'");}
   }
 
 
-  /**
-   * Unique identifier
-   */
-  public java.lang.String getId() {
-    return cacheGet(CacheKey.id);
-  }
 
   private java.lang.String extractId() {
     return getJSONObject().isNull("id") ? null :
       getJSONObject().optString("id");
   }
 
-  /**
-   * Developer's name.  Could be a company name.  Whatever is to be shown as who made the app in App Marketplace, e.g. NoshList, Pioneer Works Inc., Seven Spaces, etc.  Also used as (optional) Business DBA (Doing Business Name) name when sending to Braintree for app billing background check.
-   */
-  public java.lang.String getName() {
-    return cacheGet(CacheKey.name);
-  }
 
   private java.lang.String extractName() {
     return getJSONObject().isNull("name") ? null :
       getJSONObject().optString("name");
   }
 
-  /**
-   * Developer's individual first name
-   */
-  public java.lang.String getFirstName() {
-    return cacheGet(CacheKey.firstName);
-  }
 
   private java.lang.String extractFirstName() {
     return getJSONObject().isNull("firstName") ? null :
       getJSONObject().optString("firstName");
   }
 
-  /**
-   * Developer's individual last name
-   */
-  public java.lang.String getLastName() {
-    return cacheGet(CacheKey.lastName);
-  }
 
   private java.lang.String extractLastName() {
     return getJSONObject().isNull("lastName") ? null :
       getJSONObject().optString("lastName");
   }
 
-  /**
-   * Developer's email
-   */
-  public java.lang.String getEmail() {
-    return cacheGet(CacheKey.email);
-  }
 
   private java.lang.String extractEmail() {
     return getJSONObject().isNull("email") ? null :
       getJSONObject().optString("email");
   }
 
-  /**
-   * Developer's phone
-   */
-  public java.lang.String getPhone() {
-    return cacheGet(CacheKey.phone);
-  }
 
   private java.lang.String extractPhone() {
     return getJSONObject().isNull("phone") ? null :
       getJSONObject().optString("phone");
   }
 
-  /**
-   * Developer's date of birth
-   */
-  public java.lang.String getDob() {
-    return cacheGet(CacheKey.dob);
-  }
 
   private java.lang.String extractDob() {
     return getJSONObject().isNull("dob") ? null :
       getJSONObject().optString("dob");
   }
 
-  /**
-   * Developer's SSN; won't be stored in DB
-   */
-  public java.lang.String getSsn() {
-    return cacheGet(CacheKey.ssn);
-  }
 
   private java.lang.String extractSsn() {
     return getJSONObject().isNull("ssn") ? null :
       getJSONObject().optString("ssn");
   }
 
-  /**
-   * Developer's address
-   */
-  public java.lang.String getAddress() {
-    return cacheGet(CacheKey.address);
-  }
 
   private java.lang.String extractAddress() {
     return getJSONObject().isNull("address") ? null :
       getJSONObject().optString("address");
   }
 
-  /**
-   * Developer's city
-   */
-  public java.lang.String getCity() {
-    return cacheGet(CacheKey.city);
-  }
 
   private java.lang.String extractCity() {
     return getJSONObject().isNull("city") ? null :
       getJSONObject().optString("city");
   }
 
-  /**
-   * Developer's state
-   */
-  public java.lang.String getState() {
-    return cacheGet(CacheKey.state);
-  }
 
   private java.lang.String extractState() {
     return getJSONObject().isNull("state") ? null :
       getJSONObject().optString("state");
   }
 
-  /**
-   * Developer's postal code
-   */
-  public java.lang.String getPostalCode() {
-    return cacheGet(CacheKey.postalCode);
+
+  private java.lang.String extractCountry() {
+    return getJSONObject().isNull("country") ? null :
+      getJSONObject().optString("country");
   }
+
 
   private java.lang.String extractPostalCode() {
     return getJSONObject().isNull("postalCode") ? null :
       getJSONObject().optString("postalCode");
   }
 
-  /**
-   * Developer's bank account number; won't be stored in DB
-   */
-  public java.lang.String getBankAccountNumber() {
-    return cacheGet(CacheKey.bankAccountNumber);
-  }
 
   private java.lang.String extractBankAccountNumber() {
     return getJSONObject().isNull("bankAccountNumber") ? null :
       getJSONObject().optString("bankAccountNumber");
   }
 
-  /**
-   * Developer's bank routing number
-   */
-  public java.lang.String getBankRoutingNumber() {
-    return cacheGet(CacheKey.bankRoutingNumber);
-  }
 
   private java.lang.String extractBankRoutingNumber() {
     return getJSONObject().isNull("bankRoutingNumber") ? null :
       getJSONObject().optString("bankRoutingNumber");
   }
 
-  /**
-   * Developer's business legal name
-   */
-  public java.lang.String getBusinessLegalName() {
-    return cacheGet(CacheKey.businessLegalName);
-  }
 
   private java.lang.String extractBusinessLegalName() {
     return getJSONObject().isNull("businessLegalName") ? null :
       getJSONObject().optString("businessLegalName");
   }
 
-  /**
-   * Developer's EIN; won't be stored in DB
-   */
-  public java.lang.String getEin() {
-    return cacheGet(CacheKey.ein);
+
+  private java.lang.String extractTin() {
+    return getJSONObject().isNull("tin") ? null :
+      getJSONObject().optString("tin");
   }
 
-  private java.lang.String extractEin() {
-    return getJSONObject().isNull("ein") ? null :
-      getJSONObject().optString("ein");
-  }
-
-  /**
-   * Developer's business address
-   */
-  public java.lang.String getBusinessAddress() {
-    return cacheGet(CacheKey.businessAddress);
-  }
 
   private java.lang.String extractBusinessAddress() {
     return getJSONObject().isNull("businessAddress") ? null :
       getJSONObject().optString("businessAddress");
   }
 
-  /**
-   * Developer's business city
-   */
-  public java.lang.String getBusinessCity() {
-    return cacheGet(CacheKey.businessCity);
-  }
 
   private java.lang.String extractBusinessCity() {
     return getJSONObject().isNull("businessCity") ? null :
       getJSONObject().optString("businessCity");
   }
 
-  /**
-   * Developer's business state
-   */
-  public java.lang.String getBusinessState() {
-    return cacheGet(CacheKey.businessState);
-  }
 
   private java.lang.String extractBusinessState() {
     return getJSONObject().isNull("businessState") ? null :
       getJSONObject().optString("businessState");
   }
 
-  /**
-   * Developer's business postal code
-   */
-  public java.lang.String getBusinessPostalCode() {
-    return cacheGet(CacheKey.businessPostalCode);
+
+  private java.lang.String extractBusinessCountry() {
+    return getJSONObject().isNull("businessCountry") ? null :
+      getJSONObject().optString("businessCountry");
   }
+
 
   private java.lang.String extractBusinessPostalCode() {
     return getJSONObject().isNull("businessPostalCode") ? null :
       getJSONObject().optString("businessPostalCode");
   }
 
-  /**
-   * Developer's billing status
-   */
-  public java.lang.String getBillingStatus() {
-    return cacheGet(CacheKey.billingStatus);
+
+  private com.clover.sdk.v3.developer.DeveloperBillingStatus extractBillingStatus() {
+    if (!getJSONObject().isNull("billingStatus")) {
+      try {
+        return com.clover.sdk.v3.developer.DeveloperBillingStatus.valueOf(getJSONObject().optString("billingStatus"));
+      } catch(Exception e) {
+        e.printStackTrace();
+      }
+    }
+
+    return null;
   }
 
-  private java.lang.String extractBillingStatus() {
-    return getJSONObject().isNull("billingStatus") ? null :
-      getJSONObject().optString("billingStatus");
-  }
-
-  /**
-   * Developer's billing status message
-   */
-  public java.lang.String getBillingStatusMessage() {
-    return cacheGet(CacheKey.billingStatusMessage);
-  }
 
   private java.lang.String extractBillingStatusMessage() {
     return getJSONObject().isNull("billingStatusMessage") ? null :
       getJSONObject().optString("billingStatusMessage");
   }
 
-  /**
-   * Developer's business website
-   */
-  public java.lang.String getWebsite() {
-    return cacheGet(CacheKey.website);
+
+  private com.clover.sdk.v3.base.ApprovalStatus extractApprovalStatus() {
+    if (!getJSONObject().isNull("approvalStatus")) {
+      try {
+        return com.clover.sdk.v3.base.ApprovalStatus.valueOf(getJSONObject().optString("approvalStatus"));
+      } catch(Exception e) {
+        e.printStackTrace();
+      }
+    }
+
+    return null;
   }
+
+
+  private java.lang.Boolean extractAcceptedAgreement() {
+    return getJSONObject().isNull("acceptedAgreement") ? null :
+      getJSONObject().optBoolean("acceptedAgreement");
+  }
+
+
+  private java.lang.String extractPrName() {
+    return getJSONObject().isNull("prName") ? null :
+      getJSONObject().optString("prName");
+  }
+
+
+  private java.lang.String extractPrEmail() {
+    return getJSONObject().isNull("prEmail") ? null :
+      getJSONObject().optString("prEmail");
+  }
+
+
+  private java.lang.String extractPrPhone() {
+    return getJSONObject().isNull("prPhone") ? null :
+      getJSONObject().optString("prPhone");
+  }
+
 
   private java.lang.String extractWebsite() {
     return getJSONObject().isNull("website") ? null :
       getJSONObject().optString("website");
   }
 
-  /**
-   * The user account that owns this developer account.
-   *
-   * The returned object is not a copy so changes to it will be reflected in this instance and vice-versa.
-   */
-  public com.clover.sdk.v3.base.Reference getOwner() {
-    return cacheGet(CacheKey.owner);
+
+  private java.lang.Long extractModifiedTime() {
+    return getJSONObject().isNull("modifiedTime") ? null :
+      getJSONObject().optLong("modifiedTime");
   }
+
 
   private com.clover.sdk.v3.base.Reference extractOwner() {
     org.json.JSONObject jsonObj = getJSONObject().optJSONObject("owner");
@@ -656,6 +826,12 @@ public final class Developer implements android.os.Parcelable, com.clover.sdk.v3
       return new com.clover.sdk.v3.base.Reference(getJSONObject().optJSONObject("owner"));
     }
     return null;
+  }
+
+
+  private java.lang.Boolean extractCanApplyForPricing() {
+    return getJSONObject().isNull("canApplyForPricing") ? null :
+      getJSONObject().optBoolean("canApplyForPricing");
   }
 
 
@@ -714,6 +890,11 @@ public final class Developer implements android.os.Parcelable, com.clover.sdk.v3
     return cacheValueIsNotNull(CacheKey.state);
   }
 
+  /** Checks whether the 'country' field is set and is not null */
+  public boolean isNotNullCountry() {
+    return cacheValueIsNotNull(CacheKey.country);
+  }
+
   /** Checks whether the 'postalCode' field is set and is not null */
   public boolean isNotNullPostalCode() {
     return cacheValueIsNotNull(CacheKey.postalCode);
@@ -734,9 +915,9 @@ public final class Developer implements android.os.Parcelable, com.clover.sdk.v3
     return cacheValueIsNotNull(CacheKey.businessLegalName);
   }
 
-  /** Checks whether the 'ein' field is set and is not null */
-  public boolean isNotNullEin() {
-    return cacheValueIsNotNull(CacheKey.ein);
+  /** Checks whether the 'tin' field is set and is not null */
+  public boolean isNotNullTin() {
+    return cacheValueIsNotNull(CacheKey.tin);
   }
 
   /** Checks whether the 'businessAddress' field is set and is not null */
@@ -754,6 +935,11 @@ public final class Developer implements android.os.Parcelable, com.clover.sdk.v3
     return cacheValueIsNotNull(CacheKey.businessState);
   }
 
+  /** Checks whether the 'businessCountry' field is set and is not null */
+  public boolean isNotNullBusinessCountry() {
+    return cacheValueIsNotNull(CacheKey.businessCountry);
+  }
+
   /** Checks whether the 'businessPostalCode' field is set and is not null */
   public boolean isNotNullBusinessPostalCode() {
     return cacheValueIsNotNull(CacheKey.businessPostalCode);
@@ -769,14 +955,49 @@ public final class Developer implements android.os.Parcelable, com.clover.sdk.v3
     return cacheValueIsNotNull(CacheKey.billingStatusMessage);
   }
 
+  /** Checks whether the 'approvalStatus' field is set and is not null */
+  public boolean isNotNullApprovalStatus() {
+    return cacheValueIsNotNull(CacheKey.approvalStatus);
+  }
+
+  /** Checks whether the 'acceptedAgreement' field is set and is not null */
+  public boolean isNotNullAcceptedAgreement() {
+    return cacheValueIsNotNull(CacheKey.acceptedAgreement);
+  }
+
+  /** Checks whether the 'prName' field is set and is not null */
+  public boolean isNotNullPrName() {
+    return cacheValueIsNotNull(CacheKey.prName);
+  }
+
+  /** Checks whether the 'prEmail' field is set and is not null */
+  public boolean isNotNullPrEmail() {
+    return cacheValueIsNotNull(CacheKey.prEmail);
+  }
+
+  /** Checks whether the 'prPhone' field is set and is not null */
+  public boolean isNotNullPrPhone() {
+    return cacheValueIsNotNull(CacheKey.prPhone);
+  }
+
   /** Checks whether the 'website' field is set and is not null */
   public boolean isNotNullWebsite() {
     return cacheValueIsNotNull(CacheKey.website);
   }
 
+  /** Checks whether the 'modifiedTime' field is set and is not null */
+  public boolean isNotNullModifiedTime() {
+    return cacheValueIsNotNull(CacheKey.modifiedTime);
+  }
+
   /** Checks whether the 'owner' field is set and is not null */
   public boolean isNotNullOwner() {
     return cacheValueIsNotNull(CacheKey.owner);
+  }
+
+  /** Checks whether the 'canApplyForPricing' field is set and is not null */
+  public boolean isNotNullCanApplyForPricing() {
+    return cacheValueIsNotNull(CacheKey.canApplyForPricing);
   }
 
 
@@ -835,6 +1056,11 @@ public final class Developer implements android.os.Parcelable, com.clover.sdk.v3
     return cacheHasKey(CacheKey.state);
   }
 
+  /** Checks whether the 'country' field has been set, however the value could be null */
+  public boolean hasCountry() {
+    return cacheHasKey(CacheKey.country);
+  }
+
   /** Checks whether the 'postalCode' field has been set, however the value could be null */
   public boolean hasPostalCode() {
     return cacheHasKey(CacheKey.postalCode);
@@ -855,9 +1081,9 @@ public final class Developer implements android.os.Parcelable, com.clover.sdk.v3
     return cacheHasKey(CacheKey.businessLegalName);
   }
 
-  /** Checks whether the 'ein' field has been set, however the value could be null */
-  public boolean hasEin() {
-    return cacheHasKey(CacheKey.ein);
+  /** Checks whether the 'tin' field has been set, however the value could be null */
+  public boolean hasTin() {
+    return cacheHasKey(CacheKey.tin);
   }
 
   /** Checks whether the 'businessAddress' field has been set, however the value could be null */
@@ -875,6 +1101,11 @@ public final class Developer implements android.os.Parcelable, com.clover.sdk.v3
     return cacheHasKey(CacheKey.businessState);
   }
 
+  /** Checks whether the 'businessCountry' field has been set, however the value could be null */
+  public boolean hasBusinessCountry() {
+    return cacheHasKey(CacheKey.businessCountry);
+  }
+
   /** Checks whether the 'businessPostalCode' field has been set, however the value could be null */
   public boolean hasBusinessPostalCode() {
     return cacheHasKey(CacheKey.businessPostalCode);
@@ -890,14 +1121,49 @@ public final class Developer implements android.os.Parcelable, com.clover.sdk.v3
     return cacheHasKey(CacheKey.billingStatusMessage);
   }
 
+  /** Checks whether the 'approvalStatus' field has been set, however the value could be null */
+  public boolean hasApprovalStatus() {
+    return cacheHasKey(CacheKey.approvalStatus);
+  }
+
+  /** Checks whether the 'acceptedAgreement' field has been set, however the value could be null */
+  public boolean hasAcceptedAgreement() {
+    return cacheHasKey(CacheKey.acceptedAgreement);
+  }
+
+  /** Checks whether the 'prName' field has been set, however the value could be null */
+  public boolean hasPrName() {
+    return cacheHasKey(CacheKey.prName);
+  }
+
+  /** Checks whether the 'prEmail' field has been set, however the value could be null */
+  public boolean hasPrEmail() {
+    return cacheHasKey(CacheKey.prEmail);
+  }
+
+  /** Checks whether the 'prPhone' field has been set, however the value could be null */
+  public boolean hasPrPhone() {
+    return cacheHasKey(CacheKey.prPhone);
+  }
+
   /** Checks whether the 'website' field has been set, however the value could be null */
   public boolean hasWebsite() {
     return cacheHasKey(CacheKey.website);
   }
 
+  /** Checks whether the 'modifiedTime' field has been set, however the value could be null */
+  public boolean hasModifiedTime() {
+    return cacheHasKey(CacheKey.modifiedTime);
+  }
+
   /** Checks whether the 'owner' field has been set, however the value could be null */
   public boolean hasOwner() {
     return cacheHasKey(CacheKey.owner);
+  }
+
+  /** Checks whether the 'canApplyForPricing' field has been set, however the value could be null */
+  public boolean hasCanApplyForPricing() {
+    return cacheHasKey(CacheKey.canApplyForPricing);
   }
 
 
@@ -1078,6 +1344,22 @@ public final class Developer implements android.os.Parcelable, com.clover.sdk.v3
   }
 
   /**
+   * Sets the field 'country'.
+   */
+  public Developer setCountry(java.lang.String country) {
+    logChange("country");
+
+    try {
+      getJSONObject().put("country", country == null ? org.json.JSONObject.NULL : com.clover.sdk.v3.JsonHelper.toJSON(country));
+    } catch (org.json.JSONException e) {
+      throw new java.lang.IllegalArgumentException(e);
+    }
+
+    cacheMarkDirty(CacheKey.country);
+    return this;
+  }
+
+  /**
    * Sets the field 'postalCode'.
    */
   public Developer setPostalCode(java.lang.String postalCode) {
@@ -1142,18 +1424,18 @@ public final class Developer implements android.os.Parcelable, com.clover.sdk.v3
   }
 
   /**
-   * Sets the field 'ein'.
+   * Sets the field 'tin'.
    */
-  public Developer setEin(java.lang.String ein) {
-    logChange("ein");
+  public Developer setTin(java.lang.String tin) {
+    logChange("tin");
 
     try {
-      getJSONObject().put("ein", ein == null ? org.json.JSONObject.NULL : com.clover.sdk.v3.JsonHelper.toJSON(ein));
+      getJSONObject().put("tin", tin == null ? org.json.JSONObject.NULL : com.clover.sdk.v3.JsonHelper.toJSON(tin));
     } catch (org.json.JSONException e) {
       throw new java.lang.IllegalArgumentException(e);
     }
 
-    cacheMarkDirty(CacheKey.ein);
+    cacheMarkDirty(CacheKey.tin);
     return this;
   }
 
@@ -1206,6 +1488,22 @@ public final class Developer implements android.os.Parcelable, com.clover.sdk.v3
   }
 
   /**
+   * Sets the field 'businessCountry'.
+   */
+  public Developer setBusinessCountry(java.lang.String businessCountry) {
+    logChange("businessCountry");
+
+    try {
+      getJSONObject().put("businessCountry", businessCountry == null ? org.json.JSONObject.NULL : com.clover.sdk.v3.JsonHelper.toJSON(businessCountry));
+    } catch (org.json.JSONException e) {
+      throw new java.lang.IllegalArgumentException(e);
+    }
+
+    cacheMarkDirty(CacheKey.businessCountry);
+    return this;
+  }
+
+  /**
    * Sets the field 'businessPostalCode'.
    */
   public Developer setBusinessPostalCode(java.lang.String businessPostalCode) {
@@ -1224,7 +1522,7 @@ public final class Developer implements android.os.Parcelable, com.clover.sdk.v3
   /**
    * Sets the field 'billingStatus'.
    */
-  public Developer setBillingStatus(java.lang.String billingStatus) {
+  public Developer setBillingStatus(com.clover.sdk.v3.developer.DeveloperBillingStatus billingStatus) {
     logChange("billingStatus");
 
     try {
@@ -1254,6 +1552,86 @@ public final class Developer implements android.os.Parcelable, com.clover.sdk.v3
   }
 
   /**
+   * Sets the field 'approvalStatus'.
+   */
+  public Developer setApprovalStatus(com.clover.sdk.v3.base.ApprovalStatus approvalStatus) {
+    logChange("approvalStatus");
+
+    try {
+      getJSONObject().put("approvalStatus", approvalStatus == null ? org.json.JSONObject.NULL : com.clover.sdk.v3.JsonHelper.toJSON(approvalStatus));
+    } catch (org.json.JSONException e) {
+      throw new java.lang.IllegalArgumentException(e);
+    }
+
+    cacheMarkDirty(CacheKey.approvalStatus);
+    return this;
+  }
+
+  /**
+   * Sets the field 'acceptedAgreement'.
+   */
+  public Developer setAcceptedAgreement(java.lang.Boolean acceptedAgreement) {
+    logChange("acceptedAgreement");
+
+    try {
+      getJSONObject().put("acceptedAgreement", acceptedAgreement == null ? org.json.JSONObject.NULL : com.clover.sdk.v3.JsonHelper.toJSON(acceptedAgreement));
+    } catch (org.json.JSONException e) {
+      throw new java.lang.IllegalArgumentException(e);
+    }
+
+    cacheMarkDirty(CacheKey.acceptedAgreement);
+    return this;
+  }
+
+  /**
+   * Sets the field 'prName'.
+   */
+  public Developer setPrName(java.lang.String prName) {
+    logChange("prName");
+
+    try {
+      getJSONObject().put("prName", prName == null ? org.json.JSONObject.NULL : com.clover.sdk.v3.JsonHelper.toJSON(prName));
+    } catch (org.json.JSONException e) {
+      throw new java.lang.IllegalArgumentException(e);
+    }
+
+    cacheMarkDirty(CacheKey.prName);
+    return this;
+  }
+
+  /**
+   * Sets the field 'prEmail'.
+   */
+  public Developer setPrEmail(java.lang.String prEmail) {
+    logChange("prEmail");
+
+    try {
+      getJSONObject().put("prEmail", prEmail == null ? org.json.JSONObject.NULL : com.clover.sdk.v3.JsonHelper.toJSON(prEmail));
+    } catch (org.json.JSONException e) {
+      throw new java.lang.IllegalArgumentException(e);
+    }
+
+    cacheMarkDirty(CacheKey.prEmail);
+    return this;
+  }
+
+  /**
+   * Sets the field 'prPhone'.
+   */
+  public Developer setPrPhone(java.lang.String prPhone) {
+    logChange("prPhone");
+
+    try {
+      getJSONObject().put("prPhone", prPhone == null ? org.json.JSONObject.NULL : com.clover.sdk.v3.JsonHelper.toJSON(prPhone));
+    } catch (org.json.JSONException e) {
+      throw new java.lang.IllegalArgumentException(e);
+    }
+
+    cacheMarkDirty(CacheKey.prPhone);
+    return this;
+  }
+
+  /**
    * Sets the field 'website'.
    */
   public Developer setWebsite(java.lang.String website) {
@@ -1266,6 +1644,22 @@ public final class Developer implements android.os.Parcelable, com.clover.sdk.v3
     }
 
     cacheMarkDirty(CacheKey.website);
+    return this;
+  }
+
+  /**
+   * Sets the field 'modifiedTime'.
+   */
+  public Developer setModifiedTime(java.lang.Long modifiedTime) {
+    logChange("modifiedTime");
+
+    try {
+      getJSONObject().put("modifiedTime", modifiedTime == null ? org.json.JSONObject.NULL : com.clover.sdk.v3.JsonHelper.toJSON(modifiedTime));
+    } catch (org.json.JSONException e) {
+      throw new java.lang.IllegalArgumentException(e);
+    }
+
+    cacheMarkDirty(CacheKey.modifiedTime);
     return this;
   }
 
@@ -1285,6 +1679,22 @@ public final class Developer implements android.os.Parcelable, com.clover.sdk.v3
     }
 
     cacheMarkDirty(CacheKey.owner);
+    return this;
+  }
+
+  /**
+   * Sets the field 'canApplyForPricing'.
+   */
+  public Developer setCanApplyForPricing(java.lang.Boolean canApplyForPricing) {
+    logChange("canApplyForPricing");
+
+    try {
+      getJSONObject().put("canApplyForPricing", canApplyForPricing == null ? org.json.JSONObject.NULL : com.clover.sdk.v3.JsonHelper.toJSON(canApplyForPricing));
+    } catch (org.json.JSONException e) {
+      throw new java.lang.IllegalArgumentException(e);
+    }
+
+    cacheMarkDirty(CacheKey.canApplyForPricing);
     return this;
   }
 
@@ -1366,6 +1776,13 @@ public final class Developer implements android.os.Parcelable, com.clover.sdk.v3
     cacheRemoveValue(CacheKey.state);
   }
 
+  /** Clears the 'country' field, the 'has' method for this field will now return false */
+  public void clearCountry() {
+    unlogChange("country");
+    getJSONObject().remove("country");
+    cacheRemoveValue(CacheKey.country);
+  }
+
   /** Clears the 'postalCode' field, the 'has' method for this field will now return false */
   public void clearPostalCode() {
     unlogChange("postalCode");
@@ -1394,11 +1811,11 @@ public final class Developer implements android.os.Parcelable, com.clover.sdk.v3
     cacheRemoveValue(CacheKey.businessLegalName);
   }
 
-  /** Clears the 'ein' field, the 'has' method for this field will now return false */
-  public void clearEin() {
-    unlogChange("ein");
-    getJSONObject().remove("ein");
-    cacheRemoveValue(CacheKey.ein);
+  /** Clears the 'tin' field, the 'has' method for this field will now return false */
+  public void clearTin() {
+    unlogChange("tin");
+    getJSONObject().remove("tin");
+    cacheRemoveValue(CacheKey.tin);
   }
 
   /** Clears the 'businessAddress' field, the 'has' method for this field will now return false */
@@ -1422,6 +1839,13 @@ public final class Developer implements android.os.Parcelable, com.clover.sdk.v3
     cacheRemoveValue(CacheKey.businessState);
   }
 
+  /** Clears the 'businessCountry' field, the 'has' method for this field will now return false */
+  public void clearBusinessCountry() {
+    unlogChange("businessCountry");
+    getJSONObject().remove("businessCountry");
+    cacheRemoveValue(CacheKey.businessCountry);
+  }
+
   /** Clears the 'businessPostalCode' field, the 'has' method for this field will now return false */
   public void clearBusinessPostalCode() {
     unlogChange("businessPostalCode");
@@ -1443,6 +1867,41 @@ public final class Developer implements android.os.Parcelable, com.clover.sdk.v3
     cacheRemoveValue(CacheKey.billingStatusMessage);
   }
 
+  /** Clears the 'approvalStatus' field, the 'has' method for this field will now return false */
+  public void clearApprovalStatus() {
+    unlogChange("approvalStatus");
+    getJSONObject().remove("approvalStatus");
+    cacheRemoveValue(CacheKey.approvalStatus);
+  }
+
+  /** Clears the 'acceptedAgreement' field, the 'has' method for this field will now return false */
+  public void clearAcceptedAgreement() {
+    unlogChange("acceptedAgreement");
+    getJSONObject().remove("acceptedAgreement");
+    cacheRemoveValue(CacheKey.acceptedAgreement);
+  }
+
+  /** Clears the 'prName' field, the 'has' method for this field will now return false */
+  public void clearPrName() {
+    unlogChange("prName");
+    getJSONObject().remove("prName");
+    cacheRemoveValue(CacheKey.prName);
+  }
+
+  /** Clears the 'prEmail' field, the 'has' method for this field will now return false */
+  public void clearPrEmail() {
+    unlogChange("prEmail");
+    getJSONObject().remove("prEmail");
+    cacheRemoveValue(CacheKey.prEmail);
+  }
+
+  /** Clears the 'prPhone' field, the 'has' method for this field will now return false */
+  public void clearPrPhone() {
+    unlogChange("prPhone");
+    getJSONObject().remove("prPhone");
+    cacheRemoveValue(CacheKey.prPhone);
+  }
+
   /** Clears the 'website' field, the 'has' method for this field will now return false */
   public void clearWebsite() {
     unlogChange("website");
@@ -1450,11 +1909,25 @@ public final class Developer implements android.os.Parcelable, com.clover.sdk.v3
     cacheRemoveValue(CacheKey.website);
   }
 
+  /** Clears the 'modifiedTime' field, the 'has' method for this field will now return false */
+  public void clearModifiedTime() {
+    unlogChange("modifiedTime");
+    getJSONObject().remove("modifiedTime");
+    cacheRemoveValue(CacheKey.modifiedTime);
+  }
+
   /** Clears the 'owner' field, the 'has' method for this field will now return false */
   public void clearOwner() {
     unlogChange("owner");
     getJSONObject().remove("owner");
     cacheRemoveValue(CacheKey.owner);
+  }
+
+  /** Clears the 'canApplyForPricing' field, the 'has' method for this field will now return false */
+  public void clearCanApplyForPricing() {
+    unlogChange("canApplyForPricing");
+    getJSONObject().remove("canApplyForPricing");
+    cacheRemoveValue(CacheKey.canApplyForPricing);
   }
 
 
@@ -1528,7 +2001,7 @@ public final class Developer implements android.os.Parcelable, com.clover.sdk.v3
 
   @Override
   public String toString() {
-    String json = jsonString != null ? jsonString : getJSONObject().toString();
+    String json = getJSONObject().toString();
 
     if (bundle != null) {
       bundle.isEmpty(); // Triggers unparcel
@@ -1615,6 +2088,9 @@ public final class Developer implements android.os.Parcelable, com.clover.sdk.v3
     public static final boolean STATE_IS_REQUIRED = false;
     public static final long STATE_MAX_LEN = 2;
 
+    public static final boolean COUNTRY_IS_REQUIRED = false;
+    public static final long COUNTRY_MAX_LEN = 2;
+
     public static final boolean POSTALCODE_IS_REQUIRED = false;
     public static final long POSTALCODE_MAX_LEN = 20;
 
@@ -1627,8 +2103,8 @@ public final class Developer implements android.os.Parcelable, com.clover.sdk.v3
     public static final boolean BUSINESSLEGALNAME_IS_REQUIRED = false;
     public static final long BUSINESSLEGALNAME_MAX_LEN = 255;
 
-    public static final boolean EIN_IS_REQUIRED = false;
-    public static final long EIN_MAX_LEN = 9;
+    public static final boolean TIN_IS_REQUIRED = false;
+    public static final long TIN_MAX_LEN = 9;
 
     public static final boolean BUSINESSADDRESS_IS_REQUIRED = false;
     public static final long BUSINESSADDRESS_MAX_LEN = 255;
@@ -1639,19 +2115,38 @@ public final class Developer implements android.os.Parcelable, com.clover.sdk.v3
     public static final boolean BUSINESSSTATE_IS_REQUIRED = false;
     public static final long BUSINESSSTATE_MAX_LEN = 2;
 
+    public static final boolean BUSINESSCOUNTRY_IS_REQUIRED = false;
+    public static final long BUSINESSCOUNTRY_MAX_LEN = 2;
+
     public static final boolean BUSINESSPOSTALCODE_IS_REQUIRED = false;
     public static final long BUSINESSPOSTALCODE_MAX_LEN = 20;
 
     public static final boolean BILLINGSTATUS_IS_REQUIRED = false;
-    public static final long BILLINGSTATUS_MAX_LEN = 10;
 
     public static final boolean BILLINGSTATUSMESSAGE_IS_REQUIRED = false;
     public static final long BILLINGSTATUSMESSAGE_MAX_LEN = 127;
 
+    public static final boolean APPROVALSTATUS_IS_REQUIRED = false;
+
+    public static final boolean ACCEPTEDAGREEMENT_IS_REQUIRED = false;
+
+    public static final boolean PRNAME_IS_REQUIRED = false;
+    public static final long PRNAME_MAX_LEN = 255;
+
+    public static final boolean PREMAIL_IS_REQUIRED = false;
+    public static final long PREMAIL_MAX_LEN = 127;
+
+    public static final boolean PRPHONE_IS_REQUIRED = false;
+    public static final long PRPHONE_MAX_LEN = 25;
+
     public static final boolean WEBSITE_IS_REQUIRED = false;
     public static final long WEBSITE_MAX_LEN = 255;
 
+    public static final boolean MODIFIEDTIME_IS_REQUIRED = false;
+
     public static final boolean OWNER_IS_REQUIRED = false;
+
+    public static final boolean CANAPPLYFORPRICING_IS_REQUIRED = false;
 
   }
 

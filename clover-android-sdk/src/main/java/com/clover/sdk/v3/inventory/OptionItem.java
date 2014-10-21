@@ -27,6 +27,19 @@ package com.clover.sdk.v3.inventory;
 /** This class represents the association between an item and an option */
 public final class OptionItem implements android.os.Parcelable, com.clover.sdk.v3.Validator, com.clover.sdk.JSONifiable {
 
+ /**
+   * Reference to an option
+  */
+  public com.clover.sdk.v3.base.Reference getOption() {
+    return cacheGet(CacheKey.option);
+  }
+ /**
+   * Reference to an item
+  */
+  public com.clover.sdk.v3.base.Reference getItem() {
+    return cacheGet(CacheKey.item);
+  }
+
 
   private enum CacheKey {
     option {
@@ -46,7 +59,6 @@ public final class OptionItem implements android.os.Parcelable, com.clover.sdk.v
     public abstract Object extractValue(OptionItem instance);
   }
 
-  private String jsonString = null;
   private org.json.JSONObject jsonObject = null;
   private android.os.Bundle bundle = null;
   private android.os.Bundle changeLog = null;
@@ -65,8 +77,12 @@ public final class OptionItem implements android.os.Parcelable, com.clover.sdk.v
   /**
    * Constructs a new instance from the given JSON String.
    */
-  public OptionItem(String json) {
-    this.jsonString = json;
+  public OptionItem(String json) throws java.lang.IllegalArgumentException {
+    try {
+      this.jsonObject = new org.json.JSONObject(json);
+    } catch (org.json.JSONException e) {
+      throw new java.lang.IllegalArgumentException("invalid json", e);
+    }
   }
 
   /**
@@ -81,9 +97,7 @@ public final class OptionItem implements android.os.Parcelable, com.clover.sdk.v
    * Constructs a new instance that is a deep copy of the source instance. It does not copy the bundle or changelog.
    */
   public OptionItem(OptionItem src) {
-    if (src.jsonString != null) {
-      this.jsonString = src.jsonString;
-    } else {
+    if (src.jsonObject != null) {
       this.jsonObject = com.clover.sdk.v3.JsonHelper.deepCopy(src.getJSONObject());
     }
   }
@@ -145,17 +159,8 @@ public final class OptionItem implements android.os.Parcelable, com.clover.sdk.v
    * reflected in this instance and vice-versa.
    */
   public org.json.JSONObject getJSONObject() {
-    try {
-      if (jsonObject == null) {
-        if (jsonString != null) {
-          jsonObject = new org.json.JSONObject(jsonString);
-          jsonString = null; // null this so it will be recreated if jsonObject is modified
-        } else {
-          jsonObject = new org.json.JSONObject();
-        }
-      }
-    } catch (org.json.JSONException e) {
-      throw new java.lang.IllegalArgumentException(e);
+    if (jsonObject == null) {
+      jsonObject = new org.json.JSONObject();
     }
     return jsonObject;
   }
@@ -166,14 +171,6 @@ public final class OptionItem implements android.os.Parcelable, com.clover.sdk.v
   }
 
 
-  /**
-   * Reference to an option
-   *
-   * The returned object is not a copy so changes to it will be reflected in this instance and vice-versa.
-   */
-  public com.clover.sdk.v3.base.Reference getOption() {
-    return cacheGet(CacheKey.option);
-  }
 
   private com.clover.sdk.v3.base.Reference extractOption() {
     org.json.JSONObject jsonObj = getJSONObject().optJSONObject("option");
@@ -183,14 +180,6 @@ public final class OptionItem implements android.os.Parcelable, com.clover.sdk.v
     return null;
   }
 
-  /**
-   * Reference to an item
-   *
-   * The returned object is not a copy so changes to it will be reflected in this instance and vice-versa.
-   */
-  public com.clover.sdk.v3.base.Reference getItem() {
-    return cacheGet(CacheKey.item);
-  }
 
   private com.clover.sdk.v3.base.Reference extractItem() {
     org.json.JSONObject jsonObj = getJSONObject().optJSONObject("item");
@@ -347,7 +336,7 @@ public final class OptionItem implements android.os.Parcelable, com.clover.sdk.v
 
   @Override
   public String toString() {
-    String json = jsonString != null ? jsonString : getJSONObject().toString();
+    String json = getJSONObject().toString();
 
     if (bundle != null) {
       bundle.isEmpty(); // Triggers unparcel

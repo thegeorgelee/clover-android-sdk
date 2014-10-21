@@ -5,9 +5,9 @@
  */
 
 
-package com.clover.sdk.v3.app;
+package com.clover.sdk.v3.apps;
 
 @SuppressWarnings("all")
-public enum ProductType {
-  ANDROID, WEB, BOTH;
+public enum OAuthResponseType {
+  TOKEN, CODE;
 }

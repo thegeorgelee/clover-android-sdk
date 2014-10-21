@@ -26,6 +26,94 @@ package com.clover.sdk.v3.employees;
 @SuppressWarnings("all")
 public final class Employee implements android.os.Parcelable, com.clover.sdk.v3.Validator, com.clover.sdk.JSONifiable {
 
+ /**
+   * Unique identifier
+  */
+  public java.lang.String getId() {
+    return cacheGet(CacheKey.id);
+  }
+ /**
+   * Full name of the employee
+  */
+  public java.lang.String getName() {
+    return cacheGet(CacheKey.name);
+  }
+ /**
+   * Nickname of the employee (shows up on receipts)
+  */
+  public java.lang.String getNickname() {
+    return cacheGet(CacheKey.nickname);
+  }
+ /**
+   * Custom ID of the employee
+  */
+  public java.lang.String getCustomId() {
+    return cacheGet(CacheKey.customId);
+  }
+ /**
+   * Email of the employee (optional)
+  */
+  public java.lang.String getEmail() {
+    return cacheGet(CacheKey.email);
+  }
+ /**
+   * Returns true if this employee was sent an invite to activate their account
+  */
+  public java.lang.Boolean getInviteSent() {
+    return cacheGet(CacheKey.inviteSent);
+  }
+ /**
+   * Timestamp of when this employee claimed their account
+  */
+  public java.lang.Long getClaimedTime() {
+    return cacheGet(CacheKey.claimedTime);
+  }
+ /**
+   * Employee PIN (hashed)
+  */
+  public java.lang.String getPin() {
+    return cacheGet(CacheKey.pin);
+  }
+ /**
+   * Employee PIN
+  */
+  public java.lang.String getUnhashedPin() {
+    return cacheGet(CacheKey.unhashedPin);
+  }
+ /**
+   * Employee System Role
+  */
+  public com.clover.sdk.v3.employees.AccountRole getRole() {
+    return cacheGet(CacheKey.role);
+  }
+  public java.util.List<com.clover.sdk.v3.base.Reference> getRoles() {
+    return cacheGet(CacheKey.roles);
+  }
+ /**
+   * Returns true if this employee is the owner account for this merchant
+  */
+  public java.lang.Boolean getIsOwner() {
+    return cacheGet(CacheKey.isOwner);
+  }
+ /**
+   * This employee's shifts
+  */
+  public java.util.List<com.clover.sdk.v3.base.Reference> getShifts() {
+    return cacheGet(CacheKey.shifts);
+  }
+ /**
+   * This employee's payments
+  */
+  public java.util.List<com.clover.sdk.v3.base.Reference> getPayments() {
+    return cacheGet(CacheKey.payments);
+  }
+ /**
+   * This employee's orders
+  */
+  public java.util.List<com.clover.sdk.v3.base.Reference> getOrders() {
+    return cacheGet(CacheKey.orders);
+  }
+
 
   private enum CacheKey {
     id {
@@ -123,7 +211,6 @@ public final class Employee implements android.os.Parcelable, com.clover.sdk.v3.
     public abstract Object extractValue(Employee instance);
   }
 
-  private String jsonString = null;
   private org.json.JSONObject jsonObject = null;
   private android.os.Bundle bundle = null;
   private android.os.Bundle changeLog = null;
@@ -142,8 +229,12 @@ public final class Employee implements android.os.Parcelable, com.clover.sdk.v3.
   /**
    * Constructs a new instance from the given JSON String.
    */
-  public Employee(String json) {
-    this.jsonString = json;
+  public Employee(String json) throws java.lang.IllegalArgumentException {
+    try {
+      this.jsonObject = new org.json.JSONObject(json);
+    } catch (org.json.JSONException e) {
+      throw new java.lang.IllegalArgumentException("invalid json", e);
+    }
   }
 
   /**
@@ -158,9 +249,7 @@ public final class Employee implements android.os.Parcelable, com.clover.sdk.v3.
    * Constructs a new instance that is a deep copy of the source instance. It does not copy the bundle or changelog.
    */
   public Employee(Employee src) {
-    if (src.jsonString != null) {
-      this.jsonString = src.jsonString;
-    } else {
+    if (src.jsonObject != null) {
       this.jsonObject = com.clover.sdk.v3.JsonHelper.deepCopy(src.getJSONObject());
     }
   }
@@ -222,17 +311,8 @@ public final class Employee implements android.os.Parcelable, com.clover.sdk.v3.
    * reflected in this instance and vice-versa.
    */
   public org.json.JSONObject getJSONObject() {
-    try {
-      if (jsonObject == null) {
-        if (jsonString != null) {
-          jsonObject = new org.json.JSONObject(jsonString);
-          jsonString = null; // null this so it will be recreated if jsonObject is modified
-        } else {
-          jsonObject = new org.json.JSONObject();
-        }
-      }
-    } catch (org.json.JSONException e) {
-      throw new java.lang.IllegalArgumentException(e);
+    if (jsonObject == null) {
+      jsonObject = new org.json.JSONObject();
     }
     return jsonObject;
   }
@@ -241,128 +321,77 @@ public final class Employee implements android.os.Parcelable, com.clover.sdk.v3.
   @Override
   public void validate() {
     java.lang.String id = getId();
-    if (id != null && id.length() > 13) throw new IllegalArgumentException("Maximum string length exceeded for 'id'");
+    if (id != null && id.length() > 13) { throw new IllegalArgumentException("Maximum string length exceeded for 'id'");}
 
     java.lang.String name = getName();
     if (name == null) throw new java.lang.IllegalArgumentException("'name' is required to be non-null");
-    if (name != null && name.length() > 127) throw new IllegalArgumentException("Maximum string length exceeded for 'name'");
+    if (name != null && name.length() > 127) { throw new IllegalArgumentException("Maximum string length exceeded for 'name'");}
+
+    java.lang.String nickname = getNickname();
+    if (nickname != null && nickname.length() > 127) { throw new IllegalArgumentException("Maximum string length exceeded for 'nickname'");}
+
+    java.lang.String customId = getCustomId();
+    if (customId != null && customId.length() > 127) { throw new IllegalArgumentException("Maximum string length exceeded for 'customId'");}
+
+    java.lang.String email = getEmail();
+    if (email != null && email.length() > 127) { throw new IllegalArgumentException("Maximum string length exceeded for 'email'");}
   }
 
 
-  /**
-   * Unique identifier
-   */
-  public java.lang.String getId() {
-    return cacheGet(CacheKey.id);
-  }
 
   private java.lang.String extractId() {
     return getJSONObject().isNull("id") ? null :
       getJSONObject().optString("id");
   }
 
-  /**
-   * Full name of the employee
-   */
-  public java.lang.String getName() {
-    return cacheGet(CacheKey.name);
-  }
 
   private java.lang.String extractName() {
     return getJSONObject().isNull("name") ? null :
       getJSONObject().optString("name");
   }
 
-  /**
-   * Nickname of the employee (shows up on receipts)
-   */
-  public java.lang.String getNickname() {
-    return cacheGet(CacheKey.nickname);
-  }
 
   private java.lang.String extractNickname() {
     return getJSONObject().isNull("nickname") ? null :
       getJSONObject().optString("nickname");
   }
 
-  /**
-   * Custom ID of the employee
-   */
-  public java.lang.String getCustomId() {
-    return cacheGet(CacheKey.customId);
-  }
 
   private java.lang.String extractCustomId() {
     return getJSONObject().isNull("customId") ? null :
       getJSONObject().optString("customId");
   }
 
-  /**
-   * Email of the employee (optional)
-   */
-  public java.lang.String getEmail() {
-    return cacheGet(CacheKey.email);
-  }
 
   private java.lang.String extractEmail() {
     return getJSONObject().isNull("email") ? null :
       getJSONObject().optString("email");
   }
 
-  /**
-   * Returns true if this employee was sent an invite to activate their account
-   */
-  public java.lang.Boolean getInviteSent() {
-    return cacheGet(CacheKey.inviteSent);
-  }
 
   private java.lang.Boolean extractInviteSent() {
     return getJSONObject().isNull("inviteSent") ? null :
       getJSONObject().optBoolean("inviteSent");
   }
 
-  /**
-   * Timestamp of when this employee claimed their account
-   */
-  public java.lang.Long getClaimedTime() {
-    return cacheGet(CacheKey.claimedTime);
-  }
 
   private java.lang.Long extractClaimedTime() {
     return getJSONObject().isNull("claimedTime") ? null :
       getJSONObject().optLong("claimedTime");
   }
 
-  /**
-   * Employee PIN (hashed)
-   */
-  public java.lang.String getPin() {
-    return cacheGet(CacheKey.pin);
-  }
 
   private java.lang.String extractPin() {
     return getJSONObject().isNull("pin") ? null :
       getJSONObject().optString("pin");
   }
 
-  /**
-   * Employee PIN
-   */
-  public java.lang.String getUnhashedPin() {
-    return cacheGet(CacheKey.unhashedPin);
-  }
 
   private java.lang.String extractUnhashedPin() {
     return getJSONObject().isNull("unhashedPin") ? null :
       getJSONObject().optString("unhashedPin");
   }
 
-  /**
-   * Employee System Role
-   */
-  public com.clover.sdk.v3.employees.AccountRole getRole() {
-    return cacheGet(CacheKey.role);
-  }
 
   private com.clover.sdk.v3.employees.AccountRole extractRole() {
     if (!getJSONObject().isNull("role")) {
@@ -376,13 +405,6 @@ public final class Employee implements android.os.Parcelable, com.clover.sdk.v3.
     return null;
   }
 
-  /**
-   *
-   * The returned List is unmodifiable and will never contain any nulls, even if the source JSON had null entries.
-   */
-  public java.util.List<com.clover.sdk.v3.base.Reference> getRoles() {
-    return cacheGet(CacheKey.roles);
-  }
 
   private java.util.List<com.clover.sdk.v3.base.Reference> extractRoles() {
     if (getJSONObject().isNull("roles")) {
@@ -405,26 +427,12 @@ public final class Employee implements android.os.Parcelable, com.clover.sdk.v3.
     return java.util.Collections.unmodifiableList(itemList);
   }
 
-  /**
-   * Returns true if this employee is the owner account for this merchant
-   */
-  public java.lang.Boolean getIsOwner() {
-    return cacheGet(CacheKey.isOwner);
-  }
 
   private java.lang.Boolean extractIsOwner() {
     return getJSONObject().isNull("isOwner") ? null :
       getJSONObject().optBoolean("isOwner");
   }
 
-  /**
-   * This employee's shifts
-   *
-   * The returned List is unmodifiable and will never contain any nulls, even if the source JSON had null entries.
-   */
-  public java.util.List<com.clover.sdk.v3.base.Reference> getShifts() {
-    return cacheGet(CacheKey.shifts);
-  }
 
   private java.util.List<com.clover.sdk.v3.base.Reference> extractShifts() {
     if (getJSONObject().isNull("shifts")) {
@@ -447,14 +455,6 @@ public final class Employee implements android.os.Parcelable, com.clover.sdk.v3.
     return java.util.Collections.unmodifiableList(itemList);
   }
 
-  /**
-   * This employee's payments
-   *
-   * The returned List is unmodifiable and will never contain any nulls, even if the source JSON had null entries.
-   */
-  public java.util.List<com.clover.sdk.v3.base.Reference> getPayments() {
-    return cacheGet(CacheKey.payments);
-  }
 
   private java.util.List<com.clover.sdk.v3.base.Reference> extractPayments() {
     if (getJSONObject().isNull("payments")) {
@@ -477,14 +477,6 @@ public final class Employee implements android.os.Parcelable, com.clover.sdk.v3.
     return java.util.Collections.unmodifiableList(itemList);
   }
 
-  /**
-   * This employee's orders
-   *
-   * The returned List is unmodifiable and will never contain any nulls, even if the source JSON had null entries.
-   */
-  public java.util.List<com.clover.sdk.v3.base.Reference> getOrders() {
-    return cacheGet(CacheKey.orders);
-  }
 
   private java.util.List<com.clover.sdk.v3.base.Reference> extractOrders() {
     if (getJSONObject().isNull("orders")) {
@@ -1169,7 +1161,7 @@ public final class Employee implements android.os.Parcelable, com.clover.sdk.v3.
 
   @Override
   public String toString() {
-    String json = jsonString != null ? jsonString : getJSONObject().toString();
+    String json = getJSONObject().toString();
 
     if (bundle != null) {
       bundle.isEmpty(); // Triggers unparcel

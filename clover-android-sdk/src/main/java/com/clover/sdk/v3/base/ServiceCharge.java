@@ -26,6 +26,31 @@ package com.clover.sdk.v3.base;
 @SuppressWarnings("all")
 public final class ServiceCharge implements android.os.Parcelable, com.clover.sdk.v3.Validator, com.clover.sdk.JSONifiable {
 
+ /**
+   * Unique identifier
+  */
+  public java.lang.String getId() {
+    return cacheGet(CacheKey.id);
+  }
+ /**
+   * Service charge name
+  */
+  public java.lang.String getName() {
+    return cacheGet(CacheKey.name);
+  }
+ /**
+   * If this service charge is enabled
+  */
+  public java.lang.Boolean getEnabled() {
+    return cacheGet(CacheKey.enabled);
+  }
+ /**
+   * Percent to charge; TODO: support non-integer service charges, e.g. 12.5%
+  */
+  public java.lang.Long getPercentage() {
+    return cacheGet(CacheKey.percentage);
+  }
+
 
   private enum CacheKey {
     id {
@@ -57,7 +82,6 @@ public final class ServiceCharge implements android.os.Parcelable, com.clover.sd
     public abstract Object extractValue(ServiceCharge instance);
   }
 
-  private String jsonString = null;
   private org.json.JSONObject jsonObject = null;
   private android.os.Bundle bundle = null;
   private android.os.Bundle changeLog = null;
@@ -76,8 +100,12 @@ public final class ServiceCharge implements android.os.Parcelable, com.clover.sd
   /**
    * Constructs a new instance from the given JSON String.
    */
-  public ServiceCharge(String json) {
-    this.jsonString = json;
+  public ServiceCharge(String json) throws java.lang.IllegalArgumentException {
+    try {
+      this.jsonObject = new org.json.JSONObject(json);
+    } catch (org.json.JSONException e) {
+      throw new java.lang.IllegalArgumentException("invalid json", e);
+    }
   }
 
   /**
@@ -92,9 +120,7 @@ public final class ServiceCharge implements android.os.Parcelable, com.clover.sd
    * Constructs a new instance that is a deep copy of the source instance. It does not copy the bundle or changelog.
    */
   public ServiceCharge(ServiceCharge src) {
-    if (src.jsonString != null) {
-      this.jsonString = src.jsonString;
-    } else {
+    if (src.jsonObject != null) {
       this.jsonObject = com.clover.sdk.v3.JsonHelper.deepCopy(src.getJSONObject());
     }
   }
@@ -156,17 +182,8 @@ public final class ServiceCharge implements android.os.Parcelable, com.clover.sd
    * reflected in this instance and vice-versa.
    */
   public org.json.JSONObject getJSONObject() {
-    try {
-      if (jsonObject == null) {
-        if (jsonString != null) {
-          jsonObject = new org.json.JSONObject(jsonString);
-          jsonString = null; // null this so it will be recreated if jsonObject is modified
-        } else {
-          jsonObject = new org.json.JSONObject();
-        }
-      }
-    } catch (org.json.JSONException e) {
-      throw new java.lang.IllegalArgumentException(e);
+    if (jsonObject == null) {
+      jsonObject = new org.json.JSONObject();
     }
     return jsonObject;
   }
@@ -175,55 +192,31 @@ public final class ServiceCharge implements android.os.Parcelable, com.clover.sd
   @Override
   public void validate() {
     java.lang.String id = getId();
-    if (id != null && id.length() > 13) throw new IllegalArgumentException("Maximum string length exceeded for 'id'");
+    if (id != null && id.length() > 13) { throw new IllegalArgumentException("Maximum string length exceeded for 'id'");}
 
     java.lang.String name = getName();
-    if (name != null && name.length() > 127) throw new IllegalArgumentException("Maximum string length exceeded for 'name'");
+    if (name != null && name.length() > 127) { throw new IllegalArgumentException("Maximum string length exceeded for 'name'");}
   }
 
 
-  /**
-   * Unique identifier
-   */
-  public java.lang.String getId() {
-    return cacheGet(CacheKey.id);
-  }
 
   private java.lang.String extractId() {
     return getJSONObject().isNull("id") ? null :
       getJSONObject().optString("id");
   }
 
-  /**
-   * Service charge name
-   */
-  public java.lang.String getName() {
-    return cacheGet(CacheKey.name);
-  }
 
   private java.lang.String extractName() {
     return getJSONObject().isNull("name") ? null :
       getJSONObject().optString("name");
   }
 
-  /**
-   * If this service charge is enabled
-   */
-  public java.lang.Boolean getEnabled() {
-    return cacheGet(CacheKey.enabled);
-  }
 
   private java.lang.Boolean extractEnabled() {
     return getJSONObject().isNull("enabled") ? null :
       getJSONObject().optBoolean("enabled");
   }
 
-  /**
-   * Percent to charge; TODO: support non-integer service charges, e.g. 12.5%
-   */
-  public java.lang.Long getPercentage() {
-    return cacheGet(CacheKey.percentage);
-  }
 
   private java.lang.Long extractPercentage() {
     return getJSONObject().isNull("percentage") ? null :
@@ -437,7 +430,7 @@ public final class ServiceCharge implements android.os.Parcelable, com.clover.sd
 
   @Override
   public String toString() {
-    String json = jsonString != null ? jsonString : getJSONObject().toString();
+    String json = getJSONObject().toString();
 
     if (bundle != null) {
       bundle.isEmpty(); // Triggers unparcel

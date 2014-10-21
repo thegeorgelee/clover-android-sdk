@@ -26,6 +26,13 @@ package com.clover.sdk.v3.inventory;
 @SuppressWarnings("all")
 public final class TaxRateItem implements android.os.Parcelable, com.clover.sdk.v3.Validator, com.clover.sdk.JSONifiable {
 
+  public com.clover.sdk.v3.inventory.TaxRate getTaxRate() {
+    return cacheGet(CacheKey.taxRate);
+  }
+  public com.clover.sdk.v3.inventory.Item getItem() {
+    return cacheGet(CacheKey.item);
+  }
+
 
   private enum CacheKey {
     taxRate {
@@ -45,7 +52,6 @@ public final class TaxRateItem implements android.os.Parcelable, com.clover.sdk.
     public abstract Object extractValue(TaxRateItem instance);
   }
 
-  private String jsonString = null;
   private org.json.JSONObject jsonObject = null;
   private android.os.Bundle bundle = null;
   private android.os.Bundle changeLog = null;
@@ -64,8 +70,12 @@ public final class TaxRateItem implements android.os.Parcelable, com.clover.sdk.
   /**
    * Constructs a new instance from the given JSON String.
    */
-  public TaxRateItem(String json) {
-    this.jsonString = json;
+  public TaxRateItem(String json) throws java.lang.IllegalArgumentException {
+    try {
+      this.jsonObject = new org.json.JSONObject(json);
+    } catch (org.json.JSONException e) {
+      throw new java.lang.IllegalArgumentException("invalid json", e);
+    }
   }
 
   /**
@@ -80,9 +90,7 @@ public final class TaxRateItem implements android.os.Parcelable, com.clover.sdk.
    * Constructs a new instance that is a deep copy of the source instance. It does not copy the bundle or changelog.
    */
   public TaxRateItem(TaxRateItem src) {
-    if (src.jsonString != null) {
-      this.jsonString = src.jsonString;
-    } else {
+    if (src.jsonObject != null) {
       this.jsonObject = com.clover.sdk.v3.JsonHelper.deepCopy(src.getJSONObject());
     }
   }
@@ -144,17 +152,8 @@ public final class TaxRateItem implements android.os.Parcelable, com.clover.sdk.
    * reflected in this instance and vice-versa.
    */
   public org.json.JSONObject getJSONObject() {
-    try {
-      if (jsonObject == null) {
-        if (jsonString != null) {
-          jsonObject = new org.json.JSONObject(jsonString);
-          jsonString = null; // null this so it will be recreated if jsonObject is modified
-        } else {
-          jsonObject = new org.json.JSONObject();
-        }
-      }
-    } catch (org.json.JSONException e) {
-      throw new java.lang.IllegalArgumentException(e);
+    if (jsonObject == null) {
+      jsonObject = new org.json.JSONObject();
     }
     return jsonObject;
   }
@@ -170,13 +169,6 @@ public final class TaxRateItem implements android.os.Parcelable, com.clover.sdk.
   }
 
 
-  /**
-   *
-   * The returned object is not a copy so changes to it will be reflected in this instance and vice-versa.
-   */
-  public com.clover.sdk.v3.inventory.TaxRate getTaxRate() {
-    return cacheGet(CacheKey.taxRate);
-  }
 
   private com.clover.sdk.v3.inventory.TaxRate extractTaxRate() {
     org.json.JSONObject jsonObj = getJSONObject().optJSONObject("taxRate");
@@ -186,13 +178,6 @@ public final class TaxRateItem implements android.os.Parcelable, com.clover.sdk.
     return null;
   }
 
-  /**
-   *
-   * The returned object is not a copy so changes to it will be reflected in this instance and vice-versa.
-   */
-  public com.clover.sdk.v3.inventory.Item getItem() {
-    return cacheGet(CacheKey.item);
-  }
 
   private com.clover.sdk.v3.inventory.Item extractItem() {
     org.json.JSONObject jsonObj = getJSONObject().optJSONObject("item");
@@ -349,7 +334,7 @@ public final class TaxRateItem implements android.os.Parcelable, com.clover.sdk.
 
   @Override
   public String toString() {
-    String json = jsonString != null ? jsonString : getJSONObject().toString();
+    String json = getJSONObject().toString();
 
     if (bundle != null) {
       bundle.isEmpty(); // Triggers unparcel

@@ -26,12 +26,28 @@ package com.clover.sdk.v3.payments;
 @SuppressWarnings("all")
 public final class ServiceChargeAmount implements android.os.Parcelable, com.clover.sdk.v3.Validator, com.clover.sdk.JSONifiable {
 
+  public java.lang.String getId() {
+    return cacheGet(CacheKey.id);
+  }
+  public java.lang.String getName() {
+    return cacheGet(CacheKey.name);
+  }
+  public java.lang.Long getAmount() {
+    return cacheGet(CacheKey.amount);
+  }
+
 
   private enum CacheKey {
     id {
       @Override
       public Object extractValue(ServiceChargeAmount instance) {
         return instance.extractId();
+      }
+    },
+    name {
+      @Override
+      public Object extractValue(ServiceChargeAmount instance) {
+        return instance.extractName();
       }
     },
     amount {
@@ -45,7 +61,6 @@ public final class ServiceChargeAmount implements android.os.Parcelable, com.clo
     public abstract Object extractValue(ServiceChargeAmount instance);
   }
 
-  private String jsonString = null;
   private org.json.JSONObject jsonObject = null;
   private android.os.Bundle bundle = null;
   private android.os.Bundle changeLog = null;
@@ -64,8 +79,12 @@ public final class ServiceChargeAmount implements android.os.Parcelable, com.clo
   /**
    * Constructs a new instance from the given JSON String.
    */
-  public ServiceChargeAmount(String json) {
-    this.jsonString = json;
+  public ServiceChargeAmount(String json) throws java.lang.IllegalArgumentException {
+    try {
+      this.jsonObject = new org.json.JSONObject(json);
+    } catch (org.json.JSONException e) {
+      throw new java.lang.IllegalArgumentException("invalid json", e);
+    }
   }
 
   /**
@@ -80,9 +99,7 @@ public final class ServiceChargeAmount implements android.os.Parcelable, com.clo
    * Constructs a new instance that is a deep copy of the source instance. It does not copy the bundle or changelog.
    */
   public ServiceChargeAmount(ServiceChargeAmount src) {
-    if (src.jsonString != null) {
-      this.jsonString = src.jsonString;
-    } else {
+    if (src.jsonObject != null) {
       this.jsonObject = com.clover.sdk.v3.JsonHelper.deepCopy(src.getJSONObject());
     }
   }
@@ -144,17 +161,8 @@ public final class ServiceChargeAmount implements android.os.Parcelable, com.clo
    * reflected in this instance and vice-versa.
    */
   public org.json.JSONObject getJSONObject() {
-    try {
-      if (jsonObject == null) {
-        if (jsonString != null) {
-          jsonObject = new org.json.JSONObject(jsonString);
-          jsonString = null; // null this so it will be recreated if jsonObject is modified
-        } else {
-          jsonObject = new org.json.JSONObject();
-        }
-      }
-    } catch (org.json.JSONException e) {
-      throw new java.lang.IllegalArgumentException(e);
+    if (jsonObject == null) {
+      jsonObject = new org.json.JSONObject();
     }
     return jsonObject;
   }
@@ -163,26 +171,25 @@ public final class ServiceChargeAmount implements android.os.Parcelable, com.clo
   @Override
   public void validate() {
     java.lang.String id = getId();
-    if (id != null && id.length() > 13) throw new IllegalArgumentException("Maximum string length exceeded for 'id'");
+    if (id != null && id.length() > 13) { throw new IllegalArgumentException("Maximum string length exceeded for 'id'");}
+
+    java.lang.String name = getName();
+    if (name != null && name.length() > 127) { throw new IllegalArgumentException("Maximum string length exceeded for 'name'");}
   }
 
 
-  /**
-   */
-  public java.lang.String getId() {
-    return cacheGet(CacheKey.id);
-  }
 
   private java.lang.String extractId() {
     return getJSONObject().isNull("id") ? null :
       getJSONObject().optString("id");
   }
 
-  /**
-   */
-  public java.lang.Long getAmount() {
-    return cacheGet(CacheKey.amount);
+
+  private java.lang.String extractName() {
+    return getJSONObject().isNull("name") ? null :
+      getJSONObject().optString("name");
   }
+
 
   private java.lang.Long extractAmount() {
     return getJSONObject().isNull("amount") ? null :
@@ -195,6 +202,11 @@ public final class ServiceChargeAmount implements android.os.Parcelable, com.clo
     return cacheValueIsNotNull(CacheKey.id);
   }
 
+  /** Checks whether the 'name' field is set and is not null */
+  public boolean isNotNullName() {
+    return cacheValueIsNotNull(CacheKey.name);
+  }
+
   /** Checks whether the 'amount' field is set and is not null */
   public boolean isNotNullAmount() {
     return cacheValueIsNotNull(CacheKey.amount);
@@ -204,6 +216,11 @@ public final class ServiceChargeAmount implements android.os.Parcelable, com.clo
   /** Checks whether the 'id' field has been set, however the value could be null */
   public boolean hasId() {
     return cacheHasKey(CacheKey.id);
+  }
+
+  /** Checks whether the 'name' field has been set, however the value could be null */
+  public boolean hasName() {
+    return cacheHasKey(CacheKey.name);
   }
 
   /** Checks whether the 'amount' field has been set, however the value could be null */
@@ -229,6 +246,22 @@ public final class ServiceChargeAmount implements android.os.Parcelable, com.clo
   }
 
   /**
+   * Sets the field 'name'.
+   */
+  public ServiceChargeAmount setName(java.lang.String name) {
+    logChange("name");
+
+    try {
+      getJSONObject().put("name", name == null ? org.json.JSONObject.NULL : com.clover.sdk.v3.JsonHelper.toJSON(name));
+    } catch (org.json.JSONException e) {
+      throw new java.lang.IllegalArgumentException(e);
+    }
+
+    cacheMarkDirty(CacheKey.name);
+    return this;
+  }
+
+  /**
    * Sets the field 'amount'.
    */
   public ServiceChargeAmount setAmount(java.lang.Long amount) {
@@ -250,6 +283,13 @@ public final class ServiceChargeAmount implements android.os.Parcelable, com.clo
     unlogChange("id");
     getJSONObject().remove("id");
     cacheRemoveValue(CacheKey.id);
+  }
+
+  /** Clears the 'name' field, the 'has' method for this field will now return false */
+  public void clearName() {
+    unlogChange("name");
+    getJSONObject().remove("name");
+    cacheRemoveValue(CacheKey.name);
   }
 
   /** Clears the 'amount' field, the 'has' method for this field will now return false */
@@ -330,7 +370,7 @@ public final class ServiceChargeAmount implements android.os.Parcelable, com.clo
 
   @Override
   public String toString() {
-    String json = jsonString != null ? jsonString : getJSONObject().toString();
+    String json = getJSONObject().toString();
 
     if (bundle != null) {
       bundle.isEmpty(); // Triggers unparcel
@@ -386,6 +426,9 @@ public final class ServiceChargeAmount implements android.os.Parcelable, com.clo
 
     public static final boolean ID_IS_REQUIRED = false;
     public static final long ID_MAX_LEN = 13;
+
+    public static final boolean NAME_IS_REQUIRED = false;
+    public static final long NAME_MAX_LEN = 127;
 
     public static final boolean AMOUNT_IS_REQUIRED = false;
 

@@ -26,6 +26,88 @@ package com.clover.sdk.v3.pay;
 @SuppressWarnings("all")
 public final class PaymentRequestCardDetails implements android.os.Parcelable, com.clover.sdk.v3.Validator, com.clover.sdk.JSONifiable {
 
+  public com.clover.sdk.v3.payments.CardType getCardType() {
+    return cacheGet(CacheKey.cardType);
+  }
+  public com.clover.sdk.v3.payments.CardEntryType getEntryType() {
+    return cacheGet(CacheKey.entryType);
+  }
+  public java.lang.String getTrack1() {
+    return cacheGet(CacheKey.track1);
+  }
+  public java.lang.String getTrack2() {
+    return cacheGet(CacheKey.track2);
+  }
+  public java.lang.String getTrack3() {
+    return cacheGet(CacheKey.track3);
+  }
+  public java.lang.Boolean getEncrypted() {
+    return cacheGet(CacheKey.encrypted);
+  }
+  public java.lang.Boolean getManualEntered() {
+    return cacheGet(CacheKey.manualEntered);
+  }
+  public java.lang.Boolean getAsync() {
+    return cacheGet(CacheKey.async);
+  }
+  public java.lang.String getMaskedTrack1() {
+    return cacheGet(CacheKey.maskedTrack1);
+  }
+  public java.lang.String getMaskedTrack2() {
+    return cacheGet(CacheKey.maskedTrack2);
+  }
+  public java.lang.String getMaskedTrack3() {
+    return cacheGet(CacheKey.maskedTrack3);
+  }
+  public java.lang.String getUniqueToken() {
+    return cacheGet(CacheKey.uniqueToken);
+  }
+  public java.lang.String getPan() {
+    return cacheGet(CacheKey.pan);
+  }
+  public java.lang.String getFirstName() {
+    return cacheGet(CacheKey.firstName);
+  }
+  public java.lang.String getLastName() {
+    return cacheGet(CacheKey.lastName);
+  }
+  public java.lang.String getCountryCode() {
+    return cacheGet(CacheKey.countryCode);
+  }
+  public java.lang.String getExp() {
+    return cacheGet(CacheKey.exp);
+  }
+  public java.lang.String getStreetNumber() {
+    return cacheGet(CacheKey.streetNumber);
+  }
+  public java.lang.String getZip() {
+    return cacheGet(CacheKey.zip);
+  }
+  public java.lang.String getCvv() {
+    return cacheGet(CacheKey.cvv);
+  }
+  public java.lang.String getLast4() {
+    return cacheGet(CacheKey.last4);
+  }
+  public java.lang.String getFirst4() {
+    return cacheGet(CacheKey.first4);
+  }
+  public java.lang.String getDukptSerial() {
+    return cacheGet(CacheKey.dukptSerial);
+  }
+  public java.lang.String getSwipeStatus() {
+    return cacheGet(CacheKey.swipeStatus);
+  }
+  public java.lang.String getFingerprint() {
+    return cacheGet(CacheKey.fingerprint);
+  }
+  public java.lang.String getDeviceSerial() {
+    return cacheGet(CacheKey.deviceSerial);
+  }
+  public com.clover.sdk.v3.pay.TransactionData getTransactionData() {
+    return cacheGet(CacheKey.transactionData);
+  }
+
 
   private enum CacheKey {
     cardType {
@@ -195,7 +277,6 @@ public final class PaymentRequestCardDetails implements android.os.Parcelable, c
     public abstract Object extractValue(PaymentRequestCardDetails instance);
   }
 
-  private String jsonString = null;
   private org.json.JSONObject jsonObject = null;
   private android.os.Bundle bundle = null;
   private android.os.Bundle changeLog = null;
@@ -214,8 +295,12 @@ public final class PaymentRequestCardDetails implements android.os.Parcelable, c
   /**
    * Constructs a new instance from the given JSON String.
    */
-  public PaymentRequestCardDetails(String json) {
-    this.jsonString = json;
+  public PaymentRequestCardDetails(String json) throws java.lang.IllegalArgumentException {
+    try {
+      this.jsonObject = new org.json.JSONObject(json);
+    } catch (org.json.JSONException e) {
+      throw new java.lang.IllegalArgumentException("invalid json", e);
+    }
   }
 
   /**
@@ -230,9 +315,7 @@ public final class PaymentRequestCardDetails implements android.os.Parcelable, c
    * Constructs a new instance that is a deep copy of the source instance. It does not copy the bundle or changelog.
    */
   public PaymentRequestCardDetails(PaymentRequestCardDetails src) {
-    if (src.jsonString != null) {
-      this.jsonString = src.jsonString;
-    } else {
+    if (src.jsonObject != null) {
       this.jsonObject = com.clover.sdk.v3.JsonHelper.deepCopy(src.getJSONObject());
     }
   }
@@ -294,17 +377,8 @@ public final class PaymentRequestCardDetails implements android.os.Parcelable, c
    * reflected in this instance and vice-versa.
    */
   public org.json.JSONObject getJSONObject() {
-    try {
-      if (jsonObject == null) {
-        if (jsonString != null) {
-          jsonObject = new org.json.JSONObject(jsonString);
-          jsonString = null; // null this so it will be recreated if jsonObject is modified
-        } else {
-          jsonObject = new org.json.JSONObject();
-        }
-      }
-    } catch (org.json.JSONException e) {
-      throw new java.lang.IllegalArgumentException(e);
+    if (jsonObject == null) {
+      jsonObject = new org.json.JSONObject();
     }
     return jsonObject;
   }
@@ -315,11 +389,6 @@ public final class PaymentRequestCardDetails implements android.os.Parcelable, c
   }
 
 
-  /**
-   */
-  public com.clover.sdk.v3.payments.CardType getCardType() {
-    return cacheGet(CacheKey.cardType);
-  }
 
   private com.clover.sdk.v3.payments.CardType extractCardType() {
     if (!getJSONObject().isNull("cardType")) {
@@ -333,11 +402,6 @@ public final class PaymentRequestCardDetails implements android.os.Parcelable, c
     return null;
   }
 
-  /**
-   */
-  public com.clover.sdk.v3.payments.CardEntryType getEntryType() {
-    return cacheGet(CacheKey.entryType);
-  }
 
   private com.clover.sdk.v3.payments.CardEntryType extractEntryType() {
     if (!getJSONObject().isNull("entryType")) {
@@ -351,277 +415,150 @@ public final class PaymentRequestCardDetails implements android.os.Parcelable, c
     return null;
   }
 
-  /**
-   */
-  public java.lang.String getTrack1() {
-    return cacheGet(CacheKey.track1);
-  }
 
   private java.lang.String extractTrack1() {
     return getJSONObject().isNull("track1") ? null :
       getJSONObject().optString("track1");
   }
 
-  /**
-   */
-  public java.lang.String getTrack2() {
-    return cacheGet(CacheKey.track2);
-  }
 
   private java.lang.String extractTrack2() {
     return getJSONObject().isNull("track2") ? null :
       getJSONObject().optString("track2");
   }
 
-  /**
-   */
-  public java.lang.String getTrack3() {
-    return cacheGet(CacheKey.track3);
-  }
 
   private java.lang.String extractTrack3() {
     return getJSONObject().isNull("track3") ? null :
       getJSONObject().optString("track3");
   }
 
-  /**
-   */
-  public java.lang.Boolean getEncrypted() {
-    return cacheGet(CacheKey.encrypted);
-  }
 
   private java.lang.Boolean extractEncrypted() {
     return getJSONObject().isNull("encrypted") ? null :
       getJSONObject().optBoolean("encrypted");
   }
 
-  /**
-   */
-  public java.lang.Boolean getManualEntered() {
-    return cacheGet(CacheKey.manualEntered);
-  }
 
   private java.lang.Boolean extractManualEntered() {
     return getJSONObject().isNull("manualEntered") ? null :
       getJSONObject().optBoolean("manualEntered");
   }
 
-  /**
-   */
-  public java.lang.Boolean getAsync() {
-    return cacheGet(CacheKey.async);
-  }
 
   private java.lang.Boolean extractAsync() {
     return getJSONObject().isNull("async") ? null :
       getJSONObject().optBoolean("async");
   }
 
-  /**
-   */
-  public java.lang.String getMaskedTrack1() {
-    return cacheGet(CacheKey.maskedTrack1);
-  }
 
   private java.lang.String extractMaskedTrack1() {
     return getJSONObject().isNull("maskedTrack1") ? null :
       getJSONObject().optString("maskedTrack1");
   }
 
-  /**
-   */
-  public java.lang.String getMaskedTrack2() {
-    return cacheGet(CacheKey.maskedTrack2);
-  }
 
   private java.lang.String extractMaskedTrack2() {
     return getJSONObject().isNull("maskedTrack2") ? null :
       getJSONObject().optString("maskedTrack2");
   }
 
-  /**
-   */
-  public java.lang.String getMaskedTrack3() {
-    return cacheGet(CacheKey.maskedTrack3);
-  }
 
   private java.lang.String extractMaskedTrack3() {
     return getJSONObject().isNull("maskedTrack3") ? null :
       getJSONObject().optString("maskedTrack3");
   }
 
-  /**
-   */
-  public java.lang.String getUniqueToken() {
-    return cacheGet(CacheKey.uniqueToken);
-  }
 
   private java.lang.String extractUniqueToken() {
     return getJSONObject().isNull("uniqueToken") ? null :
       getJSONObject().optString("uniqueToken");
   }
 
-  /**
-   */
-  public java.lang.String getPan() {
-    return cacheGet(CacheKey.pan);
-  }
 
   private java.lang.String extractPan() {
     return getJSONObject().isNull("pan") ? null :
       getJSONObject().optString("pan");
   }
 
-  /**
-   */
-  public java.lang.String getFirstName() {
-    return cacheGet(CacheKey.firstName);
-  }
 
   private java.lang.String extractFirstName() {
     return getJSONObject().isNull("firstName") ? null :
       getJSONObject().optString("firstName");
   }
 
-  /**
-   */
-  public java.lang.String getLastName() {
-    return cacheGet(CacheKey.lastName);
-  }
 
   private java.lang.String extractLastName() {
     return getJSONObject().isNull("lastName") ? null :
       getJSONObject().optString("lastName");
   }
 
-  /**
-   */
-  public java.lang.String getCountryCode() {
-    return cacheGet(CacheKey.countryCode);
-  }
 
   private java.lang.String extractCountryCode() {
     return getJSONObject().isNull("countryCode") ? null :
       getJSONObject().optString("countryCode");
   }
 
-  /**
-   */
-  public java.lang.String getExp() {
-    return cacheGet(CacheKey.exp);
-  }
 
   private java.lang.String extractExp() {
     return getJSONObject().isNull("exp") ? null :
       getJSONObject().optString("exp");
   }
 
-  /**
-   */
-  public java.lang.String getStreetNumber() {
-    return cacheGet(CacheKey.streetNumber);
-  }
 
   private java.lang.String extractStreetNumber() {
     return getJSONObject().isNull("streetNumber") ? null :
       getJSONObject().optString("streetNumber");
   }
 
-  /**
-   */
-  public java.lang.String getZip() {
-    return cacheGet(CacheKey.zip);
-  }
 
   private java.lang.String extractZip() {
     return getJSONObject().isNull("zip") ? null :
       getJSONObject().optString("zip");
   }
 
-  /**
-   */
-  public java.lang.String getCvv() {
-    return cacheGet(CacheKey.cvv);
-  }
 
   private java.lang.String extractCvv() {
     return getJSONObject().isNull("cvv") ? null :
       getJSONObject().optString("cvv");
   }
 
-  /**
-   */
-  public java.lang.String getLast4() {
-    return cacheGet(CacheKey.last4);
-  }
 
   private java.lang.String extractLast4() {
     return getJSONObject().isNull("last4") ? null :
       getJSONObject().optString("last4");
   }
 
-  /**
-   */
-  public java.lang.String getFirst4() {
-    return cacheGet(CacheKey.first4);
-  }
 
   private java.lang.String extractFirst4() {
     return getJSONObject().isNull("first4") ? null :
       getJSONObject().optString("first4");
   }
 
-  /**
-   */
-  public java.lang.String getDukptSerial() {
-    return cacheGet(CacheKey.dukptSerial);
-  }
 
   private java.lang.String extractDukptSerial() {
     return getJSONObject().isNull("dukptSerial") ? null :
       getJSONObject().optString("dukptSerial");
   }
 
-  /**
-   */
-  public java.lang.String getSwipeStatus() {
-    return cacheGet(CacheKey.swipeStatus);
-  }
 
   private java.lang.String extractSwipeStatus() {
     return getJSONObject().isNull("swipeStatus") ? null :
       getJSONObject().optString("swipeStatus");
   }
 
-  /**
-   */
-  public java.lang.String getFingerprint() {
-    return cacheGet(CacheKey.fingerprint);
-  }
 
   private java.lang.String extractFingerprint() {
     return getJSONObject().isNull("fingerprint") ? null :
       getJSONObject().optString("fingerprint");
   }
 
-  /**
-   */
-  public java.lang.String getDeviceSerial() {
-    return cacheGet(CacheKey.deviceSerial);
-  }
 
   private java.lang.String extractDeviceSerial() {
     return getJSONObject().isNull("deviceSerial") ? null :
       getJSONObject().optString("deviceSerial");
   }
 
-  /**
-   *
-   * The returned object is not a copy so changes to it will be reflected in this instance and vice-versa.
-   */
-  public com.clover.sdk.v3.pay.TransactionData getTransactionData() {
-    return cacheGet(CacheKey.transactionData);
-  }
 
   private com.clover.sdk.v3.pay.TransactionData extractTransactionData() {
     org.json.JSONObject jsonObj = getJSONObject().optJSONObject("transactionData");
@@ -1600,7 +1537,7 @@ public final class PaymentRequestCardDetails implements android.os.Parcelable, c
 
   @Override
   public String toString() {
-    String json = jsonString != null ? jsonString : getJSONObject().toString();
+    String json = getJSONObject().toString();
 
     if (bundle != null) {
       bundle.isEmpty(); // Triggers unparcel

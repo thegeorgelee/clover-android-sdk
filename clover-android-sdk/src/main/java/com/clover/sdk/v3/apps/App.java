@@ -26,6 +26,253 @@ package com.clover.sdk.v3.apps;
 @SuppressWarnings("all")
 public final class App implements android.os.Parcelable, com.clover.sdk.v3.Validator, com.clover.sdk.JSONifiable {
 
+  public java.lang.String getId() {
+    return cacheGet(CacheKey.id);
+  }
+ /**
+   * Name of the app
+  */
+  public java.lang.String getName() {
+    return cacheGet(CacheKey.name);
+  }
+  public java.lang.Boolean getPublished() {
+    return cacheGet(CacheKey.published);
+  }
+  public com.clover.sdk.v3.developer.Developer getDeveloper() {
+    return cacheGet(CacheKey.developer);
+  }
+ /**
+   * App Description
+  */
+  public java.lang.String getDescription() {
+    return cacheGet(CacheKey.description);
+  }
+ /**
+   * Short tagline for the app
+  */
+  public java.lang.String getTagline() {
+    return cacheGet(CacheKey.tagline);
+  }
+ /**
+   * URL for embedded video
+  */
+  public java.lang.String getVideoUrl() {
+    return cacheGet(CacheKey.videoUrl);
+  }
+ /**
+   * Activation url for redirecting users after app installation.
+  */
+  public java.lang.String getActivationUrl() {
+    return cacheGet(CacheKey.activationUrl);
+  }
+ /**
+   * Site url for oauth redirect and web app launch from appmarket.
+  */
+  public java.lang.String getSiteUrl() {
+    return cacheGet(CacheKey.siteUrl);
+  }
+ /**
+   * Default oauth response type.
+  */
+  public com.clover.sdk.v3.apps.OAuthResponseType getDefaultResponseType() {
+    return cacheGet(CacheKey.defaultResponseType);
+  }
+  public java.lang.String getAppDomain() {
+    return cacheGet(CacheKey.appDomain);
+  }
+  public com.clover.sdk.v3.apps.AndroidVersion getAndroidVersion() {
+    return cacheGet(CacheKey.androidVersion);
+  }
+  public java.lang.String getPackageName() {
+    return cacheGet(CacheKey.packageName);
+  }
+  public java.lang.Boolean getApproved() {
+    return cacheGet(CacheKey.approved);
+  }
+  public java.lang.Boolean getSystemApp() {
+    return cacheGet(CacheKey.systemApp);
+  }
+  public java.lang.String getFilenameIcon() {
+    return cacheGet(CacheKey.filenameIcon);
+  }
+ /**
+   * URL to the icon of the app. Generated from filenameIcon.
+  */
+  public java.lang.String getFilenameIconSmall() {
+    return cacheGet(CacheKey.filenameIconSmall);
+  }
+ /**
+   * URL to the icon of the app. Generated from filenameIcon.
+  */
+  public java.lang.String getFilenameIconLarge() {
+    return cacheGet(CacheKey.filenameIconLarge);
+  }
+  public java.lang.Long getInstallCount() {
+    return cacheGet(CacheKey.installCount);
+  }
+  public java.lang.Boolean getPermissionMerchantRead() {
+    return cacheGet(CacheKey.permissionMerchantRead);
+  }
+  public java.lang.Boolean getPermissionMerchantWrite() {
+    return cacheGet(CacheKey.permissionMerchantWrite);
+  }
+  public java.lang.Boolean getPermissionCustomersRead() {
+    return cacheGet(CacheKey.permissionCustomersRead);
+  }
+  public java.lang.Boolean getPermissionCustomersWrite() {
+    return cacheGet(CacheKey.permissionCustomersWrite);
+  }
+  public java.lang.Boolean getPermissionInventoryRead() {
+    return cacheGet(CacheKey.permissionInventoryRead);
+  }
+  public java.lang.Boolean getPermissionInventoryWrite() {
+    return cacheGet(CacheKey.permissionInventoryWrite);
+  }
+  public java.lang.Boolean getPermissionOrdersRead() {
+    return cacheGet(CacheKey.permissionOrdersRead);
+  }
+  public java.lang.Boolean getPermissionOrdersWrite() {
+    return cacheGet(CacheKey.permissionOrdersWrite);
+  }
+  public java.lang.Boolean getPermissionPaymentsRead() {
+    return cacheGet(CacheKey.permissionPaymentsRead);
+  }
+  public java.lang.Boolean getPermissionPaymentsWrite() {
+    return cacheGet(CacheKey.permissionPaymentsWrite);
+  }
+  public java.lang.Boolean getPermissionEmployeesRead() {
+    return cacheGet(CacheKey.permissionEmployeesRead);
+  }
+  public java.lang.Boolean getPermissionEmployeesWrite() {
+    return cacheGet(CacheKey.permissionEmployeesWrite);
+  }
+  public java.lang.String getPrivacyPolicy() {
+    return cacheGet(CacheKey.privacyPolicy);
+  }
+  public java.lang.String getEula() {
+    return cacheGet(CacheKey.eula);
+  }
+  public java.lang.String getSupportPhone() {
+    return cacheGet(CacheKey.supportPhone);
+  }
+  public java.lang.String getSupportPhoneHours() {
+    return cacheGet(CacheKey.supportPhoneHours);
+  }
+  public java.lang.String getSupportEmail() {
+    return cacheGet(CacheKey.supportEmail);
+  }
+  public java.lang.String getSupportUrl() {
+    return cacheGet(CacheKey.supportUrl);
+  }
+  public com.clover.sdk.v3.apps.ProductType getProductType() {
+    return cacheGet(CacheKey.productType);
+  }
+  public com.clover.sdk.v3.base.ApprovalStatus getApprovalStatus() {
+    return cacheGet(CacheKey.approvalStatus);
+  }
+ /**
+   * The app's android permissions
+  */
+  public java.util.List<com.clover.sdk.v3.apps.AndroidPermission> getAndroidPermissions() {
+    return cacheGet(CacheKey.androidPermissions);
+  }
+ /**
+   * The app's screenshots
+  */
+  public java.util.List<com.clover.sdk.v3.apps.Screenshot> getScreenshots() {
+    return cacheGet(CacheKey.screenshots);
+  }
+ /**
+   * Subscription options for this app
+  */
+  public java.util.List<com.clover.sdk.v3.apps.AppSubscription> getAvailableSubscriptions() {
+    return cacheGet(CacheKey.availableSubscriptions);
+  }
+ /**
+   * Metered options for this app
+  */
+  public java.util.List<com.clover.sdk.v3.apps.AppMetered> getAvailableMetereds() {
+    return cacheGet(CacheKey.availableMetereds);
+  }
+ /**
+   * USB devices with which this app will communicate
+  */
+  public java.util.List<com.clover.sdk.v3.apps.AppUsbDevice> getUsbDevices() {
+    return cacheGet(CacheKey.usbDevices);
+  }
+ /**
+   * This is now derived directly from billingStartTime (if future -> in trial; if past -> not in trial).  So it is now unnecessary.  Please update client code to not use it.
+  */
+  public java.lang.Boolean getIsMerchantInTrial() {
+    return cacheGet(CacheKey.isMerchantInTrial);
+  }
+ /**
+   * The merchant's current subscription for this app
+  */
+  public com.clover.sdk.v3.apps.AppSubscription getCurrentSubscription() {
+    return cacheGet(CacheKey.currentSubscription);
+  }
+ /**
+   * The app's web hook
+  */
+  public com.clover.sdk.v3.apps.WebHook getWebhook() {
+    return cacheGet(CacheKey.webhook);
+  }
+ /**
+   * The app's uploaded apks
+  */
+  public java.util.List<com.clover.sdk.v3.apps.AndroidVersion> getAndroidVersions() {
+    return cacheGet(CacheKey.androidVersions);
+  }
+ /**
+   *  Whether the app is installed 
+  */
+  public java.lang.Boolean getInstalled() {
+    return cacheGet(CacheKey.installed);
+  }
+ /**
+   * If the app is a paid app, this tells whether it currently offers a 30 day free trial or not.  Developer can toggle at will.
+  */
+  public java.lang.Boolean getPaidAppHasTrial() {
+    return cacheGet(CacheKey.paidAppHasTrial);
+  }
+ /**
+   * If the app is a paid app, this tells whether salespeople get this app for free or not
+  */
+  public java.lang.Boolean getPaidAppFreeEligible() {
+    return cacheGet(CacheKey.paidAppFreeEligible);
+  }
+ /**
+   * Records the time that the approval status last changed
+  */
+  public java.lang.Long getApprovalStatusModifiedTime() {
+    return cacheGet(CacheKey.approvalStatusModifiedTime);
+  }
+ /**
+   * Text will print on printed receipts for this app
+  */
+  public java.lang.String getSmartReceiptText() {
+    return cacheGet(CacheKey.smartReceiptText);
+  }
+ /**
+   * URL we will expose on printed and web receipts for this app
+  */
+  public java.lang.String getSmartReceiptUrl() {
+    return cacheGet(CacheKey.smartReceiptUrl);
+  }
+ /**
+   * If the merchant has the app installed, this is the timestamp of when they start/started paying.  If the merchant doesn't have the app installed, this is the timestamp of when they would start paying.  In UTC.  Applies to paid apps only.
+  */
+  public java.lang.Long getBillingStartTime() {
+    return cacheGet(CacheKey.billingStartTime);
+  }
+ /**
+   * App's client secret for use with oauth
+  */
+  public java.lang.String getAppSecret() {
+    return cacheGet(CacheKey.appSecret);
+  }
+
 
   private enum CacheKey {
     id {
@@ -80,6 +327,12 @@ public final class App implements android.os.Parcelable, com.clover.sdk.v3.Valid
       @Override
       public Object extractValue(App instance) {
         return instance.extractSiteUrl();
+      }
+    },
+    defaultResponseType {
+      @Override
+      public Object extractValue(App instance) {
+        return instance.extractDefaultResponseType();
       }
     },
     appDomain {
@@ -280,6 +533,12 @@ public final class App implements android.os.Parcelable, com.clover.sdk.v3.Valid
         return instance.extractAvailableMetereds();
       }
     },
+    usbDevices {
+      @Override
+      public Object extractValue(App instance) {
+        return instance.extractUsbDevices();
+      }
+    },
     isMerchantInTrial {
       @Override
       public Object extractValue(App instance) {
@@ -292,6 +551,18 @@ public final class App implements android.os.Parcelable, com.clover.sdk.v3.Valid
         return instance.extractCurrentSubscription();
       }
     },
+    webhook {
+      @Override
+      public Object extractValue(App instance) {
+        return instance.extractWebhook();
+      }
+    },
+    androidVersions {
+      @Override
+      public Object extractValue(App instance) {
+        return instance.extractAndroidVersions();
+      }
+    },
     installed {
       @Override
       public Object extractValue(App instance) {
@@ -302,6 +573,18 @@ public final class App implements android.os.Parcelable, com.clover.sdk.v3.Valid
       @Override
       public Object extractValue(App instance) {
         return instance.extractPaidAppHasTrial();
+      }
+    },
+    paidAppFreeEligible {
+      @Override
+      public Object extractValue(App instance) {
+        return instance.extractPaidAppFreeEligible();
+      }
+    },
+    approvalStatusModifiedTime {
+      @Override
+      public Object extractValue(App instance) {
+        return instance.extractApprovalStatusModifiedTime();
       }
     },
     smartReceiptText {
@@ -322,12 +605,17 @@ public final class App implements android.os.Parcelable, com.clover.sdk.v3.Valid
         return instance.extractBillingStartTime();
       }
     },
+    appSecret {
+      @Override
+      public Object extractValue(App instance) {
+        return instance.extractAppSecret();
+      }
+    },
     ;
 
     public abstract Object extractValue(App instance);
   }
 
-  private String jsonString = null;
   private org.json.JSONObject jsonObject = null;
   private android.os.Bundle bundle = null;
   private android.os.Bundle changeLog = null;
@@ -346,8 +634,12 @@ public final class App implements android.os.Parcelable, com.clover.sdk.v3.Valid
   /**
    * Constructs a new instance from the given JSON String.
    */
-  public App(String json) {
-    this.jsonString = json;
+  public App(String json) throws java.lang.IllegalArgumentException {
+    try {
+      this.jsonObject = new org.json.JSONObject(json);
+    } catch (org.json.JSONException e) {
+      throw new java.lang.IllegalArgumentException("invalid json", e);
+    }
   }
 
   /**
@@ -362,9 +654,7 @@ public final class App implements android.os.Parcelable, com.clover.sdk.v3.Valid
    * Constructs a new instance that is a deep copy of the source instance. It does not copy the bundle or changelog.
    */
   public App(App src) {
-    if (src.jsonString != null) {
-      this.jsonString = src.jsonString;
-    } else {
+    if (src.jsonObject != null) {
       this.jsonObject = com.clover.sdk.v3.JsonHelper.deepCopy(src.getJSONObject());
     }
   }
@@ -426,17 +716,8 @@ public final class App implements android.os.Parcelable, com.clover.sdk.v3.Valid
    * reflected in this instance and vice-versa.
    */
   public org.json.JSONObject getJSONObject() {
-    try {
-      if (jsonObject == null) {
-        if (jsonString != null) {
-          jsonObject = new org.json.JSONObject(jsonString);
-          jsonString = null; // null this so it will be recreated if jsonObject is modified
-        } else {
-          jsonObject = new org.json.JSONObject();
-        }
-      }
-    } catch (org.json.JSONException e) {
-      throw new java.lang.IllegalArgumentException(e);
+    if (jsonObject == null) {
+      jsonObject = new org.json.JSONObject();
     }
     return jsonObject;
   }
@@ -445,109 +726,89 @@ public final class App implements android.os.Parcelable, com.clover.sdk.v3.Valid
   @Override
   public void validate() {
     java.lang.String id = getId();
-    if (id != null && id.length() > 13) throw new IllegalArgumentException("Maximum string length exceeded for 'id'");
+    if (id != null && id.length() > 13) { throw new IllegalArgumentException("Maximum string length exceeded for 'id'");}
 
     java.lang.String name = getName();
     if (name == null) throw new java.lang.IllegalArgumentException("'name' is required to be non-null");
-    if (name != null && name.length() > 127) throw new IllegalArgumentException("Maximum string length exceeded for 'name'");
+    if (name != null && name.length() > 127) { throw new IllegalArgumentException("Maximum string length exceeded for 'name'");}
 
     java.lang.String description = getDescription();
-    if (description != null && description.length() > 2000) throw new IllegalArgumentException("Maximum string length exceeded for 'description'");
+    if (description != null && description.length() > 2000) { throw new IllegalArgumentException("Maximum string length exceeded for 'description'");}
 
     java.lang.String tagline = getTagline();
-    if (tagline != null && tagline.length() > 255) throw new IllegalArgumentException("Maximum string length exceeded for 'tagline'");
+    if (tagline != null && tagline.length() > 255) { throw new IllegalArgumentException("Maximum string length exceeded for 'tagline'");}
 
     java.lang.String videoUrl = getVideoUrl();
-    if (videoUrl != null && videoUrl.length() > 255) throw new IllegalArgumentException("Maximum string length exceeded for 'videoUrl'");
+    if (videoUrl != null && videoUrl.length() > 255) { throw new IllegalArgumentException("Maximum string length exceeded for 'videoUrl'");}
 
     java.lang.String activationUrl = getActivationUrl();
-    if (activationUrl != null && activationUrl.length() > 255) throw new IllegalArgumentException("Maximum string length exceeded for 'activationUrl'");
+    if (activationUrl != null && activationUrl.length() > 255) { throw new IllegalArgumentException("Maximum string length exceeded for 'activationUrl'");}
 
     java.lang.String siteUrl = getSiteUrl();
-    if (siteUrl != null && siteUrl.length() > 255) throw new IllegalArgumentException("Maximum string length exceeded for 'siteUrl'");
+    if (siteUrl != null && siteUrl.length() > 255) { throw new IllegalArgumentException("Maximum string length exceeded for 'siteUrl'");}
 
     java.lang.String appDomain = getAppDomain();
-    if (appDomain != null && appDomain.length() > 255) throw new IllegalArgumentException("Maximum string length exceeded for 'appDomain'");
+    if (appDomain != null && appDomain.length() > 255) { throw new IllegalArgumentException("Maximum string length exceeded for 'appDomain'");}
 
     java.lang.String packageName = getPackageName();
-    if (packageName != null && packageName.length() > 255) throw new IllegalArgumentException("Maximum string length exceeded for 'packageName'");
+    if (packageName != null && packageName.length() > 255) { throw new IllegalArgumentException("Maximum string length exceeded for 'packageName'");}
 
     java.lang.String filenameIcon = getFilenameIcon();
-    if (filenameIcon != null && filenameIcon.length() > 100) throw new IllegalArgumentException("Maximum string length exceeded for 'filenameIcon'");
+    if (filenameIcon != null && filenameIcon.length() > 100) { throw new IllegalArgumentException("Maximum string length exceeded for 'filenameIcon'");}
 
     java.lang.String filenameIconSmall = getFilenameIconSmall();
-    if (filenameIconSmall != null && filenameIconSmall.length() > 255) throw new IllegalArgumentException("Maximum string length exceeded for 'filenameIconSmall'");
+    if (filenameIconSmall != null && filenameIconSmall.length() > 255) { throw new IllegalArgumentException("Maximum string length exceeded for 'filenameIconSmall'");}
 
     java.lang.String filenameIconLarge = getFilenameIconLarge();
-    if (filenameIconLarge != null && filenameIconLarge.length() > 255) throw new IllegalArgumentException("Maximum string length exceeded for 'filenameIconLarge'");
+    if (filenameIconLarge != null && filenameIconLarge.length() > 255) { throw new IllegalArgumentException("Maximum string length exceeded for 'filenameIconLarge'");}
 
     java.lang.String privacyPolicy = getPrivacyPolicy();
-    if (privacyPolicy != null && privacyPolicy.length() > 255) throw new IllegalArgumentException("Maximum string length exceeded for 'privacyPolicy'");
+    if (privacyPolicy != null && privacyPolicy.length() > 255) { throw new IllegalArgumentException("Maximum string length exceeded for 'privacyPolicy'");}
 
     java.lang.String eula = getEula();
-    if (eula != null && eula.length() > 255) throw new IllegalArgumentException("Maximum string length exceeded for 'eula'");
+    if (eula != null && eula.length() > 255) { throw new IllegalArgumentException("Maximum string length exceeded for 'eula'");}
 
     java.lang.String supportPhone = getSupportPhone();
-    if (supportPhone != null && supportPhone.length() > 25) throw new IllegalArgumentException("Maximum string length exceeded for 'supportPhone'");
+    if (supportPhone != null && supportPhone.length() > 25) { throw new IllegalArgumentException("Maximum string length exceeded for 'supportPhone'");}
 
     java.lang.String supportPhoneHours = getSupportPhoneHours();
-    if (supportPhoneHours != null && supportPhoneHours.length() > 127) throw new IllegalArgumentException("Maximum string length exceeded for 'supportPhoneHours'");
+    if (supportPhoneHours != null && supportPhoneHours.length() > 127) { throw new IllegalArgumentException("Maximum string length exceeded for 'supportPhoneHours'");}
 
     java.lang.String supportEmail = getSupportEmail();
-    if (supportEmail != null && supportEmail.length() > 127) throw new IllegalArgumentException("Maximum string length exceeded for 'supportEmail'");
+    if (supportEmail != null && supportEmail.length() > 127) { throw new IllegalArgumentException("Maximum string length exceeded for 'supportEmail'");}
 
     java.lang.String supportUrl = getSupportUrl();
-    if (supportUrl != null && supportUrl.length() > 255) throw new IllegalArgumentException("Maximum string length exceeded for 'supportUrl'");
+    if (supportUrl != null && supportUrl.length() > 255) { throw new IllegalArgumentException("Maximum string length exceeded for 'supportUrl'");}
 
     java.lang.String smartReceiptText = getSmartReceiptText();
-    if (smartReceiptText != null && smartReceiptText.length() > 100) throw new IllegalArgumentException("Maximum string length exceeded for 'smartReceiptText'");
+    if (smartReceiptText != null && smartReceiptText.length() > 100) { throw new IllegalArgumentException("Maximum string length exceeded for 'smartReceiptText'");}
 
     java.lang.String smartReceiptUrl = getSmartReceiptUrl();
-    if (smartReceiptUrl != null && smartReceiptUrl.length() > 255) throw new IllegalArgumentException("Maximum string length exceeded for 'smartReceiptUrl'");
+    if (smartReceiptUrl != null && smartReceiptUrl.length() > 255) { throw new IllegalArgumentException("Maximum string length exceeded for 'smartReceiptUrl'");}
+
+    java.lang.String appSecret = getAppSecret();
+    if (appSecret != null && appSecret.length() > 255) { throw new IllegalArgumentException("Maximum string length exceeded for 'appSecret'");}
   }
 
 
-  /**
-   */
-  public java.lang.String getId() {
-    return cacheGet(CacheKey.id);
-  }
 
   private java.lang.String extractId() {
     return getJSONObject().isNull("id") ? null :
       getJSONObject().optString("id");
   }
 
-  /**
-   * Name of the app
-   */
-  public java.lang.String getName() {
-    return cacheGet(CacheKey.name);
-  }
 
   private java.lang.String extractName() {
     return getJSONObject().isNull("name") ? null :
       getJSONObject().optString("name");
   }
 
-  /**
-   */
-  public java.lang.Boolean getPublished() {
-    return cacheGet(CacheKey.published);
-  }
 
   private java.lang.Boolean extractPublished() {
     return getJSONObject().isNull("published") ? null :
       getJSONObject().optBoolean("published");
   }
 
-  /**
-   *
-   * The returned object is not a copy so changes to it will be reflected in this instance and vice-versa.
-   */
-  public com.clover.sdk.v3.developer.Developer getDeveloper() {
-    return cacheGet(CacheKey.developer);
-  }
 
   private com.clover.sdk.v3.developer.Developer extractDeveloper() {
     org.json.JSONObject jsonObj = getJSONObject().optJSONObject("developer");
@@ -557,84 +818,55 @@ public final class App implements android.os.Parcelable, com.clover.sdk.v3.Valid
     return null;
   }
 
-  /**
-   * App Description
-   */
-  public java.lang.String getDescription() {
-    return cacheGet(CacheKey.description);
-  }
 
   private java.lang.String extractDescription() {
     return getJSONObject().isNull("description") ? null :
       getJSONObject().optString("description");
   }
 
-  /**
-   * Short tagline for the app
-   */
-  public java.lang.String getTagline() {
-    return cacheGet(CacheKey.tagline);
-  }
 
   private java.lang.String extractTagline() {
     return getJSONObject().isNull("tagline") ? null :
       getJSONObject().optString("tagline");
   }
 
-  /**
-   * URL for embedded video
-   */
-  public java.lang.String getVideoUrl() {
-    return cacheGet(CacheKey.videoUrl);
-  }
 
   private java.lang.String extractVideoUrl() {
     return getJSONObject().isNull("videoUrl") ? null :
       getJSONObject().optString("videoUrl");
   }
 
-  /**
-   * Activation url for redirecting users after app installation.
-   */
-  public java.lang.String getActivationUrl() {
-    return cacheGet(CacheKey.activationUrl);
-  }
 
   private java.lang.String extractActivationUrl() {
     return getJSONObject().isNull("activationUrl") ? null :
       getJSONObject().optString("activationUrl");
   }
 
-  /**
-   * Site url for oauth redirect and web app launch from appmarket.
-   */
-  public java.lang.String getSiteUrl() {
-    return cacheGet(CacheKey.siteUrl);
-  }
 
   private java.lang.String extractSiteUrl() {
     return getJSONObject().isNull("siteUrl") ? null :
       getJSONObject().optString("siteUrl");
   }
 
-  /**
-   */
-  public java.lang.String getAppDomain() {
-    return cacheGet(CacheKey.appDomain);
+
+  private com.clover.sdk.v3.apps.OAuthResponseType extractDefaultResponseType() {
+    if (!getJSONObject().isNull("defaultResponseType")) {
+      try {
+        return com.clover.sdk.v3.apps.OAuthResponseType.valueOf(getJSONObject().optString("defaultResponseType"));
+      } catch(Exception e) {
+        e.printStackTrace();
+      }
+    }
+
+    return null;
   }
+
 
   private java.lang.String extractAppDomain() {
     return getJSONObject().isNull("appDomain") ? null :
       getJSONObject().optString("appDomain");
   }
 
-  /**
-   *
-   * The returned object is not a copy so changes to it will be reflected in this instance and vice-versa.
-   */
-  public com.clover.sdk.v3.apps.AndroidVersion getAndroidVersion() {
-    return cacheGet(CacheKey.androidVersion);
-  }
 
   private com.clover.sdk.v3.apps.AndroidVersion extractAndroidVersion() {
     org.json.JSONObject jsonObj = getJSONObject().optJSONObject("androidVersion");
@@ -644,288 +876,156 @@ public final class App implements android.os.Parcelable, com.clover.sdk.v3.Valid
     return null;
   }
 
-  /**
-   */
-  public java.lang.String getPackageName() {
-    return cacheGet(CacheKey.packageName);
-  }
 
   private java.lang.String extractPackageName() {
     return getJSONObject().isNull("packageName") ? null :
       getJSONObject().optString("packageName");
   }
 
-  /**
-   */
-  public java.lang.Boolean getApproved() {
-    return cacheGet(CacheKey.approved);
-  }
 
   private java.lang.Boolean extractApproved() {
     return getJSONObject().isNull("approved") ? null :
       getJSONObject().optBoolean("approved");
   }
 
-  /**
-   */
-  public java.lang.Boolean getSystemApp() {
-    return cacheGet(CacheKey.systemApp);
-  }
 
   private java.lang.Boolean extractSystemApp() {
     return getJSONObject().isNull("systemApp") ? null :
       getJSONObject().optBoolean("systemApp");
   }
 
-  /**
-   */
-  public java.lang.String getFilenameIcon() {
-    return cacheGet(CacheKey.filenameIcon);
-  }
 
   private java.lang.String extractFilenameIcon() {
     return getJSONObject().isNull("filenameIcon") ? null :
       getJSONObject().optString("filenameIcon");
   }
 
-  /**
-   * URL to the icon of the app. Generated from filenameIcon.
-   */
-  public java.lang.String getFilenameIconSmall() {
-    return cacheGet(CacheKey.filenameIconSmall);
-  }
 
   private java.lang.String extractFilenameIconSmall() {
     return getJSONObject().isNull("filenameIconSmall") ? null :
       getJSONObject().optString("filenameIconSmall");
   }
 
-  /**
-   * URL to the icon of the app. Generated from filenameIcon.
-   */
-  public java.lang.String getFilenameIconLarge() {
-    return cacheGet(CacheKey.filenameIconLarge);
-  }
 
   private java.lang.String extractFilenameIconLarge() {
     return getJSONObject().isNull("filenameIconLarge") ? null :
       getJSONObject().optString("filenameIconLarge");
   }
 
-  /**
-   */
-  public java.lang.Long getInstallCount() {
-    return cacheGet(CacheKey.installCount);
-  }
 
   private java.lang.Long extractInstallCount() {
     return getJSONObject().isNull("installCount") ? null :
       getJSONObject().optLong("installCount");
   }
 
-  /**
-   */
-  public java.lang.Boolean getPermissionMerchantRead() {
-    return cacheGet(CacheKey.permissionMerchantRead);
-  }
 
   private java.lang.Boolean extractPermissionMerchantRead() {
     return getJSONObject().isNull("permissionMerchantRead") ? null :
       getJSONObject().optBoolean("permissionMerchantRead");
   }
 
-  /**
-   */
-  public java.lang.Boolean getPermissionMerchantWrite() {
-    return cacheGet(CacheKey.permissionMerchantWrite);
-  }
 
   private java.lang.Boolean extractPermissionMerchantWrite() {
     return getJSONObject().isNull("permissionMerchantWrite") ? null :
       getJSONObject().optBoolean("permissionMerchantWrite");
   }
 
-  /**
-   */
-  public java.lang.Boolean getPermissionCustomersRead() {
-    return cacheGet(CacheKey.permissionCustomersRead);
-  }
 
   private java.lang.Boolean extractPermissionCustomersRead() {
     return getJSONObject().isNull("permissionCustomersRead") ? null :
       getJSONObject().optBoolean("permissionCustomersRead");
   }
 
-  /**
-   */
-  public java.lang.Boolean getPermissionCustomersWrite() {
-    return cacheGet(CacheKey.permissionCustomersWrite);
-  }
 
   private java.lang.Boolean extractPermissionCustomersWrite() {
     return getJSONObject().isNull("permissionCustomersWrite") ? null :
       getJSONObject().optBoolean("permissionCustomersWrite");
   }
 
-  /**
-   */
-  public java.lang.Boolean getPermissionInventoryRead() {
-    return cacheGet(CacheKey.permissionInventoryRead);
-  }
 
   private java.lang.Boolean extractPermissionInventoryRead() {
     return getJSONObject().isNull("permissionInventoryRead") ? null :
       getJSONObject().optBoolean("permissionInventoryRead");
   }
 
-  /**
-   */
-  public java.lang.Boolean getPermissionInventoryWrite() {
-    return cacheGet(CacheKey.permissionInventoryWrite);
-  }
 
   private java.lang.Boolean extractPermissionInventoryWrite() {
     return getJSONObject().isNull("permissionInventoryWrite") ? null :
       getJSONObject().optBoolean("permissionInventoryWrite");
   }
 
-  /**
-   */
-  public java.lang.Boolean getPermissionOrdersRead() {
-    return cacheGet(CacheKey.permissionOrdersRead);
-  }
 
   private java.lang.Boolean extractPermissionOrdersRead() {
     return getJSONObject().isNull("permissionOrdersRead") ? null :
       getJSONObject().optBoolean("permissionOrdersRead");
   }
 
-  /**
-   */
-  public java.lang.Boolean getPermissionOrdersWrite() {
-    return cacheGet(CacheKey.permissionOrdersWrite);
-  }
 
   private java.lang.Boolean extractPermissionOrdersWrite() {
     return getJSONObject().isNull("permissionOrdersWrite") ? null :
       getJSONObject().optBoolean("permissionOrdersWrite");
   }
 
-  /**
-   */
-  public java.lang.Boolean getPermissionPaymentsRead() {
-    return cacheGet(CacheKey.permissionPaymentsRead);
-  }
 
   private java.lang.Boolean extractPermissionPaymentsRead() {
     return getJSONObject().isNull("permissionPaymentsRead") ? null :
       getJSONObject().optBoolean("permissionPaymentsRead");
   }
 
-  /**
-   */
-  public java.lang.Boolean getPermissionPaymentsWrite() {
-    return cacheGet(CacheKey.permissionPaymentsWrite);
-  }
 
   private java.lang.Boolean extractPermissionPaymentsWrite() {
     return getJSONObject().isNull("permissionPaymentsWrite") ? null :
       getJSONObject().optBoolean("permissionPaymentsWrite");
   }
 
-  /**
-   */
-  public java.lang.Boolean getPermissionEmployeesRead() {
-    return cacheGet(CacheKey.permissionEmployeesRead);
-  }
 
   private java.lang.Boolean extractPermissionEmployeesRead() {
     return getJSONObject().isNull("permissionEmployeesRead") ? null :
       getJSONObject().optBoolean("permissionEmployeesRead");
   }
 
-  /**
-   */
-  public java.lang.Boolean getPermissionEmployeesWrite() {
-    return cacheGet(CacheKey.permissionEmployeesWrite);
-  }
 
   private java.lang.Boolean extractPermissionEmployeesWrite() {
     return getJSONObject().isNull("permissionEmployeesWrite") ? null :
       getJSONObject().optBoolean("permissionEmployeesWrite");
   }
 
-  /**
-   */
-  public java.lang.String getPrivacyPolicy() {
-    return cacheGet(CacheKey.privacyPolicy);
-  }
 
   private java.lang.String extractPrivacyPolicy() {
     return getJSONObject().isNull("privacyPolicy") ? null :
       getJSONObject().optString("privacyPolicy");
   }
 
-  /**
-   */
-  public java.lang.String getEula() {
-    return cacheGet(CacheKey.eula);
-  }
 
   private java.lang.String extractEula() {
     return getJSONObject().isNull("eula") ? null :
       getJSONObject().optString("eula");
   }
 
-  /**
-   */
-  public java.lang.String getSupportPhone() {
-    return cacheGet(CacheKey.supportPhone);
-  }
 
   private java.lang.String extractSupportPhone() {
     return getJSONObject().isNull("supportPhone") ? null :
       getJSONObject().optString("supportPhone");
   }
 
-  /**
-   */
-  public java.lang.String getSupportPhoneHours() {
-    return cacheGet(CacheKey.supportPhoneHours);
-  }
 
   private java.lang.String extractSupportPhoneHours() {
     return getJSONObject().isNull("supportPhoneHours") ? null :
       getJSONObject().optString("supportPhoneHours");
   }
 
-  /**
-   */
-  public java.lang.String getSupportEmail() {
-    return cacheGet(CacheKey.supportEmail);
-  }
 
   private java.lang.String extractSupportEmail() {
     return getJSONObject().isNull("supportEmail") ? null :
       getJSONObject().optString("supportEmail");
   }
 
-  /**
-   */
-  public java.lang.String getSupportUrl() {
-    return cacheGet(CacheKey.supportUrl);
-  }
 
   private java.lang.String extractSupportUrl() {
     return getJSONObject().isNull("supportUrl") ? null :
       getJSONObject().optString("supportUrl");
   }
 
-  /**
-   */
-  public com.clover.sdk.v3.apps.ProductType getProductType() {
-    return cacheGet(CacheKey.productType);
-  }
 
   private com.clover.sdk.v3.apps.ProductType extractProductType() {
     if (!getJSONObject().isNull("productType")) {
@@ -939,11 +1039,6 @@ public final class App implements android.os.Parcelable, com.clover.sdk.v3.Valid
     return null;
   }
 
-  /**
-   */
-  public com.clover.sdk.v3.base.ApprovalStatus getApprovalStatus() {
-    return cacheGet(CacheKey.approvalStatus);
-  }
 
   private com.clover.sdk.v3.base.ApprovalStatus extractApprovalStatus() {
     if (!getJSONObject().isNull("approvalStatus")) {
@@ -957,14 +1052,6 @@ public final class App implements android.os.Parcelable, com.clover.sdk.v3.Valid
     return null;
   }
 
-  /**
-   * The app's android permissions
-   *
-   * The returned List is unmodifiable and will never contain any nulls, even if the source JSON had null entries.
-   */
-  public java.util.List<com.clover.sdk.v3.apps.AndroidPermission> getAndroidPermissions() {
-    return cacheGet(CacheKey.androidPermissions);
-  }
 
   private java.util.List<com.clover.sdk.v3.apps.AndroidPermission> extractAndroidPermissions() {
     if (getJSONObject().isNull("androidPermissions")) {
@@ -987,14 +1074,6 @@ public final class App implements android.os.Parcelable, com.clover.sdk.v3.Valid
     return java.util.Collections.unmodifiableList(itemList);
   }
 
-  /**
-   * The app's screenshots
-   *
-   * The returned List is unmodifiable and will never contain any nulls, even if the source JSON had null entries.
-   */
-  public java.util.List<com.clover.sdk.v3.apps.Screenshot> getScreenshots() {
-    return cacheGet(CacheKey.screenshots);
-  }
 
   private java.util.List<com.clover.sdk.v3.apps.Screenshot> extractScreenshots() {
     if (getJSONObject().isNull("screenshots")) {
@@ -1017,14 +1096,6 @@ public final class App implements android.os.Parcelable, com.clover.sdk.v3.Valid
     return java.util.Collections.unmodifiableList(itemList);
   }
 
-  /**
-   * Subscription options for this app
-   *
-   * The returned List is unmodifiable and will never contain any nulls, even if the source JSON had null entries.
-   */
-  public java.util.List<com.clover.sdk.v3.apps.AppSubscription> getAvailableSubscriptions() {
-    return cacheGet(CacheKey.availableSubscriptions);
-  }
 
   private java.util.List<com.clover.sdk.v3.apps.AppSubscription> extractAvailableSubscriptions() {
     if (getJSONObject().isNull("availableSubscriptions")) {
@@ -1047,14 +1118,6 @@ public final class App implements android.os.Parcelable, com.clover.sdk.v3.Valid
     return java.util.Collections.unmodifiableList(itemList);
   }
 
-  /**
-   * Metered options for this app
-   *
-   * The returned List is unmodifiable and will never contain any nulls, even if the source JSON had null entries.
-   */
-  public java.util.List<com.clover.sdk.v3.apps.AppMetered> getAvailableMetereds() {
-    return cacheGet(CacheKey.availableMetereds);
-  }
 
   private java.util.List<com.clover.sdk.v3.apps.AppMetered> extractAvailableMetereds() {
     if (getJSONObject().isNull("availableMetereds")) {
@@ -1077,26 +1140,34 @@ public final class App implements android.os.Parcelable, com.clover.sdk.v3.Valid
     return java.util.Collections.unmodifiableList(itemList);
   }
 
-  /**
-   * If the merchant has the app installed, and the app is a paid app, and the app has a 30 day trial, this tells whether the merchant is in trial or not
-   */
-  public java.lang.Boolean getIsMerchantInTrial() {
-    return cacheGet(CacheKey.isMerchantInTrial);
+
+  private java.util.List<com.clover.sdk.v3.apps.AppUsbDevice> extractUsbDevices() {
+    if (getJSONObject().isNull("usbDevices")) {
+      return null;
+    }
+
+    org.json.JSONObject elementsContainer = getJSONObject().optJSONObject("usbDevices");
+    org.json.JSONArray itemArray = elementsContainer.optJSONArray("elements");
+    java.util.List<com.clover.sdk.v3.apps.AppUsbDevice> itemList =
+        new java.util.ArrayList<com.clover.sdk.v3.apps.AppUsbDevice>(itemArray.length());
+    for (int i = 0; i < itemArray.length(); i++) {
+      org.json.JSONObject obj = itemArray.optJSONObject(i);
+      if (obj == null) {
+        continue;
+      }
+      com.clover.sdk.v3.apps.AppUsbDevice item = new com.clover.sdk.v3.apps.AppUsbDevice(obj);
+      itemList.add(item);
+    }
+
+    return java.util.Collections.unmodifiableList(itemList);
   }
+
 
   private java.lang.Boolean extractIsMerchantInTrial() {
     return getJSONObject().isNull("isMerchantInTrial") ? null :
       getJSONObject().optBoolean("isMerchantInTrial");
   }
 
-  /**
-   * The merchant's current subscription for this app
-   *
-   * The returned object is not a copy so changes to it will be reflected in this instance and vice-versa.
-   */
-  public com.clover.sdk.v3.apps.AppSubscription getCurrentSubscription() {
-    return cacheGet(CacheKey.currentSubscription);
-  }
 
   private com.clover.sdk.v3.apps.AppSubscription extractCurrentSubscription() {
     org.json.JSONObject jsonObj = getJSONObject().optJSONObject("currentSubscription");
@@ -1106,64 +1177,83 @@ public final class App implements android.os.Parcelable, com.clover.sdk.v3.Valid
     return null;
   }
 
-  /**
-   *  Whether the app is installed
-   */
-  public java.lang.Boolean getInstalled() {
-    return cacheGet(CacheKey.installed);
+
+  private com.clover.sdk.v3.apps.WebHook extractWebhook() {
+    org.json.JSONObject jsonObj = getJSONObject().optJSONObject("webhook");
+    if (jsonObj != null) {
+      return new com.clover.sdk.v3.apps.WebHook(getJSONObject().optJSONObject("webhook"));
+    }
+    return null;
   }
+
+
+  private java.util.List<com.clover.sdk.v3.apps.AndroidVersion> extractAndroidVersions() {
+    if (getJSONObject().isNull("androidVersions")) {
+      return null;
+    }
+
+    org.json.JSONObject elementsContainer = getJSONObject().optJSONObject("androidVersions");
+    org.json.JSONArray itemArray = elementsContainer.optJSONArray("elements");
+    java.util.List<com.clover.sdk.v3.apps.AndroidVersion> itemList =
+        new java.util.ArrayList<com.clover.sdk.v3.apps.AndroidVersion>(itemArray.length());
+    for (int i = 0; i < itemArray.length(); i++) {
+      org.json.JSONObject obj = itemArray.optJSONObject(i);
+      if (obj == null) {
+        continue;
+      }
+      com.clover.sdk.v3.apps.AndroidVersion item = new com.clover.sdk.v3.apps.AndroidVersion(obj);
+      itemList.add(item);
+    }
+
+    return java.util.Collections.unmodifiableList(itemList);
+  }
+
 
   private java.lang.Boolean extractInstalled() {
     return getJSONObject().isNull("installed") ? null :
       getJSONObject().optBoolean("installed");
   }
 
-  /**
-   * If the app is a paid app, this tells whether is has a 30 day free trial or not
-   */
-  public java.lang.Boolean getPaidAppHasTrial() {
-    return cacheGet(CacheKey.paidAppHasTrial);
-  }
 
   private java.lang.Boolean extractPaidAppHasTrial() {
     return getJSONObject().isNull("paidAppHasTrial") ? null :
       getJSONObject().optBoolean("paidAppHasTrial");
   }
 
-  /**
-   * Text will print on printed receipts for this app
-   */
-  public java.lang.String getSmartReceiptText() {
-    return cacheGet(CacheKey.smartReceiptText);
+
+  private java.lang.Boolean extractPaidAppFreeEligible() {
+    return getJSONObject().isNull("paidAppFreeEligible") ? null :
+      getJSONObject().optBoolean("paidAppFreeEligible");
   }
+
+
+  private java.lang.Long extractApprovalStatusModifiedTime() {
+    return getJSONObject().isNull("approvalStatusModifiedTime") ? null :
+      getJSONObject().optLong("approvalStatusModifiedTime");
+  }
+
 
   private java.lang.String extractSmartReceiptText() {
     return getJSONObject().isNull("smartReceiptText") ? null :
       getJSONObject().optString("smartReceiptText");
   }
 
-  /**
-   * URL we will expose on printed and web receipts for this app
-   */
-  public java.lang.String getSmartReceiptUrl() {
-    return cacheGet(CacheKey.smartReceiptUrl);
-  }
 
   private java.lang.String extractSmartReceiptUrl() {
     return getJSONObject().isNull("smartReceiptUrl") ? null :
       getJSONObject().optString("smartReceiptUrl");
   }
 
-  /**
-   * If the merchant has the app installed, this is the timestamp of when they started paying.  If the merchant doesn't have the app installed, this is the timestamp of when they would start paying.  In UTC.  Applies to paid apps only.
-   */
-  public java.lang.Long getBillingStartTime() {
-    return cacheGet(CacheKey.billingStartTime);
-  }
 
   private java.lang.Long extractBillingStartTime() {
     return getJSONObject().isNull("billingStartTime") ? null :
       getJSONObject().optLong("billingStartTime");
+  }
+
+
+  private java.lang.String extractAppSecret() {
+    return getJSONObject().isNull("appSecret") ? null :
+      getJSONObject().optString("appSecret");
   }
 
 
@@ -1210,6 +1300,11 @@ public final class App implements android.os.Parcelable, com.clover.sdk.v3.Valid
   /** Checks whether the 'siteUrl' field is set and is not null */
   public boolean isNotNullSiteUrl() {
     return cacheValueIsNotNull(CacheKey.siteUrl);
+  }
+
+  /** Checks whether the 'defaultResponseType' field is set and is not null */
+  public boolean isNotNullDefaultResponseType() {
+    return cacheValueIsNotNull(CacheKey.defaultResponseType);
   }
 
   /** Checks whether the 'appDomain' field is set and is not null */
@@ -1397,6 +1492,16 @@ public final class App implements android.os.Parcelable, com.clover.sdk.v3.Valid
     return isNotNullAvailableMetereds() && !getAvailableMetereds().isEmpty();
   }
 
+  /** Checks whether the 'usbDevices' field is set and is not null */
+  public boolean isNotNullUsbDevices() {
+    return cacheValueIsNotNull(CacheKey.usbDevices);
+  }
+
+  /** Checks whether the 'usbDevices' field is set and is not null and is not empty */
+  public boolean isNotEmptyUsbDevices() {
+    return isNotNullUsbDevices() && !getUsbDevices().isEmpty();
+  }
+
   /** Checks whether the 'isMerchantInTrial' field is set and is not null */
   public boolean isNotNullIsMerchantInTrial() {
     return cacheValueIsNotNull(CacheKey.isMerchantInTrial);
@@ -1407,6 +1512,21 @@ public final class App implements android.os.Parcelable, com.clover.sdk.v3.Valid
     return cacheValueIsNotNull(CacheKey.currentSubscription);
   }
 
+  /** Checks whether the 'webhook' field is set and is not null */
+  public boolean isNotNullWebhook() {
+    return cacheValueIsNotNull(CacheKey.webhook);
+  }
+
+  /** Checks whether the 'androidVersions' field is set and is not null */
+  public boolean isNotNullAndroidVersions() {
+    return cacheValueIsNotNull(CacheKey.androidVersions);
+  }
+
+  /** Checks whether the 'androidVersions' field is set and is not null and is not empty */
+  public boolean isNotEmptyAndroidVersions() {
+    return isNotNullAndroidVersions() && !getAndroidVersions().isEmpty();
+  }
+
   /** Checks whether the 'installed' field is set and is not null */
   public boolean isNotNullInstalled() {
     return cacheValueIsNotNull(CacheKey.installed);
@@ -1415,6 +1535,16 @@ public final class App implements android.os.Parcelable, com.clover.sdk.v3.Valid
   /** Checks whether the 'paidAppHasTrial' field is set and is not null */
   public boolean isNotNullPaidAppHasTrial() {
     return cacheValueIsNotNull(CacheKey.paidAppHasTrial);
+  }
+
+  /** Checks whether the 'paidAppFreeEligible' field is set and is not null */
+  public boolean isNotNullPaidAppFreeEligible() {
+    return cacheValueIsNotNull(CacheKey.paidAppFreeEligible);
+  }
+
+  /** Checks whether the 'approvalStatusModifiedTime' field is set and is not null */
+  public boolean isNotNullApprovalStatusModifiedTime() {
+    return cacheValueIsNotNull(CacheKey.approvalStatusModifiedTime);
   }
 
   /** Checks whether the 'smartReceiptText' field is set and is not null */
@@ -1430,6 +1560,11 @@ public final class App implements android.os.Parcelable, com.clover.sdk.v3.Valid
   /** Checks whether the 'billingStartTime' field is set and is not null */
   public boolean isNotNullBillingStartTime() {
     return cacheValueIsNotNull(CacheKey.billingStartTime);
+  }
+
+  /** Checks whether the 'appSecret' field is set and is not null */
+  public boolean isNotNullAppSecret() {
+    return cacheValueIsNotNull(CacheKey.appSecret);
   }
 
 
@@ -1476,6 +1611,11 @@ public final class App implements android.os.Parcelable, com.clover.sdk.v3.Valid
   /** Checks whether the 'siteUrl' field has been set, however the value could be null */
   public boolean hasSiteUrl() {
     return cacheHasKey(CacheKey.siteUrl);
+  }
+
+  /** Checks whether the 'defaultResponseType' field has been set, however the value could be null */
+  public boolean hasDefaultResponseType() {
+    return cacheHasKey(CacheKey.defaultResponseType);
   }
 
   /** Checks whether the 'appDomain' field has been set, however the value could be null */
@@ -1643,6 +1783,11 @@ public final class App implements android.os.Parcelable, com.clover.sdk.v3.Valid
     return cacheHasKey(CacheKey.availableMetereds);
   }
 
+  /** Checks whether the 'usbDevices' field has been set, however the value could be null */
+  public boolean hasUsbDevices() {
+    return cacheHasKey(CacheKey.usbDevices);
+  }
+
   /** Checks whether the 'isMerchantInTrial' field has been set, however the value could be null */
   public boolean hasIsMerchantInTrial() {
     return cacheHasKey(CacheKey.isMerchantInTrial);
@@ -1653,6 +1798,16 @@ public final class App implements android.os.Parcelable, com.clover.sdk.v3.Valid
     return cacheHasKey(CacheKey.currentSubscription);
   }
 
+  /** Checks whether the 'webhook' field has been set, however the value could be null */
+  public boolean hasWebhook() {
+    return cacheHasKey(CacheKey.webhook);
+  }
+
+  /** Checks whether the 'androidVersions' field has been set, however the value could be null */
+  public boolean hasAndroidVersions() {
+    return cacheHasKey(CacheKey.androidVersions);
+  }
+
   /** Checks whether the 'installed' field has been set, however the value could be null */
   public boolean hasInstalled() {
     return cacheHasKey(CacheKey.installed);
@@ -1661,6 +1816,16 @@ public final class App implements android.os.Parcelable, com.clover.sdk.v3.Valid
   /** Checks whether the 'paidAppHasTrial' field has been set, however the value could be null */
   public boolean hasPaidAppHasTrial() {
     return cacheHasKey(CacheKey.paidAppHasTrial);
+  }
+
+  /** Checks whether the 'paidAppFreeEligible' field has been set, however the value could be null */
+  public boolean hasPaidAppFreeEligible() {
+    return cacheHasKey(CacheKey.paidAppFreeEligible);
+  }
+
+  /** Checks whether the 'approvalStatusModifiedTime' field has been set, however the value could be null */
+  public boolean hasApprovalStatusModifiedTime() {
+    return cacheHasKey(CacheKey.approvalStatusModifiedTime);
   }
 
   /** Checks whether the 'smartReceiptText' field has been set, however the value could be null */
@@ -1676,6 +1841,11 @@ public final class App implements android.os.Parcelable, com.clover.sdk.v3.Valid
   /** Checks whether the 'billingStartTime' field has been set, however the value could be null */
   public boolean hasBillingStartTime() {
     return cacheHasKey(CacheKey.billingStartTime);
+  }
+
+  /** Checks whether the 'appSecret' field has been set, however the value could be null */
+  public boolean hasAppSecret() {
+    return cacheHasKey(CacheKey.appSecret);
   }
 
 
@@ -1823,6 +1993,22 @@ public final class App implements android.os.Parcelable, com.clover.sdk.v3.Valid
     }
 
     cacheMarkDirty(CacheKey.siteUrl);
+    return this;
+  }
+
+  /**
+   * Sets the field 'defaultResponseType'.
+   */
+  public App setDefaultResponseType(com.clover.sdk.v3.apps.OAuthResponseType defaultResponseType) {
+    logChange("defaultResponseType");
+
+    try {
+      getJSONObject().put("defaultResponseType", defaultResponseType == null ? org.json.JSONObject.NULL : com.clover.sdk.v3.JsonHelper.toJSON(defaultResponseType));
+    } catch (org.json.JSONException e) {
+      throw new java.lang.IllegalArgumentException(e);
+    }
+
+    cacheMarkDirty(CacheKey.defaultResponseType);
     return this;
   }
 
@@ -2430,6 +2616,40 @@ public final class App implements android.os.Parcelable, com.clover.sdk.v3.Valid
   }
 
   /**
+   * Sets the field 'usbDevices'.
+   *
+   * Nulls in the given List are skipped. List parameter is copied, so it will not reflect any changes, but objects inside it will.
+   */
+  public App setUsbDevices(java.util.List<com.clover.sdk.v3.apps.AppUsbDevice> usbDevices) {
+    logChange("usbDevices");
+
+    try {
+      if (usbDevices == null) {
+        getJSONObject().put("usbDevices", org.json.JSONObject.NULL);
+        cacheMarkDirty(CacheKey.usbDevices);
+        return this;
+      }
+
+      org.json.JSONArray array = new org.json.JSONArray();
+      for (com.clover.sdk.v3.apps.AppUsbDevice obj : usbDevices) {
+        if (obj == null) {
+          continue;
+        }
+        array.put(obj.getJSONObject());
+      }
+
+      org.json.JSONObject elementsContainer = new org.json.JSONObject();
+      elementsContainer.put("elements", array);
+      getJSONObject().put("usbDevices", elementsContainer);
+    } catch (org.json.JSONException e) {
+      throw new java.lang.IllegalArgumentException(e);
+    }
+
+    cacheMarkDirty(CacheKey.usbDevices);
+    return this;
+  }
+
+  /**
    * Sets the field 'isMerchantInTrial'.
    */
   public App setIsMerchantInTrial(java.lang.Boolean isMerchantInTrial) {
@@ -2465,6 +2685,59 @@ public final class App implements android.os.Parcelable, com.clover.sdk.v3.Valid
   }
 
   /**
+   * Sets the field 'webhook'.
+   *
+   * The parameter is not copied so changes to it will be reflected in this instance and vice-versa.
+   */
+  public App setWebhook(com.clover.sdk.v3.apps.WebHook webhook) {
+    logChange("webhook");
+
+    try {
+      getJSONObject().put("webhook",
+          webhook == null ? org.json.JSONObject.NULL : webhook.getJSONObject());
+    } catch (org.json.JSONException e) {
+      throw new java.lang.IllegalArgumentException(e);
+    }
+
+    cacheMarkDirty(CacheKey.webhook);
+    return this;
+  }
+
+  /**
+   * Sets the field 'androidVersions'.
+   *
+   * Nulls in the given List are skipped. List parameter is copied, so it will not reflect any changes, but objects inside it will.
+   */
+  public App setAndroidVersions(java.util.List<com.clover.sdk.v3.apps.AndroidVersion> androidVersions) {
+    logChange("androidVersions");
+
+    try {
+      if (androidVersions == null) {
+        getJSONObject().put("androidVersions", org.json.JSONObject.NULL);
+        cacheMarkDirty(CacheKey.androidVersions);
+        return this;
+      }
+
+      org.json.JSONArray array = new org.json.JSONArray();
+      for (com.clover.sdk.v3.apps.AndroidVersion obj : androidVersions) {
+        if (obj == null) {
+          continue;
+        }
+        array.put(obj.getJSONObject());
+      }
+
+      org.json.JSONObject elementsContainer = new org.json.JSONObject();
+      elementsContainer.put("elements", array);
+      getJSONObject().put("androidVersions", elementsContainer);
+    } catch (org.json.JSONException e) {
+      throw new java.lang.IllegalArgumentException(e);
+    }
+
+    cacheMarkDirty(CacheKey.androidVersions);
+    return this;
+  }
+
+  /**
    * Sets the field 'installed'.
    */
   public App setInstalled(java.lang.Boolean installed) {
@@ -2493,6 +2766,38 @@ public final class App implements android.os.Parcelable, com.clover.sdk.v3.Valid
     }
 
     cacheMarkDirty(CacheKey.paidAppHasTrial);
+    return this;
+  }
+
+  /**
+   * Sets the field 'paidAppFreeEligible'.
+   */
+  public App setPaidAppFreeEligible(java.lang.Boolean paidAppFreeEligible) {
+    logChange("paidAppFreeEligible");
+
+    try {
+      getJSONObject().put("paidAppFreeEligible", paidAppFreeEligible == null ? org.json.JSONObject.NULL : com.clover.sdk.v3.JsonHelper.toJSON(paidAppFreeEligible));
+    } catch (org.json.JSONException e) {
+      throw new java.lang.IllegalArgumentException(e);
+    }
+
+    cacheMarkDirty(CacheKey.paidAppFreeEligible);
+    return this;
+  }
+
+  /**
+   * Sets the field 'approvalStatusModifiedTime'.
+   */
+  public App setApprovalStatusModifiedTime(java.lang.Long approvalStatusModifiedTime) {
+    logChange("approvalStatusModifiedTime");
+
+    try {
+      getJSONObject().put("approvalStatusModifiedTime", approvalStatusModifiedTime == null ? org.json.JSONObject.NULL : com.clover.sdk.v3.JsonHelper.toJSON(approvalStatusModifiedTime));
+    } catch (org.json.JSONException e) {
+      throw new java.lang.IllegalArgumentException(e);
+    }
+
+    cacheMarkDirty(CacheKey.approvalStatusModifiedTime);
     return this;
   }
 
@@ -2541,6 +2846,22 @@ public final class App implements android.os.Parcelable, com.clover.sdk.v3.Valid
     }
 
     cacheMarkDirty(CacheKey.billingStartTime);
+    return this;
+  }
+
+  /**
+   * Sets the field 'appSecret'.
+   */
+  public App setAppSecret(java.lang.String appSecret) {
+    logChange("appSecret");
+
+    try {
+      getJSONObject().put("appSecret", appSecret == null ? org.json.JSONObject.NULL : com.clover.sdk.v3.JsonHelper.toJSON(appSecret));
+    } catch (org.json.JSONException e) {
+      throw new java.lang.IllegalArgumentException(e);
+    }
+
+    cacheMarkDirty(CacheKey.appSecret);
     return this;
   }
 
@@ -2606,6 +2927,13 @@ public final class App implements android.os.Parcelable, com.clover.sdk.v3.Valid
     unlogChange("siteUrl");
     getJSONObject().remove("siteUrl");
     cacheRemoveValue(CacheKey.siteUrl);
+  }
+
+  /** Clears the 'defaultResponseType' field, the 'has' method for this field will now return false */
+  public void clearDefaultResponseType() {
+    unlogChange("defaultResponseType");
+    getJSONObject().remove("defaultResponseType");
+    cacheRemoveValue(CacheKey.defaultResponseType);
   }
 
   /** Clears the 'appDomain' field, the 'has' method for this field will now return false */
@@ -2839,6 +3167,13 @@ public final class App implements android.os.Parcelable, com.clover.sdk.v3.Valid
     cacheRemoveValue(CacheKey.availableMetereds);
   }
 
+  /** Clears the 'usbDevices' field, the 'has' method for this field will now return false */
+  public void clearUsbDevices() {
+    unlogChange("usbDevices");
+    getJSONObject().remove("usbDevices");
+    cacheRemoveValue(CacheKey.usbDevices);
+  }
+
   /** Clears the 'isMerchantInTrial' field, the 'has' method for this field will now return false */
   public void clearIsMerchantInTrial() {
     unlogChange("isMerchantInTrial");
@@ -2853,6 +3188,20 @@ public final class App implements android.os.Parcelable, com.clover.sdk.v3.Valid
     cacheRemoveValue(CacheKey.currentSubscription);
   }
 
+  /** Clears the 'webhook' field, the 'has' method for this field will now return false */
+  public void clearWebhook() {
+    unlogChange("webhook");
+    getJSONObject().remove("webhook");
+    cacheRemoveValue(CacheKey.webhook);
+  }
+
+  /** Clears the 'androidVersions' field, the 'has' method for this field will now return false */
+  public void clearAndroidVersions() {
+    unlogChange("androidVersions");
+    getJSONObject().remove("androidVersions");
+    cacheRemoveValue(CacheKey.androidVersions);
+  }
+
   /** Clears the 'installed' field, the 'has' method for this field will now return false */
   public void clearInstalled() {
     unlogChange("installed");
@@ -2865,6 +3214,20 @@ public final class App implements android.os.Parcelable, com.clover.sdk.v3.Valid
     unlogChange("paidAppHasTrial");
     getJSONObject().remove("paidAppHasTrial");
     cacheRemoveValue(CacheKey.paidAppHasTrial);
+  }
+
+  /** Clears the 'paidAppFreeEligible' field, the 'has' method for this field will now return false */
+  public void clearPaidAppFreeEligible() {
+    unlogChange("paidAppFreeEligible");
+    getJSONObject().remove("paidAppFreeEligible");
+    cacheRemoveValue(CacheKey.paidAppFreeEligible);
+  }
+
+  /** Clears the 'approvalStatusModifiedTime' field, the 'has' method for this field will now return false */
+  public void clearApprovalStatusModifiedTime() {
+    unlogChange("approvalStatusModifiedTime");
+    getJSONObject().remove("approvalStatusModifiedTime");
+    cacheRemoveValue(CacheKey.approvalStatusModifiedTime);
   }
 
   /** Clears the 'smartReceiptText' field, the 'has' method for this field will now return false */
@@ -2886,6 +3249,13 @@ public final class App implements android.os.Parcelable, com.clover.sdk.v3.Valid
     unlogChange("billingStartTime");
     getJSONObject().remove("billingStartTime");
     cacheRemoveValue(CacheKey.billingStartTime);
+  }
+
+  /** Clears the 'appSecret' field, the 'has' method for this field will now return false */
+  public void clearAppSecret() {
+    unlogChange("appSecret");
+    getJSONObject().remove("appSecret");
+    cacheRemoveValue(CacheKey.appSecret);
   }
 
 
@@ -2959,7 +3329,7 @@ public final class App implements android.os.Parcelable, com.clover.sdk.v3.Valid
 
   @Override
   public String toString() {
-    String json = jsonString != null ? jsonString : getJSONObject().toString();
+    String json = getJSONObject().toString();
 
     if (bundle != null) {
       bundle.isEmpty(); // Triggers unparcel
@@ -3038,6 +3408,8 @@ public final class App implements android.os.Parcelable, com.clover.sdk.v3.Valid
     public static final boolean SITEURL_IS_REQUIRED = false;
     public static final long SITEURL_MAX_LEN = 255;
 
+    public static final boolean DEFAULTRESPONSETYPE_IS_REQUIRED = false;
+
     public static final boolean APPDOMAIN_IS_REQUIRED = false;
     public static final long APPDOMAIN_MAX_LEN = 255;
 
@@ -3115,13 +3487,23 @@ public final class App implements android.os.Parcelable, com.clover.sdk.v3.Valid
 
     public static final boolean AVAILABLEMETEREDS_IS_REQUIRED = false;
 
+    public static final boolean USBDEVICES_IS_REQUIRED = false;
+
     public static final boolean ISMERCHANTINTRIAL_IS_REQUIRED = false;
 
     public static final boolean CURRENTSUBSCRIPTION_IS_REQUIRED = false;
 
+    public static final boolean WEBHOOK_IS_REQUIRED = false;
+
+    public static final boolean ANDROIDVERSIONS_IS_REQUIRED = false;
+
     public static final boolean INSTALLED_IS_REQUIRED = false;
 
     public static final boolean PAIDAPPHASTRIAL_IS_REQUIRED = false;
+
+    public static final boolean PAIDAPPFREEELIGIBLE_IS_REQUIRED = false;
+
+    public static final boolean APPROVALSTATUSMODIFIEDTIME_IS_REQUIRED = false;
 
     public static final boolean SMARTRECEIPTTEXT_IS_REQUIRED = false;
     public static final long SMARTRECEIPTTEXT_MAX_LEN = 100;
@@ -3130,6 +3512,9 @@ public final class App implements android.os.Parcelable, com.clover.sdk.v3.Valid
     public static final long SMARTRECEIPTURL_MAX_LEN = 255;
 
     public static final boolean BILLINGSTARTTIME_IS_REQUIRED = false;
+
+    public static final boolean APPSECRET_IS_REQUIRED = false;
+    public static final long APPSECRET_MAX_LEN = 255;
 
   }
 
