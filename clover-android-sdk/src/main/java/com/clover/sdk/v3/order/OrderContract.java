@@ -1,6 +1,4 @@
-package com.clover.sdk.v3.order;
-
-/*
+/**
  * Copyright (C) 2015 Clover Network, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,6 +13,7 @@ package com.clover.sdk.v3.order;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.clover.sdk.v3.order;
 
 import android.accounts.Account;
 import android.net.Uri;

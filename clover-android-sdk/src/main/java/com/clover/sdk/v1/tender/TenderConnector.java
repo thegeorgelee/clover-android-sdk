@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (C) 2015 Clover Network, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.clover.sdk.v1.tender;
 
 import android.accounts.Account;
@@ -123,6 +122,36 @@ public class TenderConnector extends ServiceConnector<ITenderService> {
         return service.checkAndCreateTender(label, labelKey, enabled, opensCashDrawer, status);
       }
     }, callback);
+  }
+
+  public void deleteTender(final String tenderId) throws RemoteException, ClientException, ServiceException, BindingException {
+    execute(new TenderCallable<Void>() {
+      @Override
+      public Void call(ITenderService service, ResultStatus status) throws RemoteException {
+        service.delete(tenderId, status);
+        return null;
+      }
+    });
+  }
+
+  public void setOpensCashDrawer(final String tenderId, final boolean opensCashDrawer) throws RemoteException, ClientException, ServiceException, BindingException {
+    execute(new TenderCallable<Void>() {
+      @Override
+      public Void call(ITenderService service, ResultStatus status) throws RemoteException {
+        service.setOpensCashDrawer(tenderId, opensCashDrawer, status);
+        return null;
+      }
+    });
+  }
+
+  public void setLabel(final String tenderId, final String tenderLabel) throws RemoteException, ClientException, ServiceException, BindingException {
+    execute(new TenderCallable<Void>() {
+      @Override
+      public Void call(ITenderService service, ResultStatus status) throws RemoteException {
+        service.setLabel(tenderId, tenderLabel, status);
+        return null;
+      }
+    });
   }
 
   /**
